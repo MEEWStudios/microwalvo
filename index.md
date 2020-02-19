@@ -19,7 +19,8 @@ Brief Synopsis: Where’s Ronaldo is a competitive/cooperative two or four playe
 - Avoid mistaking Ronaldo for one of his lookalikes
 
 #### Rules
-In order to earn points, the player must hover over Ronaldo once he is found for 3 seconds. Players cannot simply "camp" an opposing team member by following/overlapping their spotlight everywhere, or both teams will begin to lose points after a certain amount of time.
+- In order to earn points, the player must hover over Ronaldo once he is found for 3 seconds. 
+- Players cannot simply "camp" an opposing team member by following/overlapping their spotlight everywhere, or both teams will begin to lose points after a certain amount of time.
 
 #### Obstacles
 
