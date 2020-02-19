@@ -13,7 +13,24 @@ Brief Synopsis: Where’s Ronaldo is a competitive/cooperative two or four playe
 
 ### Storyboard Concepts
 
-(coming soon)
+#### Goals
+- Find (and explode) Ronaldo as fast and as many times as possible
+- Delay the opposing team in finding Ronaldo by using the provided power-ups on the map
+- Avoid mistaking Ronaldo for one of his lookalikes
+
+#### Rules
+In order to earn points, the player must hover over Ronaldo once he is found for 3 seconds. Players cannot simply "camp" an opposing team member by following/overlapping their spotlight everywhere, or both teams will begin to lose points after a certain amount of time.
+
+#### Obstacles
+
+- The player can only reveal Ronaldo or other power-ups on the map by moving over them with their spotlight
+- If the player mistakes and explodes a lookalike for Ronaldo, they will lose points
+
+#### Power-ups
+
+- Strengthening your own spotlight to earn you double points whenever you find Ronaldo
+- Weakening the opposing team's guns to decrease the points they earn for finding Ronaldo
+- Decreasing the opposing team's movement speed
 
 ### Screenshots
 
