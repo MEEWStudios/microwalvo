@@ -1,37 +1,24 @@
-## This is the index file
+## Where's Ronaldo?
 
-You can use the [editor on GitHub](https://github.com/willardperalta/MEEWStudios/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+### Team Members
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+- Willard Peralta
+- Emily Pang
+- MirrenHollison
+- Ethan Chow
 
-### Markdown
+### Game Concept
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Brief Synopsis
+	Where’s Ronaldo is a competitive/cooperative one to four player game of Where’s Waldo. Players control a magnifying glass and the objective is to find Ronaldo whom can be found anywhere in a top down view of the level. Among many other objects found in the level, Ronaldo is free to move, hide behind objects or teleport making it harder for players to detect and find Ronaldo. Ronaldo wears green stripes and a distinctive monocle. Players must hover above Ronaldo for a certain amount of time to score a point. Ronaldo re-spawns again in a random location once he is found. The players with the most amount of points within the time limit wins the round and or match. Players can earn items that positively affect them or negatively affect other players by finding Ronaldo a certain amount of times in a row. Players cannot stay in one place, they will be punished if they “camp” a single area of the screen. 
 
-```markdown
-Syntax highlighted code block
+### Storyboard Concepts
 
-# Header 1
-## Header 2
-### Header 3
 
-- Bulleted
-- List
+### Screenshots
 
-1. Numbered
-2. List
 
-**Bold** and _Italic_ and `Code` text
+### Videos
 
-[Link](url) and ![Image](src)
-```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/willardperalta/MEEWStudios/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
