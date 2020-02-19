@@ -1,4 +1,18 @@
-## Welcome to GitHub Pages
+## Editing HTML and CSS for Github Pages Themes
+https://help.github.com/en/github/working-with-github-pages/adding-a-theme-to-your-github-pages-site-using-jekyll#customizing-your-themes-css
+
+## The repo for the theme that is currently in use (Cayman):
+https://github.com/pages-themes/cayman
+
+
+
+
+
+
+
+
+
+## GitHub Pages Info
 
 You can use the [editor on GitHub](https://github.com/willardperalta/MEEWStudios/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
