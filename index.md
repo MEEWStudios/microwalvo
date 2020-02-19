@@ -30,7 +30,7 @@ Brief Synopsis: Where’s Ronaldo is a competitive/cooperative two or four playe
 #### Power-ups
 
 - Strengthening your own spotlight to earn you double points whenever you find Ronaldo
-- Weakening the opposing team's guns to decrease the points they earn for finding Ronaldo
+- Weakening the opposing team's spotlight to decrease the points they earn for finding Ronaldo
 - Decreasing the opposing team's movement speed
 
 ### Screenshots
