@@ -1,10 +1,11 @@
-## [Editing HTML and CSS for Github Pages Themes]
-(https://help.github.com/en/github/working-with-github-pages/adding-a-theme-to-your-github-pages-site-using-jekyll#customizing-your-themes-css)
+## Editing HTML and CSS for Github Pages Themes
+https://help.github.com/en/github/working-with-github-pages/adding-a-theme-to-your-github-pages-site-using-jekyll#customizing-your-themes-css
 
-## [The repo for the theme that is currently in use (Cayman)]
-(https://github.com/pages-themes/cayman)
+## The repo for the theme that is currently in use (Cayman)
+https://github.com/pages-themes/cayman
 
-## [Testing Github Pages Locally] (https://help.github.com/en/github/working-with-github-pages/testing-your-github-pages-site-locally-with-jekyll)
+## Testing Github Pages Locally 
+https://help.github.com/en/github/working-with-github-pages/testing-your-github-pages-site-locally-with-jekyll
 
 
 
