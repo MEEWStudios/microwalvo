@@ -4,7 +4,7 @@
 
 - Willard Peralta
 - Emily Pang
-- MirrenHollison
+- Mirren Hollison
 - Ethan Chow
 
 ### Game Concept
