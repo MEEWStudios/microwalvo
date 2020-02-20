@@ -34,12 +34,12 @@ Brief Synopsis: Where’s Ronaldo is a competitive/cooperative two or four playe
 - Decreasing the opposing team's movement speed
 
 #### Concept Art
-![Image 1](microwalvo/images/img1.jpg)
-![Image 2](microwalvo/images/img2.jpg)
-![Image 3](microwalvo/images/img3.jpg)
-![Image 4](microwalvo/images/img4.jpg)
-![Image 5](microwalvo/images/img5.jpg)
-![Image 6](microwalvo/images/img6.jpg)
+![Image 1](/images/img1.jpg)
+![Image 2](/images/img2.jpg)
+![Image 3](/images/img3.jpg)
+![Image 4](/images/img4.jpg)
+![Image 5](/images/img5.jpg)
+![Image 6](/images/img6.jpg)
 
 ### Screenshots
 
