@@ -33,6 +33,9 @@ Brief Synopsis: Where’s Ronaldo is a competitive/cooperative two or four playe
 - Weakening the opposing team's spotlight to decrease the points they earn for finding Ronaldo
 - Decreasing the opposing team's movement speed
 
+#### Concept Art
+
+
 ### Screenshots
 
 (coming soon)
