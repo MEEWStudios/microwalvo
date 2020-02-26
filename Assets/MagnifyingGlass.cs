@@ -17,8 +17,8 @@ public class MagnifyingGlass : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
 		// Old joystick input system
-		Vector3 move = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
-		transform.position += move * speed * Time.deltaTime;
+		//Vector3 move = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+		//transform.position += move * speed * Time.deltaTime;
 
 		// Bad keyboard controls
 		if (Input.GetKey(KeyCode.LeftArrow)) {
@@ -46,8 +46,8 @@ public class MagnifyingGlass : MonoBehaviour {
 		if (gamepad != null) {
 			// EZJoystick manipulation
 			Vector3 newPosition = this.transform.position;
-			newPosition.x += gamepad.leftJoystick.xAxis * speed;
-			newPosition.y += gamepad.leftJoystick.yAxis * speed;
+			newPosition.x += gamepad.leftJoystick.xAxis * speed * Time.deltaTime;
+			newPosition.y += gamepad.leftJoystick.yAxis * speed * Time.deltaTime;
 			// Is this necessary?
 			this.transform.position = newPosition;
 		} else {
