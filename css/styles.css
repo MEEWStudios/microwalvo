@@ -1,36 +1,7 @@
-/* Nav bar style */
-/* Style the links inside the navigation bar */
-.topnav {
-  background-color: rgb(76, 133, 160);
-  overflow: hidden;
-}
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: rgb(52, 86, 199);
-  color: black;
-}
-
-/* Add a color to the active/current link */
-.topnav a.active {
-  background-color: rgb(52, 86, 199);
-  color: white;
-}
 /* Navbar style */
-
-
-
-
-
-
+.ui.secondary.pointing.menu .item:hover {
+  border-bottom-color: #c1aee9;
+}
 
 /* Footer style */
 footer {
@@ -45,29 +16,10 @@ footer {
 /* Footer style */
 
 
-
-
-
 /* General Styles */
 
 
-
 /* General Styles */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* Homepage styles */
