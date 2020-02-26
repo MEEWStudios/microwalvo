@@ -15,7 +15,7 @@ public class Wheel : MonoBehaviour {
 	public UnityEngine.UI.Text offsetText;
 	public UnityEngine.UI.Text newWheelAngleText;
 
-	public UnityEngine.GameObject magglass;
+	public UnityEngine.GameObject spotlight;
 
 	private EZGamepad gamepad = EZGM.GetEZGamepad(Player.One);
 	private float wheelAngleDegrees = 0f;
@@ -23,8 +23,6 @@ public class Wheel : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
-		MagnifyingGlass glassScript = magglass.GetComponent<MagnifyingGlass>();
-		//glassScript.alsoTest();
 		Debug.Log(GetAngleDifference(190, 182));
 		Debug.Log(GetAngleDifference(120, 112));
 	}
@@ -111,6 +109,7 @@ public class Wheel : MonoBehaviour {
 		}
 
 		lastAngleDegrees = joystickAngleDegrees;
+		MoveSpotlight();
 	}
 
 	private bool AngleWithinThreshold(float angleDegrees1, float angleDegrees2, float threshold) {
@@ -137,5 +136,14 @@ public class Wheel : MonoBehaviour {
 		//}
 
 		return 1 + Mathf.FloorToInt(angleDegrees / 90);
+	}
+
+	private void MoveSpotlight() {
+		double degreeDensity = 0.005;
+
+		Vector3 newPosition = spotlight.transform.position;
+		newPosition.x = (float) (wheelAngleDegrees * degreeDensity);
+		// Is this necessary?
+		spotlight.transform.position = newPosition;
 	}
 }
