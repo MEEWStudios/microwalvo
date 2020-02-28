@@ -23,8 +23,7 @@ public class Wheel : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
-		Debug.Log(GetAngleDifference(190, 182));
-		Debug.Log(GetAngleDifference(120, 112));
+
 	}
 
 	// Update is called once per frame
@@ -142,7 +141,7 @@ public class Wheel : MonoBehaviour {
 		double degreeDensity = 0.005;
 
 		Vector3 newPosition = spotlight.transform.position;
-		newPosition.x = (float) (wheelAngleDegrees * degreeDensity);
+		newPosition.x = (float) (-wheelAngleDegrees * degreeDensity);
 		// Is this necessary?
 		spotlight.transform.position = newPosition;
 	}
