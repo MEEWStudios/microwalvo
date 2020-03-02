@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wheel : MonoBehaviour {
+public class Wheel : PlayerControl {
 	// degrees [0, 180]
 	public float joystickActivationAngle = 40;
 	// Joystick needs to be at least this far away from the center to activate [0, 1]
 	public float joystickActivationDistance = 0.85f;
+	public GameObject managersObject;
 
 	public UnityEngine.UI.Text distanceText;
 	public UnityEngine.UI.Text wheelAngleText;
@@ -15,27 +16,29 @@ public class Wheel : MonoBehaviour {
 	public UnityEngine.UI.Text offsetText;
 	public UnityEngine.UI.Text newWheelAngleText;
 
-	public UnityEngine.GameObject spotlight;
+	public GameObject spotlight;
 
+	private ControlManager controlManager;
 	private EZGamepad gamepad = EZGM.GetEZGamepad(Player.One);
 	private float wheelAngleDegrees = 0f;
 	private float lastAngleDegrees = 0f;
 
 	// Start is called before the first frame update
 	void Start() {
-
+		controlManager = managersObject.GetComponent<ControlManager>();
+		controlManager.RegisterControl(this);
 	}
 
 	// Update is called once per frame
-	void Update() {
-		if (gamepad != null) {
-			Tick();
-		} else {
-			gamepad = EZGM.GetEZGamepad(Player.One);
-		}
-	}
+	//void Update() {
+	//	if (gamepad != null && gamepad.isConnected) {
+	//		ProcessGamepadInput(gamepad);
+	//	} else {
+	//		gamepad = EZGM.GetEZGamepad(Player.One);
+	//	}
+	//}
 
-	private void Tick() {
+	public override void ProcessGamepadInput(EZGamepad gamepad) {
 		float xAxis = gamepad.rightJoystick.xAxis;
 		float yAxis = gamepad.rightJoystick.yAxis;
 		float joystickAngleRadians = Mathf.Atan2(yAxis, xAxis);
