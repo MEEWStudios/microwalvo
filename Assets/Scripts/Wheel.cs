@@ -70,8 +70,8 @@ public class Wheel : PlayerControl {
 		//	Debug.Log(joystickAngleDegrees - lastAngleDegrees);
 		//newWheelAngle += joystickAngleDegrees - lastAngleDegrees;
 		wheelAngleDegrees -= GetAngleDifference(joystickAngleDegrees, lastAngleDegrees);
-		if (GetAngleDifference(joystickAngleDegrees, lastAngleDegrees) != 0)
-			Debug.Log(GetAngleDifference(joystickAngleDegrees, lastAngleDegrees) + " " + joystickAngleDegrees + " " + lastAngleDegrees);
+		//if (GetAngleDifference(joystickAngleDegrees, lastAngleDegrees) != 0)
+		//	Debug.Log(GetAngleDifference(joystickAngleDegrees, lastAngleDegrees) + " " + joystickAngleDegrees + " " + lastAngleDegrees);
 
 		//if (GetAngleDifference(newWheelAngle, wheelAngleDegrees) > angleActivationThreshold) {
 		//	offsetAngleDegrees = joystickAngleDegrees - wheelAngleDegrees;
