@@ -16,11 +16,13 @@ public class detect_thing : MonoBehaviour
     public float bad_item_x_position = 0;
     public float bad_item_z_position = 0;
 
+
     // Start is called before the first frame update
     void Start()
     {
 
     }
+
 
     bool ronaldoWithinSpotlight() 
     {
