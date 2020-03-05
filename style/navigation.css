@@ -15,11 +15,11 @@ header {
 	z-index: 1;
 }
 
-header > div {
+header > div:first-child {
 	height: var(--navigation-height);
 }
 
-header > div > img {
+header > div:first-child > img {
 	height: 100%;
 	pointer-events: none;
 }
