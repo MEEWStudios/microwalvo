@@ -1,0 +1,72 @@
+.container.title {
+	--container-title-angle-width: 0.4em;
+	--container-title-height: 2.5rem;
+	--container-title-background: var(--theme-primary-dark-background);
+	--container-title-color: var(--theme-primary-color);
+	
+	position: relative;
+	margin-top: calc(var(--container-title-height) / 2 + var(--page-element-padding));
+	padding-top: calc(var(--container-title-height) / 2 + var(--page-element-padding));
+}
+
+.container.title > h2:first-child,
+.container.title > div:first-child {
+	position: absolute;
+	top: 0;
+	left: 1rem;
+	line-height: var(--container-title-height);
+	transform: translateY(-50%);
+	box-sizing: border-box;
+}
+
+.container.title > h2:first-child,
+.container.title > div:first-child h2 {
+	margin: 0 var(--container-title-angle-width);
+	padding: 0 0.7rem;
+	height: var(--container-title-height);
+	background: var(--container-title-background);
+	color: var(--container-title-color);
+}
+
+.container.title > div:first-child h2 {
+	position: relative;
+	display: inline-block;
+}
+
+.container.title > div:first-child h2:first-child {
+	margin-right: 0;
+}
+
+.container.title > h2:first-child::before,
+.container.title > h2:first-child::after,
+.container.title > div:first-child h2::before,
+.container.title > div:first-child h2::after {
+	content: '';
+	position: absolute;
+	top: 0;
+}
+
+.container.title > h2:first-child::before,
+.container.title > div:first-child h2::before {
+	left: calc(-1 * var(--container-title-angle-width));
+	border-bottom: var(--container-title-height) solid var(--container-title-background);
+	border-left: var(--container-title-angle-width) solid transparent;
+}
+
+.container.title > div:first-child h2:first-child {
+	--container-title-background: var(--theme-tertiary-background);
+	--container-title-color: #000;
+	
+	user-select: none;
+}
+
+.container.title > h2:first-child::after,
+.container.title > div:first-child h2::after {
+	right: calc(-1 * var(--container-title-angle-width));
+	border-right: var(--container-title-angle-width) solid transparent;
+	border-top: var(--container-title-height) solid var(--container-title-background);
+}
+
+.container.title p:nth-child(2) {
+	margin-top: 0;
+}

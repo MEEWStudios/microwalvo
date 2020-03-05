@@ -1,0 +1,13 @@
+---
+layout: base
+head: <link href='{{site.baseurl}}/style/blog.css' rel='stylesheet'>
+---
+<main>
+	<h1>{{page.title}}</h1>
+	<div style='margin-bottom: 0.5rem;'>
+		Written {% if page.author %}by <span style='font-weight: 500;'>{{page.author}}</span> {% endif %}on <span style='color: rgba(0, 0, 0, 0.7);'>{{page.date | date: '%B %-d, %Y'}}</span>
+	</div>
+	<div class='container'>
+		{{page.content | markdownify}}
+	</div>
+</main>

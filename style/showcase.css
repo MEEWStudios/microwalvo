@@ -1,0 +1,106 @@
+.showcase {
+	padding: var(--page-element-padding);
+	padding-bottom: 0.5em;
+	/* Derived from the rgba necessary to go from --theme-primary-background to --theme-primary-light-background using 0.3 alpha */
+	background: rgba(148, 128, 194, 0.3);
+	text-align: center;
+}
+
+.showcase::after {
+	content: 'Click to enlarge';
+	display: block;
+	margin-top: calc(var(--page-element-padding) / 2);
+	font-style: italic;
+}
+
+.showcase img {
+	max-width: 18em;
+	max-height: 18em;
+	cursor: pointer;
+}
+
+.theater {
+	--theater-transition-duration: 250ms;
+	
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	transition: background var(--theater-transition-duration), backdrop-filter var(--theater-transition-duration);
+    z-index: 1;
+	user-select: none;
+	overflow-y: hidden;
+}
+
+.theater.open {
+	background: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(6px);
+}
+
+.theater .screen {
+    position: relative;
+    height: 85vh;
+}
+
+.theater .screen img {
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	max-width: 95%;
+	max-height: 95%;
+	opacity: 0;
+	transform: translate(-50%, -50%);
+	transition: top var(--theater-transition-duration), opacity var(--theater-transition-duration);
+}
+
+.theater.open .screen img {
+	top: 50%;
+	opacity: 1;
+}
+
+.theater .browser {
+    position: absolute;
+    display: flex;
+    align-items: center;
+	/* Breaks in Chrome when the container is overflowed */
+/*    justify-content: center;*/
+	bottom: -15vh;
+    height: 15vh;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+	opacity: 0;
+    transition: bottom var(--theater-transition-duration), opacity var(--theater-transition-duration);
+	overflow-x: auto;
+}
+
+.theater.open .browser {
+    bottom: 0;
+	padding: 0 calc(var(--page-element-padding) / 2);
+    opacity: 1;
+	box-sizing: border-box;
+}
+
+.theater .browser img {
+    max-height: 90%;
+    max-width: 10em;
+    margin: 0 calc(var(--page-element-padding) / 2);
+    cursor: pointer;
+}
+
+.theater .browser img.selected {
+    outline: calc(var(--page-element-padding) / 5) solid var(--theme-tertiary-background);
+    outline-offset: calc(var(--page-element-padding) / -5);
+}
+
+.theater .close {
+	position: absolute;
+	top: 2em;
+	right: 2em;
+	width: 3em;
+	opacity: 0;
+	cursor: pointer;
+	transition: opacity var(--theater-transition-duration);
+}
+
+.theater.open .close {
+	opacity: 1;
+}

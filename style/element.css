@@ -1,0 +1,77 @@
+body {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+}
+
+header {
+	padding: 0 var(--page-margin);
+}
+
+main {
+	flex: 1;
+	margin: 0 var(--page-margin);
+	padding: 1em 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 1rem 0 0.5rem;
+	font-weight: 300;
+}
+
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child,
+p:first-child,
+ul:first-child {
+	margin-top: 0;
+}
+
+h1:last-child,
+h2:last-child,
+h3:last-child,
+h4:last-child,
+h5:last-child,
+h6:last-child,
+p:last-child,
+ul:last-child {
+	margin-bottom: 0;
+}
+
+p {
+	margin: 0.8em 0;
+	text-align: justify;
+	line-height: 1.5;
+}
+
+code {
+	padding: 0.1em 0.4em;
+	/* Derived from the rgba necessary to go from --theme-primary-background to --theme-primary-light-background using 0.3 alpha */
+	background: rgba(148, 128, 194, 0.3);
+	font-size: 0.9em;
+}
+
+code,
+pre {
+	font-family: 'Roboto Mono', monospace;
+}
+
+pre {
+	margin: 0.4em 0;
+}
+
+pre code {
+	display: block;
+	padding: 0.6em;
+	tab-size: 4;
+}

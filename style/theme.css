@@ -1,0 +1,37 @@
+:root {
+	/* Theme Colors */
+	--theme-primary-background: #E4F9E7;
+	--theme-primary-light-background: #FFF;
+	--theme-primary-dark-background: #80CC86;
+	--theme-primary-color: #000;
+	--theme-primary-dark-color: #111;
+	--theme-tertiary-background: #CBE294;
+	--theme-tertiary-light-background: #DEECBB;
+	--theme-tertiary-color: #000;
+	--theme-secondary-background: #5D43C1;
+	--theme-secondary-light-background: #7E6ACD;
+	--theme-secondary-dark-background: #4A24E2;
+	--theme-secondary-color: #FFF;
+	
+	/* Page */
+	--page-margin: calc((100vw - 75rem) / 2);
+	--page-element-padding: 1rem;
+}
+
+@media only screen and (max-width: 1392px) {
+	:root {
+		--page-margin: 6rem;
+	}
+}
+
+@media only screen and (max-width: 991px) {
+	:root {
+		--page-margin: 3rem;
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	:root {
+		--page-margin: 3rem;
+	}
+}

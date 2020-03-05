@@ -1,0 +1,18 @@
+<div class='container title'>
+	<div>
+		<h2>{{include.post.date | date: '%b %-d'}}</h2><h2>{{include.post.title}}</h2>
+	</div>
+	<p>
+		{{include.post.content | markdownify | strip_html | truncatewords: 80}}
+	</p>
+	<div>
+		{% assign post_file_extension = include.post.url | slice: -5, 5 %}
+		{% if post_file_extension == '.html' %}
+			{% assign temp = include.post.url.size | minus: 5 %}
+			{% assign url = include.post.url | slice: 0, temp %}
+		{% else %}
+			{% assign url = include.post.url %}
+		{% endif %}
+		<a class='button' href='{{site.baseurl}}{{url}}'>Read More</a>
+	</div>
+</div>

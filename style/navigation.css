@@ -1,0 +1,89 @@
+header {
+	--navigation-height: 3.75rem;
+	--navigation-angle-width: 0.85rem;
+	--navigation-spacing: 0rem;
+	--navigation-background: transparent;
+	--navigation-hover-background: var(--theme-tertiary-background);
+	--navigation-active-background: var(--theme-tertiary-light-background);
+	--navigation-color: var(--theme-primary-color);
+	
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	display: flex;
+	background: var(--theme-primary-background);
+	user-select: none;
+	z-index: 1;
+}
+
+header > img {
+	height: var(--navigation-height);
+	pointer-events: none;
+}
+
+header > div,
+header a:not(.button) {
+	position: relative;
+	display: inline-flex;
+	margin-right: calc(var(--navigation-angle-width) + var(--navigation-spacing));
+	padding: 0 var(--page-element-padding);
+	background: var(--navigation-background);
+	color: var(--navigation-color);
+	font-size: 1.1em;
+	font-weight: 400;
+	text-decoration: none;
+	box-sizing: border-box;
+}
+
+header > div {
+	margin: auto 0;
+}
+
+header a {
+	height: var(--navigation-height);
+}
+
+header a:first-of-type {
+	margin-left: calc(var(--navigation-angle-width) + var(--navigation-spacing));
+}
+
+header a::before,
+header a::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	pointer-events: none;
+}
+
+header a::before {
+	left: calc(-1 * var(--navigation-angle-width));
+	border-bottom: var(--navigation-height) solid var(--navigation-background);
+	border-left: var(--navigation-angle-width) solid transparent;
+}
+
+header a::after {
+	right: calc(-1 * var(--navigation-angle-width));
+	border-right: var(--navigation-angle-width) solid transparent;
+	border-top: var(--navigation-height) solid var(--navigation-background);
+}
+
+header a:not(.button):hover {
+	--navigation-background: var(--navigation-hover-background);
+	
+	text-decoration: none;
+}
+
+header a:active {
+	--navigation-background: var(--navigation-active-background);
+}
+
+header a.active {
+	--navigation-background: var(--theme-primary-dark-background);
+	--navigation-color: var(--theme-primary-dark-color);
+	
+	font-weight: 500;
+}
+
+header a div {
+	margin: auto;
+}

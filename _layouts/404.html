@@ -1,0 +1,29 @@
+---
+layout: base
+head: |
+  <style type='text/css'>
+  	.error-box {
+  		padding: var(--page-element-padding);
+  		background: var(--theme-primary-dark-background);
+  		color: var(--theme-primary-dark-color);
+  		text-align: center;
+  	}
+  
+  	.error-header {
+  		margin: var(--page-element-padding) 0;
+  		font-size: 4.5rem;
+  	}
+  
+  	.error-detail {
+  		margin-bottom: var(--page-element-padding);
+  	}
+  </style>
+---
+<main style='text-align: center;'>
+	<div class='error-box'>
+		<div class='error-header'>We couldn't find that!</div>
+		<div class='error-detail'>404 Not Found</div>
+	</div>
+	<div style='margin-top: 40px;'>Sorry, that page or resource does not exist!</div>
+	<div style='margin-top: 25px;'>Try the <a href='{{site.baseurl}}/'>home page</a>.</div>
+</main>

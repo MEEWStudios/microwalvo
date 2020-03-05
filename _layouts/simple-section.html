@@ -1,0 +1,11 @@
+---
+layout: base
+---
+<main>
+	{% for section in page.sections %}
+	<h1>{{section[0]}}</h1>
+	<div class='container'>
+		{{section[1] | markdownify}}
+	</div>
+	{% endfor %}
+</main>
