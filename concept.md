@@ -5,8 +5,8 @@ head: |
   <style type='text/css'>
   	.img {
   		display: block;
-  		width: 50%;
-  		height: 50%;
+  		max-width: 100%;
+  		max-height: 25em;
   	}
   </style>
 ---
