@@ -16,6 +16,9 @@
 	/* Page */
 	--page-margin: calc((100vw - 75rem) / 2);
 	--page-element-padding: 1rem;
+	
+	/* Navigation */
+	--navigation-height: 3.75rem;
 }
 
 @media only screen and (max-width: 1392px) {

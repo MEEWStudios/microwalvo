@@ -75,3 +75,9 @@ pre code {
 	padding: 0.6em;
 	tab-size: 4;
 }
+
+@media only screen and (max-width: 767px) {
+	main {
+		margin-top: var(--navigation-height);
+	}
+}

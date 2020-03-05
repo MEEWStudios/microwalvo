@@ -1,5 +1,4 @@
 header {
-	--navigation-height: 3.75rem;
 	--navigation-angle-width: 0.85rem;
 	--navigation-spacing: 0rem;
 	--navigation-background: transparent;
@@ -16,12 +15,15 @@ header {
 	z-index: 1;
 }
 
-header > img {
+header > div {
 	height: var(--navigation-height);
+}
+
+header > div > img {
+	height: 100%;
 	pointer-events: none;
 }
 
-header > div,
 header a:not(.button) {
 	position: relative;
 	display: inline-flex;
@@ -33,10 +35,6 @@ header a:not(.button) {
 	font-weight: 400;
 	text-decoration: none;
 	box-sizing: border-box;
-}
-
-header > div {
-	margin: auto 0;
 }
 
 header a {
@@ -86,4 +84,52 @@ header a.active {
 
 header a div {
 	margin: auto;
+}
+
+/* Mobile Navigation Menu */
+@media only screen and (max-width: 767px) {
+	header {
+		position: fixed;
+		display: flex;
+		flex-direction: column;
+		top: 0;
+		padding: 0 calc(var(--page-element-padding) * 2);
+		height: 100vh;
+		box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.4);
+		transform: translateX(-100%);
+		transition: transform 150ms;
+	}
+	
+	header:focus,
+	header:hover {
+		transform: translateX(0);
+	}
+	
+	header::after {
+		content: '';
+		position: fixed;
+		width: var(--navigation-height);
+		height: var(--navigation-height);
+		top: 0;
+		right: 0;
+		background: var(--theme-primary-dark-background);
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' width='24'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath d='M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z'/%3E%3C/svg%3E");
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: calc(var(--navigation-height) / 2);
+		transform: translateX(100%);
+	}
+	
+	header:focus::after,
+	header:hover::after {
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' width='24'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
+	}
+	
+	header:focus::after {
+		pointer-events: none;
+	}
+	
+	header a:not(.button) {
+		margin: 0;
+	}
 }
