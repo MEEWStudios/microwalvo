@@ -129,6 +129,11 @@ header a div {
 		pointer-events: none;
 	}
 	
+	header > div:first-child > img {
+		display: block;
+		margin: 0 auto;
+	}
+	
 	header a:not(.button) {
 		margin: 0;
 	}
