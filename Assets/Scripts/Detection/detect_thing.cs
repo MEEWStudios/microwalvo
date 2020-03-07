@@ -106,23 +106,23 @@ public class detect_thing : MonoBehaviour
 
       if(detectableThingWithinSpotlight())
       {
-          Debug.Log("Detectable Object Found!");
+          //Debug.Log("Detectable Object Found!");
 
           if(ronaldoWithinSpotlight())
           {
-              Debug.Log("Ronaldo Found!");
+              //Debug.Log("Ronaldo Found!");
           }
           if(fakeRonaldoWithinSpotlight())
           {
-              Debug.Log("Fake Ronaldo Found!");
+              //Debug.Log("Fake Ronaldo Found!");
           }
           if(goodItemWithinSpotlight())
           {
-              Debug.Log("Good Item Found!");
+              //Debug.Log("Good Item Found!");
           }
           if(badItemWithinSpotlight())
           {
-              Debug.Log("Bad Item Found!");
+              //Debug.Log("Bad Item Found!");
           }
       } 
     
