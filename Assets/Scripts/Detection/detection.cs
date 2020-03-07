@@ -5,17 +5,17 @@ using UnityEngine;
 public class detection : MonoBehaviour
 {
 	public GameObject ronaldo;
-	float x;
+	IEnumerator coroutine;
 
 	private void OnTriggerEnter(Collider col) {
 		
-		//Vector3 position = ronaldo.transform.position;
-		//position.x = Random.Range(-5, 5);
-		//ronaldo.transform.position = position;
 
 		if(col.gameObject.name == "Ronaldo")
 		{
             Debug.Log("Ronaldo entered spotlight!");
+
+			coroutine = MoveRonaldo(3.0f);
+			StartCoroutine(coroutine);
 		}
 
 		if(col.gameObject.name == "Fake Ronaldo")
@@ -33,7 +33,6 @@ public class detection : MonoBehaviour
             Debug.Log("Bad Item entered spotlight!");
 		}
 
-
 	}
 
 	private void OnTriggerExit(Collider other) {
@@ -41,6 +40,7 @@ public class detection : MonoBehaviour
 		if(other.gameObject.name == "Ronaldo")
 		{
             Debug.Log("Ronaldo exited spotlight!");
+			StopCoroutine(coroutine);
 		}
 
 		if(other.gameObject.name == "Fake Ronaldo")
@@ -59,9 +59,20 @@ public class detection : MonoBehaviour
 		}
 	}
 
+	IEnumerator MoveRonaldo(float delay) {
+		yield return new WaitForSeconds(delay);
+		Vector3 position = ronaldo.transform.position;
+		// The current plane we have is 10 x 10 x 10
+		position.x = Random.Range(-5, 5);
+		//position.y = Random.Range(-5, 5);
+		//position.z = Random.Range(-5, 5);
+		ronaldo.transform.position = position;
+		Debug.Log("Ronaldo has moved!");
+	}
+
 	// Update is called once per frame
 	void Update()
     {
-      
+
     }
 }
