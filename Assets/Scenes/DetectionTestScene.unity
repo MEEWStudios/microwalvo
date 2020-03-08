@@ -670,7 +670,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &963194226
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1185,7 +1185,6 @@ GameObject:
   - component: {fileID: 1690406665}
   - component: {fileID: 1690406664}
   - component: {fileID: 1690406663}
-  - component: {fileID: 1690406667}
   m_Layer: 0
   m_Name: UnconnectedSpotlight
   m_TagString: Untagged
@@ -1268,28 +1267,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1690406667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1690406662}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 280250fda171f4fd1bc6b99001f5ca19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  light_x_position: 0
-  light_z_position: 0
-  ronaldo_x_position: 0
-  ronaldo_z_position: 0
-  fake_ronaldo_x_position: 0
-  fake_ronaldo_z_position: 0
-  good_item_x_position: 0
-  good_item_z_position: 0
-  bad_item_x_position: 0
-  bad_item_z_position: 0
 --- !u!1 &1760215844
 GameObject:
   m_ObjectHideFlags: 0

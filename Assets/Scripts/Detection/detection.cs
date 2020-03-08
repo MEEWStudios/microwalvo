@@ -5,10 +5,16 @@ using UnityEngine;
 public class detection : MonoBehaviour
 {
 	public GameObject ronaldo;
+	public GameObject fakeRonaldo;
 	IEnumerator coroutine;
 
+	void Start () {
+	    fakeRonaldo = GameObject.Find("Fake Ronaldo");
+		ronaldo = GameObject.Find("Ronaldo");
+	}
+
+
 	private void OnTriggerEnter(Collider col) {
-		
 
 		if(col.gameObject.name == "Ronaldo")
 		{
@@ -21,6 +27,9 @@ public class detection : MonoBehaviour
 		if(col.gameObject.name == "Fake Ronaldo")
 		{
             Debug.Log("Fake Ronaldo entered spotlight!");
+
+			coroutine = moveFakeRonaldo(3.0f);
+			StartCoroutine(coroutine);
 		}
 
 		if(col.gameObject.name == "Good Item")
@@ -63,11 +72,22 @@ public class detection : MonoBehaviour
 		yield return new WaitForSeconds(delay);
 		Vector3 position = ronaldo.transform.position;
 		// The current plane we have is 10 x 10 x 10
-		position.x = Random.Range(-5, 5);
+		position.x = Random.Range(position.x - 5, position.x - 5);
 		//position.y = Random.Range(-5, 5);
 		//position.z = Random.Range(-5, 5);
 		ronaldo.transform.position = position;
 		Debug.Log("Ronaldo has moved!");
+	}
+
+	IEnumerator moveFakeRonaldo(float delay) {
+		yield return new WaitForSeconds(delay);
+		Vector3 position = fakeRonaldo.transform.position;
+		// The current plane we have is 10 x 10 x 10
+		position.x = Random.Range(position.x - 5, position.x + 5);
+		//position.y = Random.Range(-5, 5);
+		//position.z = Random.Range(-5, 5);
+		fakeRonaldo.transform.position = position;
+		Debug.Log("Fake Ronaldo has moved!");
 	}
 
 	// Update is called once per frame
