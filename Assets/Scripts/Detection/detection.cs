@@ -19,7 +19,6 @@ public class detection : MonoBehaviour
 		if(col.gameObject.name == "Ronaldo")
 		{
             Debug.Log("Ronaldo entered spotlight!");
-
 			coroutine = MoveRonaldo(3.0f);
 			StartCoroutine(coroutine);
 		}
@@ -27,7 +26,6 @@ public class detection : MonoBehaviour
 		if(col.gameObject.name == "Fake Ronaldo")
 		{
             Debug.Log("Fake Ronaldo entered spotlight!");
-
 			coroutine = moveFakeRonaldo(3.0f);
 			StartCoroutine(coroutine);
 		}
@@ -35,11 +33,15 @@ public class detection : MonoBehaviour
 		if(col.gameObject.name == "Good Item")
 		{
             Debug.Log("Good Item entered spotlight!");
+			coroutine = removeItem(3.0f, col.gameObject);
+			StartCoroutine(coroutine);
 		}
 
 		if(col.gameObject.name == "Bad Item")
 		{
             Debug.Log("Bad Item entered spotlight!");
+			coroutine = removeItem(3.0f, col.gameObject);
+			StartCoroutine(coroutine);
 		}
 
 	}
@@ -55,16 +57,19 @@ public class detection : MonoBehaviour
 		if(other.gameObject.name == "Fake Ronaldo")
 		{
             Debug.Log(" Fake Ronaldo exited spotlight!");
+			StopCoroutine(coroutine);
 		}
 
 		if(other.gameObject.name == "Good Item")
 		{
             Debug.Log("Good Item exited spotlight!");
+			StopCoroutine(coroutine);
 		}
 
 		if(other.gameObject.name == "Bad Item")
 		{
             Debug.Log("Bad Item exited spotlight!");
+			StopCoroutine(coroutine);
 		}
 	}
 
@@ -88,6 +93,21 @@ public class detection : MonoBehaviour
 		//position.z = Random.Range(-5, 5);
 		fakeRonaldo.transform.position = position;
 		Debug.Log("Fake Ronaldo has moved!");
+	}
+
+	IEnumerator removeItem(float delay, GameObject itemToRemove) {
+		yield return new WaitForSeconds(delay);
+
+        if(itemToRemove.name == "Good Item"){
+		    Debug.Log("Good Item Removed!");
+		}
+
+        if(itemToRemove.name == "Bad Item"){
+		    Debug.Log("Bad Item Removed!");
+		}
+
+        Destroy(itemToRemove);
+
 	}
 
 	// Update is called once per frame
