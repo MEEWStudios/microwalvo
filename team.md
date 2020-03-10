@@ -13,20 +13,20 @@ head: |
 # Team Members
 <img class='profile' src='{{site.baseurl}}/assets/team/mirrenhollison.jpg'>
 ## Mirren Hollison
-ACM Student
+ACM Student\
 Email: mirren@hawaii.edu
 
 <img class='profile' src='{{site.baseurl}}/assets/team/emilypang.jpg'>
 ## Emily Pang
-ICS Student
+ICS Student\
 Email: eppang@hawaii.edu
 
 <img class='profile' src='{{site.baseurl}}/assets/team/ethanchow.jpg'>
 ## Ethan Chow
-ICS Student
+ICS Student\
 Email: epchow@hawaii.edu
 
 <img class='profile' src='{{site.baseurl}}/assets/team/willardperalta.jpg'>
 ## Willard Peralta
-ICS Student
+ICS Student\
 Email: willardp@hawaii.edu
