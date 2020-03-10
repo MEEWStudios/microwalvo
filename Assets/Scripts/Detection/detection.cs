@@ -77,7 +77,7 @@ public class detection : MonoBehaviour
 		yield return new WaitForSeconds(delay);
 		Vector3 position = ronaldo.transform.position;
 		// The current plane we have is 10 x 10 x 10
-		position.x = Random.Range(position.x - 5, position.x - 5);
+		position.x = Random.Range(position.x - 5, position.x + 5);
 		//position.y = Random.Range(-5, 5);
 		//position.z = Random.Range(-5, 5);
 		ronaldo.transform.position = position;
