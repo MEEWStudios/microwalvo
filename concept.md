@@ -17,4 +17,3 @@ head: |
 <img src='{{site.baseurl}}/assets/concept/img4.jpg' class='img'>
 <img src='{{site.baseurl}}/assets/concept/img5.jpg' class='img'>
 <img src='{{site.baseurl}}/assets/concept/img6.jpg' class='img'>
-<img src='{{site.baseurl}}/assets/unity_screenshots/detection.gif' class='img'>
