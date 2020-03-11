@@ -5617,7 +5617,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2059933689}
   - component: {fileID: 2059933688}
-  - component: {fileID: 2059933687}
   - component: {fileID: 2059933691}
   - component: {fileID: 2059933690}
   - component: {fileID: 2059933686}
@@ -5641,45 +5640,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
---- !u!23 &2059933687
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2059933685}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 41d288c7caf5a0e4ea157c475aeb2fca, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
 --- !u!33 &2059933688
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5696,7 +5656,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2059933685}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.130005, y: 0.7, z: -3.81}
+  m_LocalPosition: {x: 24.07, y: 0.67, z: -3.6}
   m_LocalScale: {x: 9.56, y: 0.01, z: 9.31}
   m_Children:
   - {fileID: 745761436}
@@ -5718,6 +5678,7 @@ MonoBehaviour:
   ronaldo: {fileID: 1586222831}
   fakeRonaldo: {fileID: 1399102734}
   explosion: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56, type: 3}
+  pickup: {fileID: 100006, guid: 8fc06027b01064e4f885fd8dd2929310, type: 3}
 --- !u!64 &2059933691
 MeshCollider:
   m_ObjectHideFlags: 0

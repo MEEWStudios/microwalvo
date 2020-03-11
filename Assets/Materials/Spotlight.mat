@@ -9,8 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Spotlight
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION
-  m_LightmapFlags: 1
+  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
@@ -78,6 +78,6 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 0.8018868, g: 0.7850124, b: 0.13238695, a: 0.38431373}
-    - _EmissionColor: {r: 0.9915269, g: 1, b: 0.5801887, a: 1}
+    - _Color: {r: 0.8018868, g: 0.7850124, b: 0.13238695, a: 0}
+    - _EmissionColor: {r: 0.07647059, g: 0.07647059, b: 0.04509804, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
