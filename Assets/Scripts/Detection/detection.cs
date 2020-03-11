@@ -7,6 +7,7 @@ public class detection : MonoBehaviour
 	public GameObject ronaldo;
 	public GameObject fakeRonaldo;
 	public GameObject explosion;
+	public GameObject pickup;
 	IEnumerator coroutine;
 
 	void Start () {
@@ -34,14 +35,14 @@ public class detection : MonoBehaviour
 		if(col.gameObject.name == "Good Item")
 		{
             Debug.Log("Good Item entered spotlight!");
-			coroutine = removeItem(3.0f, col.gameObject);
+			coroutine = removeItem(1.0f, col.gameObject);
 			StartCoroutine(coroutine);
 		}
 
 		if(col.gameObject.name == "Bad Item")
 		{
             Debug.Log("Bad Item entered spotlight!");
-			coroutine = removeItem(3.0f, col.gameObject);
+			coroutine = removeItem(1.0f, col.gameObject);
 			StartCoroutine(coroutine);
 		}
 
@@ -57,7 +58,7 @@ public class detection : MonoBehaviour
 
 		if(other.gameObject.name == "Fake Ronaldo")
 		{
-            Debug.Log(" Fake Ronaldo exited spotlight!");
+            Debug.Log("Fake Ronaldo exited spotlight!");
 			StopCoroutine(coroutine);
 		}
 
@@ -98,8 +99,8 @@ public class detection : MonoBehaviour
 
 	IEnumerator removeItem(float delay, GameObject itemToRemove) {
 		yield return new WaitForSeconds(delay);
-
-        if(itemToRemove.name == "Good Item"){
+		GameObject item = Instantiate(pickup, transform.position, Quaternion.identity) as GameObject;
+		if (itemToRemove.name == "Good Item"){
 		    Debug.Log("Good Item Removed!");
 		}
 
