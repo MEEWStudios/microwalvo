@@ -6,6 +6,7 @@ public class detection : MonoBehaviour
 {
 	public GameObject ronaldo;
 	public GameObject fakeRonaldo;
+	public GameObject explosion;
 	IEnumerator coroutine;
 
 	void Start () {
@@ -75,22 +76,22 @@ public class detection : MonoBehaviour
 
 	IEnumerator MoveRonaldo(float delay) {
 		yield return new WaitForSeconds(delay);
+		GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
 		Vector3 position = ronaldo.transform.position;
 		// The current plane we have is 10 x 10 x 10
 		position.x = Random.Range(position.x - 5, position.x + 5);
-		//position.y = Random.Range(-5, 5);
-		//position.z = Random.Range(-5, 5);
+		position.z = Random.Range(-5, 5);
 		ronaldo.transform.position = position;
 		Debug.Log("Ronaldo has moved!");
 	}
 
 	IEnumerator moveFakeRonaldo(float delay) {
 		yield return new WaitForSeconds(delay);
+		GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
 		Vector3 position = fakeRonaldo.transform.position;
 		// The current plane we have is 10 x 10 x 10
 		position.x = Random.Range(position.x - 5, position.x + 5);
-		//position.y = Random.Range(-5, 5);
-		//position.z = Random.Range(-5, 5);
+		position.z = Random.Range(position.z - 5, position.z + 5);
 		fakeRonaldo.transform.position = position;
 		Debug.Log("Fake Ronaldo has moved!");
 	}
