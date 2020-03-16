@@ -36,7 +36,7 @@ public class DrawOnTexture : MonoBehaviour {
         {
 			// younger = redder (higher r)
 			// older = blacker
-			//Debug.Log("Time: " + Time.timeSinceLevelLoad + "; r: " + r);
+			//Debug.Log("Time: " + Time.LevelLoad + "; r: " + r);
 			Color color = new Color(Time.timeSinceLevelLoad, 0, 0, 1);
 			//Debug.Log("r: " + color.r);
 			//Color color = new Color(1, 0, 0, 1);

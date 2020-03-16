@@ -83,7 +83,8 @@ Shader "Custom/Window"
 
 				// TEST
 				//float blurRadius = floor(_BlurRadius * mouseSample.r);
-				//return mouseSample; // test mouse map
+				//float4 mouseSample = tex2D(_MouseMap, input.texCoord.xy); //uncomment to draw red line
+				//return mouseSample; // test mouse map //uncomment to draw red line
 				//float noSmudge = mouseSample.r != 0; // test erasing blur
 			}
 
