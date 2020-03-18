@@ -2,11 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wheel : PlayerControl {
+public class SpotlightControl : PlayerControl {
+	public enum Axis {
+		Horizontal, Vertical
+	}
+
 	// degrees [0, 180]
+	public Team team;
+	public Axis controlAxis;
 	public float joystickActivationAngle = 40;
 	// Joystick needs to be at least this far away from the center to activate [0, 1]
 	public float joystickActivationDistance = 0.85f;
+	public double degreeDensity = 0.005;
 	public GameObject managersObject;
 
 	public UnityEngine.UI.Text distanceText;
@@ -18,25 +25,18 @@ public class Wheel : PlayerControl {
 
 	public GameObject spotlight;
 
+	private Vector2 transformOffset;
 	private ControlManager controlManager;
-	private EZGamepad gamepad = EZGM.GetEZGamepad(Player.One);
 	private float wheelAngleDegrees = 0f;
 	private float lastAngleDegrees = 0f;
 
 	// Start is called before the first frame update
 	void Start() {
-		controlManager = managersObject.GetComponent<ControlManager>();
-		controlManager.RegisterControl(this);
-	}
+		transformOffset = new Vector2(spotlight.transform.position.x, spotlight.transform.position.y);
 
-	// Update is called once per frame
-	//void Update() {
-	//	if (gamepad != null && gamepad.isConnected) {
-	//		ProcessGamepadInput(gamepad);
-	//	} else {
-	//		gamepad = EZGM.GetEZGamepad(Player.One);
-	//	}
-	//}
+		controlManager = managersObject.GetComponent<ControlManager>();
+		controlManager.RegisterControl(this, team);
+	}
 
 	public override void ProcessGamepadInput(EZGamepad gamepad) {
 		float xAxis = gamepad.rightJoystick.xAxis;
@@ -66,36 +66,9 @@ public class Wheel : PlayerControl {
 			return;
 		}
 
-		//if (joystickAngleDegrees - lastAngleDegrees > 0)
-		//	Debug.Log(joystickAngleDegrees - lastAngleDegrees);
-		//newWheelAngle += joystickAngleDegrees - lastAngleDegrees;
 		wheelAngleDegrees -= GetAngleDifference(joystickAngleDegrees, lastAngleDegrees);
-		//if (GetAngleDifference(joystickAngleDegrees, lastAngleDegrees) != 0)
-		//	Debug.Log(GetAngleDifference(joystickAngleDegrees, lastAngleDegrees) + " " + joystickAngleDegrees + " " + lastAngleDegrees);
-
-		//if (GetAngleDifference(newWheelAngle, wheelAngleDegrees) > angleActivationThreshold) {
-		//	offsetAngleDegrees = joystickAngleDegrees - wheelAngleDegrees;
-		//	newWheelAngle = joystickAngleDegrees - offsetAngleDegrees;
-		//	lastAngleDegrees = 0;
-		//}
-
-		//Debug.Log(wheelAngleDegrees);
-		//Debug.Log(newWheelAngle + " " + GetQuadrantFromAngleDegree(newWheelAngle));
-		//if (GetQuadrantFromAngleDegree(wheelAngleDegrees) == 4 && GetQuadrantFromAngleDegree(newWheelAngle) == 1) {
-		//	newWheelAngle += 360;
-		//} else if (GetQuadrantFromAngleDegree(wheelAngleDegrees) == 1 && GetQuadrantFromAngleDegree(newWheelAngle) == 4) {
-		//	newWheelAngle -= 360;
-		//}
 
 		this.transform.rotation = Quaternion.Euler(wheelAngleDegrees, -90, -90);
-		//wheelAngleDegrees = newWheelAngle + rotationsAngle;
-
-		//float angleDifference = (wheelAngleDegrees - (newWheelAngle));
-		//Debug.Log(angleDifference);
-		//Debug.Log("    Wheel Angle: " + wheelAngleDegrees);
-		//Debug.Log("New Wheel Angle: " + (wheelAngleDegrees + angleDifference));
-		//this.transform.rotation = Quaternion.Euler(wheelAngleDegrees + angleDifference, -90, -90);
-		//wheelAngleDegrees += angleDifference;
 
 		if (wheelAngleText != null) {
 			wheelAngleText.text = "Wheel Angle: " + wheelAngleDegrees;
@@ -127,25 +100,17 @@ public class Wheel : PlayerControl {
 		// Get angleDegree as [0, 360)
 		angleDegrees = Mathf.Abs(angleDegrees % 360);
 
-		//if (angleDegree < 90) {
-		//	return 1;
-		//} else if (angleDegree < 180) {
-		//	return 2;
-		//} else if (angleDegree < 270) {
-		//	return 3;
-		//} else {
-		//	return 4;
-		//}
-
 		return 1 + Mathf.FloorToInt(angleDegrees / 90);
 	}
 
 	private void MoveSpotlight() {
-		double degreeDensity = 0.005;
-
 		Vector3 newPosition = spotlight.transform.position;
-		newPosition.x = (float) (-wheelAngleDegrees * degreeDensity);
-		// Is this necessary?
+		if (controlAxis == Axis.Horizontal) {
+			newPosition.x = (float) (-wheelAngleDegrees * degreeDensity) + transformOffset.x;
+		} else {
+			newPosition.z = (float) (-wheelAngleDegrees * degreeDensity) + transformOffset.y;
+		}
+		
 		spotlight.transform.position = newPosition;
 	}
 }
