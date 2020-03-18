@@ -605,7 +605,7 @@ Transform:
   m_GameObject: {fileID: 198792031}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.030014, y: 8.8, z: 3.5}
-  m_LocalScale: {x: 446.26645, y: 1, z: 150}
+  m_LocalScale: {x: 415.5, y: 2.6, z: 150}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 21
@@ -628,6 +628,8 @@ MonoBehaviour:
   TextureSize: 900
   Radius: 1
   BlurColor: {r: 0, g: 0, b: 0, a: 0}
+  spotlight: {fileID: 0}
+  TopViewCamera: {fileID: 0}
 --- !u!64 &198792037
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4070,9 +4072,11 @@ MonoBehaviour:
   cam: {fileID: 1893044523}
   drawColor: {r: 1, g: 0, b: 0, a: 0}
   destinationRenderer: {fileID: 1550036915}
-  TextureSize: 900
+  TextureSize: 450
   Radius: 1
   BlurColor: {r: 0, g: 0, b: 0, a: 0}
+  spotlight: {fileID: 2059933685}
+  TopViewCamera: {fileID: 1893044521}
 --- !u!23 &1550036915
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4128,8 +4132,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1550036913}
   m_LocalRotation: {x: -0.099005885, y: 0.0044454387, z: -0.010966224, w: 0.9950165}
-  m_LocalPosition: {x: 5.1, y: 76.1, z: -10.4}
-  m_LocalScale: {x: 69.3, y: 0.8, z: 61.8}
+  m_LocalPosition: {x: 5.3, y: 70.5, z: -13.6}
+  m_LocalScale: {x: 122.2, y: 0.8, z: 123.95}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 22
@@ -5430,6 +5434,7 @@ GameObject:
   - component: {fileID: 1893044524}
   - component: {fileID: 1893044523}
   - component: {fileID: 1893044522}
+  - component: {fileID: 1893044525}
   m_Layer: 0
   m_Name: Top View Camera
   m_TagString: Player
@@ -5502,6 +5507,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 64.055, y: 0, z: 0}
+--- !u!114 &1893044525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893044521}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2727ce64f55b4494990c3d84bd8abcea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Spotlight: {fileID: 2059933685}
+  TopViewCamera: {fileID: 1893044521}
 --- !u!1 &1949079992
 GameObject:
   m_ObjectHideFlags: 0
