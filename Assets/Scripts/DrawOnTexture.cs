@@ -32,44 +32,31 @@ public class DrawOnTexture : MonoBehaviour {
 		destinationRenderer.material.SetTexture("_MouseMap", texture);
 	}
 
-	void OnSpotlight ()
-	{
-
-
-			Color color = new Color(Time.timeSinceLevelLoad, 0, 0, 1);
-
-
-			int x = (int)spotlight.transform.position.x;
-			int y = (int)spotlight.transform.position.z;
-
-			texture.SetPixel(x, y, color);
-
-			for (int i = 0; i < texture.height; i++)
-			{
-				for (int j = 0; j < texture.width; j++)
-				{
-					float dist = Vector2.Distance(new Vector2(i,j), new Vector2(x,y));
-					if(dist <= Radius)
-						texture.SetPixel(i, j, color);
-				}
-			}
-
-			texture.Apply();
-			destinationRenderer.material.SetTexture("_MouseMap", texture);
-        
-	}
-
+	// Debugging 
 	void OnMouseDrag ()
 	{
-	 Ray ray = cam.ScreenPointToRay(spotlight.transform.position); //Input.mousePosition
-		
-Debug.Log(ray);
-Debug.Log(spotlight.transform.position);
+		//Debug.Log("MOUSE POSITION: " + Input.mousePosition); //(x: 0 to 6800, y: 0 to 2304, z: 0)
+		//Debug.Log("SPOTLIGHT POSITION: " + spotlight.transform.position); //(position: x: -112 to 124, z: -34 to 63)
+        //Debug.Log(cam.WorldToScreenPoint(spotlight.transform.position).x);
+	}
+
+
+
+
+	void Update()
+    {
+
+    	// create a vector that uses x and y coordinates that were converted from world to screen coordinates
+        Vector3 spotlightVector = new Vector3(cam.WorldToScreenPoint(spotlight.transform.position).x, cam.WorldToScreenPoint(spotlight.transform.position).y, 0.0f);
+
+        //the ray for the spotlight
+        Ray ray = cam.ScreenPointToRay(spotlightVector); //Input.mousePosition 
+
+
         RaycastHit hit;
 
         if(Physics.Raycast(ray, out hit, 100))
         {
-        	Debug.Log("RAYCAST HIT");
 			// younger = redder (higher r)
 			// older = blacker
 			//Debug.Log("Time: " + Time.LevelLoad + "; r: " + r);
@@ -95,11 +82,6 @@ Debug.Log(spotlight.transform.position);
 			texture.Apply();
 			destinationRenderer.material.SetTexture("_MouseMap", texture);
         }
-	}
-
-	void Update()
-    {
-                Debug.DrawRay(spotlight.transform.position , (cam.transform.position - spotlight.transform.position), Color.yellow);
                 
     }
 

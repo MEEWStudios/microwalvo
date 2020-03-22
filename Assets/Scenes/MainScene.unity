@@ -4072,7 +4072,7 @@ MonoBehaviour:
   cam: {fileID: 1893044523}
   drawColor: {r: 1, g: 0, b: 0, a: 0}
   destinationRenderer: {fileID: 1550036915}
-  TextureSize: 450
+  TextureSize: 300
   Radius: 1
   BlurColor: {r: 0, g: 0, b: 0, a: 0}
   spotlight: {fileID: 2059933685}
