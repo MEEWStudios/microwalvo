@@ -10,8 +10,8 @@ public class DrawOnTexture : MonoBehaviour {
 	public int TextureSize;
 	public int Radius;
 	public Color BlurColor;
-	public GameObject spotlight;
-    public GameObject TopViewCamera;
+	public GameObject spotlight1;
+	public GameObject spotlight2;
 
 	private Texture2D texture;
 
@@ -47,14 +47,19 @@ public class DrawOnTexture : MonoBehaviour {
     {
 
     	// create a vector that uses x and y coordinates that were converted from world to screen coordinates
-        Vector3 spotlightVector = new Vector3(cam.WorldToScreenPoint(spotlight.transform.position).x, cam.WorldToScreenPoint(spotlight.transform.position).y, 0.0f);
+        Vector3 spotlight1Vector = new Vector3(cam.WorldToScreenPoint(spotlight1.transform.position).x, cam.WorldToScreenPoint(spotlight1.transform.position).y, 0.0f);
+
+        Vector3 spotlight2Vector = new Vector3(cam.WorldToScreenPoint(spotlight2.transform.position).x, cam.WorldToScreenPoint(spotlight2.transform.position).y, 0.0f);
 
         //the ray for the spotlight
-        Ray ray = cam.ScreenPointToRay(spotlightVector); //Input.mousePosition 
+        Ray ray = cam.ScreenPointToRay(spotlight1Vector); //Input.mousePosition 
+        Ray ray2 = cam.ScreenPointToRay(spotlight2Vector); 
 
 
         RaycastHit hit;
+        RaycastHit hit2;
 
+    	//spotlight1
         if(Physics.Raycast(ray, out hit, 100))
         {
 			// younger = redder (higher r)
@@ -66,6 +71,42 @@ public class DrawOnTexture : MonoBehaviour {
 
 			int x = (int)(hit.textureCoord.x*texture.width);
 			int y = (int)(hit.textureCoord.y*texture.height);
+
+			texture.SetPixel(x, y, color);
+
+			for (int i = 0; i < texture.height; i++)
+			{
+				for (int j = 0; j < texture.width; j++)
+				{
+					float dist = Vector2.Distance(new Vector2(i,j), new Vector2(x,y));
+					if(dist <= Radius)
+						texture.SetPixel(i, j, color);
+				}
+			}
+
+			texture.Apply();
+			destinationRenderer.material.SetTexture("_MouseMap", texture);
+        }
+
+
+
+
+
+
+
+
+        //spotlight2
+        if(Physics.Raycast(ray2, out hit2, 100))
+        {
+			// younger = redder (higher r)
+			// older = blacker
+			//Debug.Log("Time: " + Time.LevelLoad + "; r: " + r);
+			Color color = new Color(Time.timeSinceLevelLoad, 0, 0, 1);
+			//Debug.Log("r: " + color.r);
+			//Color color = new Color(1, 0, 0, 1);
+
+			int x = (int)(hit2.textureCoord.x*texture.width);
+			int y = (int)(hit2.textureCoord.y*texture.height);
 
 			texture.SetPixel(x, y, color);
 
