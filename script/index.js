@@ -48,39 +48,39 @@ function delay(time) {
 }
 
 function isInHeirarchyOf(element, parent) {
-    while (element) {
-        if (element === parent) {
-            return true;
-        } else {
-            element = element.parentElement;
-        }
-    }
-    
-    return false;
+	while (element) {
+		if (element === parent) {
+			return true;
+		} else {
+			element = element.parentElement;
+		}
+	}
+	
+	return false;
 }
 
 const getScrollbarWidth = (() => {
-    let width = undefined;
+	let width = undefined;
 
-    return () => {
-        if (width !== undefined) {
-            // Cache the value once it's been calculated
-            return width;
-        } else {
-            let container = document.createElement('div');
-            container.style.visibility = 'hidden';
-            container.style.overflow = 'scroll';
-            let child = document.createElement('div');
+	return () => {
+		if (width !== undefined) {
+			// Cache the value once it's been calculated
+			return width;
+		} else {
+			let container = document.createElement('div');
+			container.style.visibility = 'hidden';
+			container.style.overflow = 'scroll';
+			let child = document.createElement('div');
 
-            container.appendChild(child);
-            document.body.appendChild(container);
+			container.appendChild(child);
+			document.body.appendChild(container);
 
-            width = container.offsetWidth - child.offsetWidth;
-            document.body.removeChild(container);
+			width = container.offsetWidth - child.offsetWidth;
+			document.body.removeChild(container);
 
-            return width;
-        }
-    }
+			return width;
+		}
+	}
 })();
 
 document.addEventListener('DOMContentLoaded', async () => {
