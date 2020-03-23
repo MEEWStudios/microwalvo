@@ -51,6 +51,7 @@ ul:last-child {
 p {
 	margin: 0.8em 0;
 	text-align: justify;
+	text-align-last: left;
 	line-height: 1.5;
 }
 
