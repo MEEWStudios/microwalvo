@@ -70,3 +70,9 @@
 .container.title p:nth-child(2) {
 	margin-top: 0;
 }
+
+main .container p > img {
+	display: block;
+	max-width: 100%;
+	max-height: 25em;
+}
