@@ -1,17 +1,16 @@
+{% assign sitebaseurlreplacement = '{{site.baseurl}}' %}
 <!DOCTYPE HTML>
 <html>
 	{% include head.html %}
 	{% if layout.head %}
-		{% assign sitebaseurlreplacement = '{{site.baseurl}}' %}
-		{{ layout.head | replace: sitebaseurlreplacement, site.baseurl }}
+		{{layout.head | replace: sitebaseurlreplacement, site.baseurl}}
 	{% endif %}
 	{% if page.head %}
-		{% assign sitebaseurlreplacement = '{{site.baseurl}}' %}
-		{{ page.head | replace: sitebaseurlreplacement, site.baseurl }}
+		{{page.head | replace: sitebaseurlreplacement, site.baseurl}}
 	{% endif %}
 	<body>
 		{% include header.html %}
-		{{content}}
+		{{content | replace: sitebaseurlreplacement, site.baseurl}}
 		{% include footer.html %}
 	</body>
 </html>
