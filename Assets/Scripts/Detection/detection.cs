@@ -28,21 +28,21 @@ public class detection : MonoBehaviour
 		if(col.gameObject.name == "Fake Ronaldo")
 		{
             Debug.Log("Fake Ronaldo entered spotlight!");
-			coroutine = moveFakeRonaldo(3.0f);
+			coroutine = MoveFakeRonaldo(3.0f);
 			StartCoroutine(coroutine);
 		}
 
 		if(col.gameObject.name == "Good Item")
 		{
             Debug.Log("Good Item entered spotlight!");
-			coroutine = removeItem(1.0f, col.gameObject);
+			coroutine = RemoveItem(1.0f, col.gameObject);
 			StartCoroutine(coroutine);
 		}
 
 		if(col.gameObject.name == "Bad Item")
 		{
             Debug.Log("Bad Item entered spotlight!");
-			coroutine = removeItem(1.0f, col.gameObject);
+			coroutine = RemoveItem(1.0f, col.gameObject);
 			StartCoroutine(coroutine);
 		}
 
@@ -75,20 +75,30 @@ public class detection : MonoBehaviour
 		}
 	}
 
+	bool CheckSpawnPosition(Vector3 position, Vector3 size) {
+		Vector3 spotlightPosition = this.gameObject.transform.position;
+		Vector3 spotlightSize = this.gameObject.GetComponent<MeshCollider>().bounds.size;
+
+		return !(Mathf.Abs(spotlightPosition.x - position.x) * 2 < (spotlightSize.x + size.x)) ||
+		 !(Mathf.Abs(spotlightPosition.z - spotlightPosition.z) * 2 < (spotlightSize.z + size.z));
+	}
+
 	IEnumerator MoveRonaldo(float delay) {
 		yield return new WaitForSeconds(delay);
 		GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
 		Vector3 position = ronaldo.transform.position;
 		// The current plane we have is 10 x 10 x 10
-		position.x = Random.Range(position.x - 15, position.x + 15);
-		position.z = Random.Range(position.z - 15, position.z + 15);
+		//do {
+			position.x = Random.Range(position.x - 15, position.x + 15);
+			position.z = Random.Range(position.z - 15, position.z + 15);
+		//} while (CheckSpawnPosition(position, ronaldo.GetComponent<MeshCollider>().bounds.size));
 		ronaldo.transform.position = position;
 		Debug.Log("Ronaldo has moved!");
 	}
 
-	IEnumerator moveFakeRonaldo(float delay) {
+	IEnumerator MoveFakeRonaldo(float delay) {
 		yield return new WaitForSeconds(delay);
-		GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
+		GameObject effect = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
 		Vector3 position = fakeRonaldo.transform.position;
 		// The current plane we have is 10 x 10 x 10
 		position.x = Random.Range(position.x - 15, position.x + 15);
@@ -97,9 +107,9 @@ public class detection : MonoBehaviour
 		Debug.Log("Fake Ronaldo has moved!");
 	}
 
-	IEnumerator removeItem(float delay, GameObject itemToRemove) {
+	IEnumerator RemoveItem(float delay, GameObject itemToRemove) {
 		yield return new WaitForSeconds(delay);
-		GameObject item = Instantiate(pickup, transform.position, Quaternion.identity) as GameObject;
+		GameObject effect = Instantiate(pickup, transform.position, Quaternion.identity) as GameObject;
 		if (itemToRemove.name == "Good Item"){
 		    Debug.Log("Good Item Removed!");
 		}
