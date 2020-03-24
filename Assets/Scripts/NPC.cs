@@ -17,9 +17,9 @@ public class NPC : MonoBehaviour {
 
 	void SpawnNPC() {
 		Vector3 position = person.transform.position;
-		for (int i = 0; i < 5; i++) {
-			position.x = Random.Range(-20, 20);
-			position.z = Random.Range(-20, 20);
+		for(int i = 0; i < 10; i++) {
+			position.x = Random.Range(-40, 40);
+			position.z = Random.Range(-40, 40);
 			GameObject NPC = Instantiate(person, position, Quaternion.identity) as GameObject;
 		}
 
