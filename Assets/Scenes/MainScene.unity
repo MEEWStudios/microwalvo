@@ -3316,7 +3316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d4967b521f48f749b4c084a613d06aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wanderRadius: 10
+  wanderRadius: 30
   wanderTimer: 5
 --- !u!54 &663879476
 Rigidbody:
@@ -4441,7 +4441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d4967b521f48f749b4c084a613d06aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wanderRadius: 10
+  wanderRadius: 30
   wanderTimer: 5
 --- !u!195 &1036180697
 NavMeshAgent:
@@ -9531,7 +9531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d4967b521f48f749b4c084a613d06aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wanderRadius: 10
+  wanderRadius: 30
   wanderTimer: 5
 --- !u!195 &2138886381
 NavMeshAgent:
