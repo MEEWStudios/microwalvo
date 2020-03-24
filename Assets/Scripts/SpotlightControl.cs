@@ -110,7 +110,7 @@ public class SpotlightControl : PlayerControl {
 		} else {
 			newPosition.z = (float) (-wheelAngleDegrees * degreeDensity) + transformOffset.y;
 		}
-		
+
 		spotlight.transform.position = newPosition;
 	}
 }

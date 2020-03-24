@@ -4,21 +4,18 @@
 using UnityEngine;
 using System.Collections;
 
-public class TestRays : MonoBehaviour
-{
-    Camera cam;
-    public GameObject Spotlight;
-    public GameObject TopViewCamera;
+public class TestRays : MonoBehaviour {
+	Camera cam;
+	public GameObject Spotlight;
+	public GameObject TopViewCamera;
 
 
-    void Start()
-    {
-        //cam = GetComponent<Camera>();
-    }
+	void Start() {
+		//cam = GetComponent<Camera>();
+	}
 
-    void Update()
-    {
-        //Ray ray = cam.ScreenPointToRay(Spotlight.transform.position);
-        Debug.DrawRay(Spotlight.transform.position, (TopViewCamera.transform.position - Spotlight.transform.position), Color.yellow);
-    }
+	void Update() {
+		//Ray ray = cam.ScreenPointToRay(Spotlight.transform.position);
+		Debug.DrawRay(Spotlight.transform.position, (TopViewCamera.transform.position - Spotlight.transform.position), Color.yellow);
+	}
 }

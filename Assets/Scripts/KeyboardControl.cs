@@ -2,26 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyboardControl : MonoBehaviour
-{
+public class KeyboardControl : MonoBehaviour {
 
-    public float speed;
+	public float speed;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	// Start is called before the first frame update
+	void Start() {
 
-    // Update is called once per frame
-    void Update()
-    {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+	}
 
-        x *= speed * Time.deltaTime;
-        z *= speed * Time.deltaTime;
+	// Update is called once per frame
+	void Update() {
+		float x = Input.GetAxis("Horizontal");
+		float z = Input.GetAxis("Vertical");
 
-        transform.Translate(x, 0, z);
-    }
+		x *= speed * Time.deltaTime;
+		z *= speed * Time.deltaTime;
+
+		transform.Translate(x, 0, z);
+	}
 }
