@@ -21,6 +21,7 @@ public class NPC : MonoBehaviour {
 			position.x = Random.Range(-40, 40);
 			position.z = Random.Range(-40, 40);
 			GameObject NPC = Instantiate(person, position, Quaternion.identity) as GameObject;
+			NPC.tag = "Fake Ronaldo";
 		}
 
 	}

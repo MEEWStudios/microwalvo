@@ -4,9 +4,11 @@ using UnityEngine.AI;
 
 public class NPCController : MonoBehaviour {
 
-	public float wanderRadius;
-	public float wanderTimer;
+	public float wanderRadius; // Wander Radius
+	public float minWanderTime;
+	public float maxWanderTime;
 
+	private float wanderTimer;
 	private Transform target;
 	private NavMeshAgent agent;
 	private float timer;
@@ -25,6 +27,7 @@ public class NPCController : MonoBehaviour {
 			Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
 			agent.SetDestination(newPos);
 			timer = 0;
+			wanderTimer = Random.Range(minWanderTime, maxWanderTime);
 		}
 	}
 

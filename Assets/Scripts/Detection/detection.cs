@@ -10,20 +10,18 @@ public class detection : MonoBehaviour {
 	IEnumerator coroutine;
 
 	void Start() {
-		fakeRonaldo = GameObject.Find("Fake Ronaldo");
-		ronaldo = GameObject.Find("Ronaldo");
+
 	}
 
 
 	private void OnTriggerEnter(Collider col) {
-
-		if (col.gameObject.name == "Ronaldo") {
+		if (col.gameObject == ronaldo) {
 			Debug.Log("Ronaldo entered spotlight!");
 			coroutine = MoveRonaldo(3.0f);
 			StartCoroutine(coroutine);
 		}
 
-		if (col.gameObject.name == "Fake Ronaldo") {
+		if (col.gameObject.tag == "Fake Ronaldo") {
 			Debug.Log("Fake Ronaldo entered spotlight!");
 			coroutine = MoveFakeRonaldo(3.0f);
 			StartCoroutine(coroutine);
@@ -45,12 +43,12 @@ public class detection : MonoBehaviour {
 
 	private void OnTriggerExit(Collider other) {
 
-		if (other.gameObject.name == "Ronaldo") {
+		if (other.gameObject == ronaldo) {
 			Debug.Log("Ronaldo exited spotlight!");
 			StopCoroutine(coroutine);
 		}
 
-		if (other.gameObject.name == "Fake Ronaldo") {
+		if (other.gameObject.tag == "Fake Ronaldo") {
 			Debug.Log("Fake Ronaldo exited spotlight!");
 			StopCoroutine(coroutine);
 		}
