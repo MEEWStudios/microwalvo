@@ -4,63 +4,72 @@ using UnityEngine;
 
 public class detection : MonoBehaviour {
 	public GameObject ronaldo;
-	public GameObject fakeRonaldo;
 	public GameObject explosion;
 	public GameObject pickup;
+	Dictionary<GameObject, Coroutine> coroutines = new Dictionary<GameObject, Coroutine>();
 	IEnumerator coroutine;
 
 	void Start() {
 
 	}
 
+	// Update is called once per frame
+	void Update() {
+
+	}
 
 	private void OnTriggerEnter(Collider col) {
-		if (col.gameObject == ronaldo) {
+		GameObject gameObject = col.gameObject;
+		IEnumerator enumerator = null;
+
+		if (gameObject == ronaldo) {
 			Debug.Log("Ronaldo entered spotlight!");
-			coroutine = MoveRonaldo(3.0f);
-			StartCoroutine(coroutine);
+			enumerator = MoveRonaldo(1.0f, gameObject);
 		}
 
-		if (col.gameObject.tag == "Fake Ronaldo") {
+		if (gameObject.tag == "Fake Ronaldo") {
 			Debug.Log("Fake Ronaldo entered spotlight!");
-			coroutine = MoveFakeRonaldo(3.0f);
-			StartCoroutine(coroutine);
+			enumerator = MoveFakeRonaldo(1.0f, gameObject);
 		}
 
-		if (col.gameObject.name == "Good Item") {
+		if (gameObject.name == "Good Item") {
 			Debug.Log("Good Item entered spotlight!");
-			coroutine = RemoveItem(1.0f, col.gameObject);
-			StartCoroutine(coroutine);
+			enumerator = RemoveItem(1.0f, gameObject);
 		}
 
-		if (col.gameObject.name == "Bad Item") {
+		if (gameObject.name == "Bad Item") {
 			Debug.Log("Bad Item entered spotlight!");
-			coroutine = RemoveItem(1.0f, col.gameObject);
-			StartCoroutine(coroutine);
+			enumerator = RemoveItem(1.0f, gameObject);
+		}
+
+		if (enumerator != null) {
+			coroutines.Add(gameObject, StartCoroutine(enumerator));
 		}
 
 	}
 
 	private void OnTriggerExit(Collider other) {
+		GameObject gameObject = other.gameObject;
+		if (coroutines.ContainsKey(gameObject)) {
+			Coroutine coroutine = coroutines[gameObject];
+			StopCoroutine(coroutine);
+			coroutines.Remove(gameObject);
+		}
 
 		if (other.gameObject == ronaldo) {
 			Debug.Log("Ronaldo exited spotlight!");
-			StopCoroutine(coroutine);
 		}
 
 		if (other.gameObject.tag == "Fake Ronaldo") {
 			Debug.Log("Fake Ronaldo exited spotlight!");
-			StopCoroutine(coroutine);
 		}
 
 		if (other.gameObject.name == "Good Item") {
 			Debug.Log("Good Item exited spotlight!");
-			StopCoroutine(coroutine);
 		}
 
 		if (other.gameObject.name == "Bad Item") {
 			Debug.Log("Bad Item exited spotlight!");
-			StopCoroutine(coroutine);
 		}
 	}
 
@@ -72,7 +81,7 @@ public class detection : MonoBehaviour {
 		 !(Mathf.Abs(spotlightPosition.z - spotlightPosition.z) * 2 < (spotlightSize.z + size.z));
 	}
 
-	IEnumerator MoveRonaldo(float delay) {
+	IEnumerator MoveRonaldo(float delay, GameObject ronaldo) {
 		yield return new WaitForSeconds(delay);
 		GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
 		Vector3 position = ronaldo.transform.position;
@@ -83,9 +92,11 @@ public class detection : MonoBehaviour {
 		//} while (CheckSpawnPosition(position, ronaldo.GetComponent<MeshCollider>().bounds.size));
 		ronaldo.transform.position = position;
 		Debug.Log("Ronaldo has moved!");
+
+		coroutines.Remove(ronaldo);
 	}
 
-	IEnumerator MoveFakeRonaldo(float delay) {
+	IEnumerator MoveFakeRonaldo(float delay, GameObject fakeRonaldo) {
 		yield return new WaitForSeconds(delay);
 		GameObject effect = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
 		Vector3 position = fakeRonaldo.transform.position;
@@ -94,6 +105,8 @@ public class detection : MonoBehaviour {
 		position.z = Random.Range(position.z - 15, position.z + 15);
 		fakeRonaldo.transform.position = position;
 		Debug.Log("Fake Ronaldo has moved!");
+
+		coroutines.Remove(fakeRonaldo);
 	}
 
 	IEnumerator RemoveItem(float delay, GameObject itemToRemove) {
@@ -109,10 +122,6 @@ public class detection : MonoBehaviour {
 
 		Destroy(itemToRemove);
 
-	}
-
-	// Update is called once per frame
-	void Update() {
-
+		coroutines.Remove(itemToRemove);
 	}
 }
