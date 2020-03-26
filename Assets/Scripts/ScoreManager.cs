@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScoreManager : MonoBehaviour
-{
+public class ScoreManager : MonoBehaviour {
 	private Dictionary<Team, int> scores = new Dictionary<Team, int>();
 
 	// Start is called before the first frame update
-	void Start()
-	{
-		
+	void Start() {
+
 	}
 
 	// Update is called once per frame
-	void Update()
-	{
-		
+	void Update() {
+
 	}
 
 	void ResetScores() {

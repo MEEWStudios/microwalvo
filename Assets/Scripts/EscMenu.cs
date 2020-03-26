@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class EscMenu : MonoBehaviour
-{
+public class EscMenu : MonoBehaviour {
 	// Start is called before the first frame update
-	void Start()
-	{
+	void Start() {
 
 	}
 
 	// Update is called once per frame
-	void Update()
-	{
+	void Update() {
 		//if (Keyboard.current.escapeKey.isPressed) {
 		//	this.gameObject.SetActive(!this.gameObject.activeSelf);
 		//}
@@ -21,9 +18,9 @@ public class EscMenu : MonoBehaviour
 			//this.gameObject.SetActive(this.gameObject.activeSelf);
 #if UNITY_EDITOR
 			UnityEditor.EditorApplication.isPlaying = false;
- #else
+#else
 			Application.Quit();
- #endif
+#endif
 		}
 	}
 }
