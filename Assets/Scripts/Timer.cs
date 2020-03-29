@@ -2,9 +2,10 @@
 using UnityEngine.UI;
 
 public class Timer : MonoBehaviour {
-	private int time = 60;
+	private int time = 180;
 	private bool running = false;
 	private float timeCounter = 0;
+	public Text timerText;
 
 	// Start is called before the first frame update
 	void Start() {
@@ -15,7 +16,13 @@ public class Timer : MonoBehaviour {
 	void Update() {
 		if (running) {
 			timeCounter += Time.deltaTime;
-			this.GetComponent<Text>().text = "Time: " + TimestampToString(time - timeCounter);
+			if((time - timeCounter) > 0) {
+				timerText.text = TimestampToString(time - timeCounter);
+			} else {
+				running = false;
+				timerText.text = "Finished!";
+			}
+			
 		}
 	}
 
