@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class detection : MonoBehaviour {
 	public GameObject ronaldo;
@@ -8,6 +9,7 @@ public class detection : MonoBehaviour {
 	public GameObject pickup;
 	Dictionary<GameObject, Coroutine> coroutines = new Dictionary<GameObject, Coroutine>();
 	IEnumerator coroutine;
+	public Text p1Score, p2Score, p3Score, p4Score;
 
 	void Start() {
 
@@ -18,11 +20,12 @@ public class detection : MonoBehaviour {
 
 	}
 
+
 	private void OnTriggerEnter(Collider col) {
 		GameObject gameObject = col.gameObject;
 		IEnumerator enumerator = null;
 
-		if (gameObject == ronaldo) {
+		if (gameObject.tag == "Real Ronaldo") {
 			Debug.Log("Ronaldo entered spotlight!");
 			enumerator = MoveRonaldo(1.0f, gameObject);
 		}
@@ -92,6 +95,20 @@ public class detection : MonoBehaviour {
 		//} while (CheckSpawnPosition(position, ronaldo.GetComponent<MeshCollider>().bounds.size));
 		ronaldo.transform.position = position;
 		Debug.Log("Ronaldo has moved!");
+ 		
+		//add points to the corresponding spotlight's score
+	    if(transform.parent.name == "Spotlight1") {
+			p1Score.text = ((int.Parse(p1Score.text)) + 1).ToString();
+		}
+		if(transform.parent.name == "Spotlight2") {
+			p2Score.text = ((int.Parse(p2Score.text)) + 1).ToString();
+		}
+		if(transform.parent.name == "Spotlight3") {
+			p3Score.text = ((int.Parse(p3Score.text)) + 1).ToString();
+		}
+		if(transform.parent.name == "Spotlight4") {
+			p4Score.text = ((int.Parse(p4Score.text)) + 1).ToString();
+		}
 
 		coroutines.Remove(ronaldo);
 	}
@@ -105,6 +122,28 @@ public class detection : MonoBehaviour {
 		position.z = Random.Range(position.z - 15, position.z + 15);
 		fakeRonaldo.transform.position = position;
 		Debug.Log("Fake Ronaldo has moved!");
+
+		//Subtract points from corresponding spotlight
+		if(transform.parent.name == "Spotlight1") {
+			if(int.Parse(p1Score.text) > 0) {
+				p1Score.text = ((int.Parse(p1Score.text)) - 1).ToString();
+			}
+		}
+		if(transform.parent.name == "Spotlight2") {
+			if(int.Parse(p2Score.text) > 0) {
+				p2Score.text = ((int.Parse(p2Score.text)) - 1).ToString();
+			}
+		}
+		if(transform.parent.name == "Spotlight3") {
+			if(int.Parse(p3Score.text) > 0) {
+				p3Score.text = ((int.Parse(p3Score.text)) - 1).ToString();
+			}
+		}
+		if(transform.parent.name == "Spotlight4") {
+			if(int.Parse(p4Score.text) > 0) {
+				p4Score.text = ((int.Parse(p4Score.text)) - 1).ToString();
+			}
+		}
 
 		coroutines.Remove(fakeRonaldo);
 	}
