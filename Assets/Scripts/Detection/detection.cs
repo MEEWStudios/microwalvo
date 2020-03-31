@@ -153,10 +153,12 @@ public class detection : MonoBehaviour {
 		GameObject effect = Instantiate(pickup, transform.position, Quaternion.identity) as GameObject;
 		if (itemToRemove.name == "Good Item") {
 			Debug.Log("Good Item Removed!");
+			GameObject.Find("Spotlight1").GetComponent<KeyboardControl>().speed = 150;
 		}
 
 		if (itemToRemove.name == "Bad Item") {
 			Debug.Log("Bad Item Removed!");
+			GameObject.Find("Spotlight1").GetComponent<KeyboardControl>().speed = 5;
 		}
 
 		Destroy(itemToRemove);

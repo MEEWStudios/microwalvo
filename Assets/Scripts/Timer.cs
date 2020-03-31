@@ -1,18 +1,37 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections;
 
 public class Timer : MonoBehaviour {
 	private int time = 120;
 	private bool running = false;
 	private float timeCounter = 0;
-	public Text timerText, p1Score, p2Score, p3Score, p4Score, winnerText;
+	public Text timerText, p1Score, p2Score, p3Score, p4Score, winnerText, startScreenText;
 	private int p1Num, p2Num, p3Num, p4Num;
+	private GameObject startScreen;
 
 	// Start is called before the first frame update
 	void Start() {
+		/*
+		startScreen = GameObject.Find("StartScreen");
+		StartCoroutine(ExampleCoroutine());
+	    System.Threading.Thread.Sleep(3000);
+		Destroy(startScreen);
+		*/
 		Run();
 	}
+
+	/*
+ 	IEnumerator ExampleCoroutine()
+    {
+        yield return new WaitForSeconds(2);
+        startScreenText.text = ("Go!");
+        yield return new WaitForSeconds(1);
+        startScreenText.text = ("");
+  
+    }*/
+
 
 	// Update is called once per frame
 	void Update() {
@@ -30,7 +49,37 @@ public class Timer : MonoBehaviour {
 				p4Num = int.Parse(p4Score.text);
 
 				if(p1Num == 0 && p2Num == 0 && p3Num == 0 && p4Num == 0) {
-					winnerText.text = "Tie!";
+					winnerText.text = "Four way tie!";
+				}
+				else if(p1Num == p2Num && p2Num == p3Num && (p1Num > p4Num)) {
+					winnerText.text = "P1, P2, and P3 tie!";
+				}
+				else if(p1Num == p3Num && p3Num == p4Num && (p1Num > p2Num)) {
+					winnerText.text = "P1, P3, and P4 tie!";
+				}
+				else if(p1Num == p2Num && p2Num == p4Num && (p1Num > p3Num)) {
+					winnerText.text = "P1, P2, and P4 tie!";
+				}
+				else if(p2Num == p3Num && p3Num == p4Num && (p2Num > p1Num)) {
+					winnerText.text = "P2, P3, and P4 tie!";
+				}
+				else if(p1Num == p2Num && (p1Num > p3Num) && (p1Num > p4Num)) {
+					winnerText.text = "P1 and P2 tie!";
+				}
+				else if(p1Num == p3Num && (p1Num > p2Num) && (p1Num > p4Num)) {
+					winnerText.text = "P1 and P3 tie!";
+				}
+				else if(p1Num == p4Num && (p1Num > p2Num) && (p1Num > p3Num)) {
+					winnerText.text = "P1 and P4 tie!";
+				}
+				else if(p2Num == p3Num && (p2Num > p1Num) && (p2Num > p4Num)) {
+					winnerText.text = "P2 and P3 tie!";
+				}
+				else if(p2Num == p4Num && (p2Num > p1Num) && (p2Num > p3Num)) {
+					winnerText.text = "P2 and P4 tie!";
+				}
+				else if(p3Num == p4Num && (p3Num > p1Num) && (p3Num > p2Num)) {
+					winnerText.text = "P3 and P4 tie!";
 				}
 				else if(Math.Max(Math.Max(p1Num, p2Num), Math.Max(p3Num, p4Num)) == p1Num) {
 					winnerText.text = "Player 1 Wins!";
