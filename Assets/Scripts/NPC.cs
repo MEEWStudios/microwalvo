@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NPC : MonoBehaviour {
+	public int fakeRonaldoCount;
+	public GameObject fakeRonaldo;
+	public int personCount;
 	public GameObject person;
+
 
 	// Start is called before the first frame update
 	void Start() {
-		SpawnNPC();
+		SpawnNPCs();
 	}
 
 	// Update is called once per frame
@@ -15,13 +19,20 @@ public class NPC : MonoBehaviour {
 
 	}
 
-	void SpawnNPC() {
-		Vector3 position = person.transform.position;
-		for(int i = 0; i < 10; i++) {
-			position.x = Random.Range(-40, 40);
-			position.z = Random.Range(-40, 40);
-			GameObject NPC = Instantiate(person, position, Quaternion.identity) as GameObject;
+	void SpawnNPCs() {
+		Vector3 position = fakeRonaldo.transform.position;
+		for (int i = 0; i < fakeRonaldoCount; i++) {
+			position.x = Random.Range(-50, 50);
+			position.z = Random.Range(-50, 50);
+			GameObject NPC = Instantiate(fakeRonaldo, position, Quaternion.identity) as GameObject;
 			NPC.tag = "Fake Ronaldo";
+		}
+
+		position = person.transform.position;
+		for(int i = 0; i < personCount; i++) {
+			position.x = Random.Range(-50, 50);
+			position.z = Random.Range(-50, 50);
+			GameObject NPC = Instantiate(person, position, Quaternion.identity) as GameObject;
 		}
 
 	}
