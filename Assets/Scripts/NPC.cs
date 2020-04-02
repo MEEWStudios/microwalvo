@@ -22,17 +22,19 @@ public class NPC : MonoBehaviour {
 	void SpawnNPCs() {
 		Vector3 position = fakeRonaldo.transform.position;
 		for (int i = 0; i < fakeRonaldoCount; i++) {
-			position.x = Random.Range(-50, 50);
-			position.z = Random.Range(-50, 50);
+			position.x = Random.Range(-80, 80);
+			position.z = Random.Range(-80, 80);
 			GameObject NPC = Instantiate(fakeRonaldo, position, Quaternion.identity) as GameObject;
+			NPC.AddComponent<NPCController>();
 			NPC.tag = "Fake Ronaldo";
 		}
 
 		position = person.transform.position;
 		for(int i = 0; i < personCount; i++) {
-			position.x = Random.Range(-50, 50);
-			position.z = Random.Range(-50, 50);
+			position.x = Random.Range(-80, 80);
+			position.z = Random.Range(-80, 80);
 			GameObject NPC = Instantiate(person, position, Quaternion.identity) as GameObject;
+			NPC.AddComponent<NPCController>();
 		}
 
 	}

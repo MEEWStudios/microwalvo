@@ -4,15 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class detection : MonoBehaviour {
+	public GameObject managersObject;
 	public GameObject ronaldo;
 	public GameObject explosion;
 	public GameObject pickup;
 	Dictionary<GameObject, Coroutine> coroutines = new Dictionary<GameObject, Coroutine>();
 	IEnumerator coroutine;
-	public Text p1Score, p2Score, p3Score, p4Score;
+	
+	public SpotlightControl control;
+	private ScoreManager scoreManager;
 
 	void Start() {
-
+		control = this.transform.parent.GetComponent<SpotlightControl>();
+		scoreManager = managersObject.GetComponent<ScoreManager>();
 	}
 
 	// Update is called once per frame
@@ -21,11 +25,11 @@ public class detection : MonoBehaviour {
 	}
 
 
-	private void OnTriggerEnter(Collider col) {
-		GameObject gameObject = col.gameObject;
+	private void OnTriggerEnter(Collider collider) {
+		GameObject gameObject = collider.gameObject;
 		IEnumerator enumerator = null;
 
-		if (gameObject.tag == "Real Ronaldo") {
+		if (gameObject.tag == "Real Ronaldo" && gameObject.GetComponent<NPCTraits>().player == control.player) {
 			Debug.Log("Ronaldo entered spotlight!");
 			enumerator = MoveRonaldo(1.0f, gameObject);
 		}
@@ -51,34 +55,34 @@ public class detection : MonoBehaviour {
 
 	}
 
-	private void OnTriggerExit(Collider other) {
-		GameObject gameObject = other.gameObject;
+	private void OnTriggerExit(Collider collider) {
+		GameObject gameObject = collider.gameObject;
 		if (coroutines.ContainsKey(gameObject)) {
 			Coroutine coroutine = coroutines[gameObject];
 			StopCoroutine(coroutine);
 			coroutines.Remove(gameObject);
 		}
 
-		if (other.gameObject == ronaldo) {
+		if (gameObject.tag == "Real Ronaldo" && gameObject.GetComponent<NPCTraits>().player == control.player) {
 			Debug.Log("Ronaldo exited spotlight!");
 		}
 
-		if (other.gameObject.tag == "Fake Ronaldo") {
+		if (gameObject.tag == "Fake Ronaldo") {
 			Debug.Log("Fake Ronaldo exited spotlight!");
 		}
 
-		if (other.gameObject.name == "Good Item") {
+		if (gameObject.name == "Good Item") {
 			Debug.Log("Good Item exited spotlight!");
 		}
 
-		if (other.gameObject.name == "Bad Item") {
+		if (gameObject.name == "Bad Item") {
 			Debug.Log("Bad Item exited spotlight!");
 		}
 	}
 
 	bool CheckSpawnPosition(Vector3 position, Vector3 size) {
-		Vector3 spotlightPosition = this.gameObject.transform.position;
-		Vector3 spotlightSize = this.gameObject.GetComponent<MeshCollider>().bounds.size;
+		Vector3 spotlightPosition = this.transform.position;
+		Vector3 spotlightSize = this.GetComponent<MeshCollider>().bounds.size;
 
 		return !(Mathf.Abs(spotlightPosition.x - position.x) * 2 < (spotlightSize.x + size.x)) ||
 		 !(Mathf.Abs(spotlightPosition.z - spotlightPosition.z) * 2 < (spotlightSize.z + size.z));
@@ -95,20 +99,9 @@ public class detection : MonoBehaviour {
 		//} while (CheckSpawnPosition(position, ronaldo.GetComponent<MeshCollider>().bounds.size));
 		ronaldo.transform.position = position;
 		Debug.Log("Ronaldo has moved!");
- 		
-		//add points to the corresponding spotlight's score
-	    if(transform.parent.name == "Spotlight1") {
-			p1Score.text = ((int.Parse(p1Score.text)) + 1).ToString();
-		}
-		if(transform.parent.name == "Spotlight2") {
-			p2Score.text = ((int.Parse(p2Score.text)) + 1).ToString();
-		}
-		if(transform.parent.name == "Spotlight3") {
-			p3Score.text = ((int.Parse(p3Score.text)) + 1).ToString();
-		}
-		if(transform.parent.name == "Spotlight4") {
-			p4Score.text = ((int.Parse(p4Score.text)) + 1).ToString();
-		}
+
+		// Add points to the corresponding spotlight's score
+		scoreManager.ChangeScoreBy(control.player, 1);
 
 		coroutines.Remove(ronaldo);
 	}
@@ -123,27 +116,8 @@ public class detection : MonoBehaviour {
 		fakeRonaldo.transform.position = position;
 		Debug.Log("Fake Ronaldo has moved!");
 
-		//Subtract points from corresponding spotlight
-		if(transform.parent.name == "Spotlight1") {
-			if(int.Parse(p1Score.text) > 0) {
-				p1Score.text = ((int.Parse(p1Score.text)) - 1).ToString();
-			}
-		}
-		if(transform.parent.name == "Spotlight2") {
-			if(int.Parse(p2Score.text) > 0) {
-				p2Score.text = ((int.Parse(p2Score.text)) - 1).ToString();
-			}
-		}
-		if(transform.parent.name == "Spotlight3") {
-			if(int.Parse(p3Score.text) > 0) {
-				p3Score.text = ((int.Parse(p3Score.text)) - 1).ToString();
-			}
-		}
-		if(transform.parent.name == "Spotlight4") {
-			if(int.Parse(p4Score.text) > 0) {
-				p4Score.text = ((int.Parse(p4Score.text)) - 1).ToString();
-			}
-		}
+		// Subtract points from corresponding spotlight
+		scoreManager.ChangeScoreBy(control.player, -1);
 
 		coroutines.Remove(fakeRonaldo);
 	}

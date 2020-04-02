@@ -74,15 +74,19 @@ public class EZGamepad {
     [HideInInspector]
     public bool justDisconnected = false;
 
-    /// <summary> Empty EZGamepad. </summary>
-    public EZGamepad() { }
+	/// <summary> Index of gamepad in Gamepad.all. </summary>
+	private int gamepadIndex = -1;
+
+	/// <summary> Empty EZGamepad. </summary>
+	public EZGamepad() { }
 
     /// <summary>
     ///     Creates EZGamepad using ButtonControls and StickControls from Gamepad class.
     /// </summary>
     /// <param name="gp"> Gamepad to derive ButtonControls and StickControls from. </param>
-    public EZGamepad(Gamepad gp) {
+    public EZGamepad(Gamepad gp, int gamepadIndex) {
         gamepad = gp;
+		this.gamepadIndex = gamepadIndex;
         InitializeInput(gp);
     }
 
@@ -180,6 +184,12 @@ public class EZGamepad {
     public int GetDeviceID() {
         return gamepad.deviceId;
     }
+	
+	/// <summary> Returns the index for this gamepad in Gamepad.all. </summary>
+	/// <returns> The index. </returns>
+	public int GetGamepadIndex() {
+		return gamepadIndex;
+	}
 }
 
 /// <summary>

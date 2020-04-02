@@ -43,7 +43,7 @@ public class EZGM : MonoBehaviour {
         ezGamepads.Clear();
         //Adds all connected EZGamepads to dictionary
         for (int i = 0; i < Gamepad.all.Count; i++) {
-            ezGamepads.Add((Player)i, new EZGamepad(Gamepad.all[i]));
+            ezGamepads.Add((Player)i, new EZGamepad(Gamepad.all[i], i));
         }
 
         manager = this;
@@ -110,7 +110,7 @@ public class EZGM : MonoBehaviour {
                 if (ezgpBuffer.ContainsKey(player)) {
                     //Add only if there are still players left to add
                 } else if (ezgpBuffer.Count < currentCount) {
-                    ezgpBuffer.Add(player, new EZGamepad(Gamepad.all[nextIndex]));
+                    ezgpBuffer.Add(player, new EZGamepad(Gamepad.all[nextIndex], nextIndex));
                     //Increment to next new player index
                     nextIndex++;
                 }

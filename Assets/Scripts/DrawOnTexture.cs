@@ -11,8 +11,7 @@ public class DrawOnTexture : MonoBehaviour {
 	public int textureDensity;
 	public int radius;
 	public Color blurColor;
-	public GameObject spotlight1;
-	public GameObject spotlight2;
+	public List<GameObject> spotlights = new List<GameObject>();
 
 	private int textureWidth;
 	private int textureHeight;
@@ -20,8 +19,8 @@ public class DrawOnTexture : MonoBehaviour {
 	private Color[,] textureCache;
 
 	void Start() {
-		textureWidth = Mathf.FloorToInt(textureDensity * this.gameObject.transform.localScale.x + 0.5f);
-		textureHeight = Mathf.FloorToInt(textureDensity * this.gameObject.transform.localScale.z + 0.5f);
+		textureWidth = Mathf.FloorToInt(textureDensity * this.transform.localScale.x + 0.5f);
+		textureHeight = Mathf.FloorToInt(textureDensity * this.transform.localScale.z + 0.5f);
 
 		texture = new Texture2D(textureWidth, textureHeight, TextureFormat.RFloat, false, true);
 		textureCache = new Color[textureWidth, textureHeight];
@@ -44,6 +43,48 @@ public class DrawOnTexture : MonoBehaviour {
 
 	void Update() {
 		// create a vector that uses x and y coordinates that were converted from world to screen coordinates
+		Vector3 spotlightVector;
+		Ray ray;
+		//bool dirty = false;
+
+		foreach (GameObject spotlight in spotlights) {
+			spotlightVector = new Vector3(cam.WorldToScreenPoint(spotlight.transform.position).x, cam.WorldToScreenPoint(spotlight.transform.position).y, 0);
+			//the ray for the spotlight
+			ray = cam.ScreenPointToRay(spotlightVector); //Input.mousePosition
+
+			if (Physics.Raycast(ray, out RaycastHit hit, 100)) {
+				// younger = redder (higher r)
+				// older = blacker
+				//Debug.Log("Time: " + Time.LevelLoad + "; r: " + r);
+				Color color = new Color(Time.timeSinceLevelLoad, 0, 0, 1);
+				//Debug.Log("r: " + color.r);
+				//Color color = new Color(1, 0, 0, 1);
+
+				int x = (int) (hit.textureCoord.x * texture.width);
+				int y = (int) (hit.textureCoord.y * texture.height);
+
+				if (textureCache[x, y] != color) {
+					//dirty = true;
+					texture.SetPixel(x, y, color);
+				}
+
+				for (int i = Mathf.Max(x - radius, 0); i <= Mathf.Min(x + radius, textureWidth); i++) {
+					for (int j = Mathf.Max(y - radius, 0); j <= Mathf.Min(y + radius, textureHeight); j++) {
+						//float dist = Mathf.Sqrt(Mathf.Pow(x - i, 2) + Mathf.Pow(y - j, 2));
+						float dist = Vector2.Distance(new Vector2(i, j), new Vector2(x, y));
+						if (dist <= radius) {
+							if (textureCache[i, j] != color) {
+								//dirty = true;
+								texture.SetPixel(i, j, color);
+								//break;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		/*
 		Vector3 spotlight1Vector = new Vector3(cam.WorldToScreenPoint(spotlight1.transform.position).x, cam.WorldToScreenPoint(spotlight1.transform.position).y, 0.0f);
 		Vector3 spotlight2Vector = new Vector3(cam.WorldToScreenPoint(spotlight2.transform.position).x, cam.WorldToScreenPoint(spotlight2.transform.position).y, 0.0f);
 
@@ -142,11 +183,12 @@ public class DrawOnTexture : MonoBehaviour {
 				}
 			}
 		}
+		*/
 
-		if (dirty) {
-			texture.Apply();
+		//if (dirty) {
+		texture.Apply();
 			destinationRenderer.material.SetTexture("_MouseMap", texture);
-		}
+		//}
 
 	}
 

@@ -4,9 +4,9 @@ using UnityEngine.AI;
 
 public class NPCController : MonoBehaviour {
 
-	public float wanderRadius; // Wander Radius
-	public float minWanderTime;
-	public float maxWanderTime;
+	public float wanderRadius = 60; // Wander Radius
+	public float minWanderTime = 3;
+	public float maxWanderTime = 8;
 
 	private float wanderTimer;
 	private Transform target;
