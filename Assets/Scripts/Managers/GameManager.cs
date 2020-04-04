@@ -21,12 +21,20 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start() {
 		//MainMenu();
-		StartRound();
+		//StartRound();
 	}
 
 	// Update is called once per frame
 	void Update() {
-		if (roundInProgress) {
+		if (!roundInProgress) {
+			if (EZGM.EZGamepadCount() > 0) {
+				if (EZGM.GetEZGamepad((Player) 0).buttonSouth.justPressed) {
+					StartRound();
+				}
+			} else if (Input.GetKeyDown(KeyCode.Space)) {
+				StartRound();
+			}
+		} else if (roundInProgress) {
 			currentRoundTime += Time.deltaTime;
 			if ((roundTime - currentRoundTime) > 0) {
 				timerText.text = TimestampToString(roundTime - currentRoundTime);
@@ -42,7 +50,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void StartRound() {
-		int playerCount = EZGM.EZGamepadCount();
+		int playerCount = EZGM.EZGamepadCount() == 0 ? 1 : EZGM.EZGamepadCount();
 		GameObject sourceSpotlight = prefabSource.transform.Find("Spotlight").gameObject;
 		GameObject sourceRonaldo = prefabSource.transform.Find("Characters").Find("Ronaldo").gameObject;
 		Transform map = GameObject.Find("Map").transform;
@@ -54,6 +62,12 @@ public class GameManager : MonoBehaviour {
 			SpotlightControl control = newSpotlight.AddComponent<SpotlightControl>();
 			control.player = (Player) i;
 			newSpotlight.transform.Find("SpotlightCollider").GetComponent<detection>().control = control;
+
+			// Add keyboard control
+			if (i == 0) {
+				KeyboardControl keyControl = newSpotlight.AddComponent<KeyboardControl>();
+				keyControl.speed = 50;
+			}
 
 			// Add the spotlight to the texture draw script
 			draw.spotlights.Add(newSpotlight.transform.Find("SpotlightCollider").gameObject);
