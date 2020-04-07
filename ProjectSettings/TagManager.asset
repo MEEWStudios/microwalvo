@@ -7,6 +7,8 @@ TagManager:
   - Fake Ronaldo
   - FxTemporaire
   - Real Ronaldo
+  - GoodItem
+  - BadItem
   layers:
   - Default
   - TransparentFX

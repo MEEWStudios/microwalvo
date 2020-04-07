@@ -14,9 +14,15 @@ public class detection : MonoBehaviour {
 	public SpotlightControl control;
 	private ScoreManager scoreManager;
 
+	private float normalControllerSpeed, normalKeyboardSpeed;
+	private int numItemsWaiting = 0;
+
+
 	void Start() {
 		control = this.transform.parent.GetComponent<SpotlightControl>();
 		scoreManager = managersObject.GetComponent<ScoreManager>();
+
+ 
 	}
 
 	// Update is called once per frame
@@ -39,12 +45,12 @@ public class detection : MonoBehaviour {
 			enumerator = MoveFakeRonaldo(1.0f, gameObject);
 		}
 
-		if (gameObject.name == "Good Item") {
+		if (gameObject.tag == "GoodItem") {
 			Debug.Log("Good Item entered spotlight!");
 			enumerator = RemoveItem(1.0f, gameObject);
 		}
 
-		if (gameObject.name == "Bad Item") {
+		if (gameObject.tag == "BadItem") {
 			Debug.Log("Bad Item entered spotlight!");
 			enumerator = RemoveItem(1.0f, gameObject);
 		}
@@ -71,11 +77,11 @@ public class detection : MonoBehaviour {
 			Debug.Log("Fake Ronaldo exited spotlight!");
 		}
 
-		if (gameObject.name == "Good Item") {
+		if (gameObject.tag == "Good Item") {
 			Debug.Log("Good Item exited spotlight!");
 		}
 
-		if (gameObject.name == "Bad Item") {
+		if (gameObject.tag == "Bad Item") {
 			Debug.Log("Bad Item exited spotlight!");
 		}
 	}
@@ -125,18 +131,56 @@ public class detection : MonoBehaviour {
 	IEnumerator RemoveItem(float delay, GameObject itemToRemove) {
 		yield return new WaitForSeconds(delay);
 		GameObject effect = Instantiate(pickup, transform.position, Quaternion.identity) as GameObject;
-		if (itemToRemove.name == "Good Item") {
-			Debug.Log("Good Item Removed!");
-			GameObject.Find("Spotlight1").GetComponent<KeyboardControl>().speed = 150;
-		}
 
-		if (itemToRemove.name == "Bad Item") {
-			Debug.Log("Bad Item Removed!");
-			GameObject.Find("Spotlight1").GetComponent<KeyboardControl>().speed = 5;
-		}
+		string itemToRemoveTag = itemToRemove.tag;
 
+		StartCoroutine(modifySpotlightSpeed(itemToRemoveTag));
 		Destroy(itemToRemove);
 
 		coroutines.Remove(itemToRemove);
+	}
+
+
+	IEnumerator modifySpotlightSpeed(string itemtoRemoveTag) {
+		int slowSpeed = 3;
+		int fastSpeed = 150;
+		normalKeyboardSpeed = 50;
+		normalControllerSpeed = 1;
+
+		if (itemtoRemoveTag == "GoodItem") {
+			Debug.Log("Good Item Removed!");
+			this.gameObject.transform.parent.gameObject.GetComponent<KeyboardControl>().speed = fastSpeed;
+			this.gameObject.transform.parent.gameObject.GetComponent<SpotlightControl>().speed = fastSpeed;
+
+			//accounts for picking up multiple items in a row
+			numItemsWaiting++; 
+			yield return new WaitForSeconds(5.0f);
+			numItemsWaiting--;
+
+			if(numItemsWaiting == 0) {
+				this.gameObject.transform.parent.gameObject.GetComponent<KeyboardControl>().speed = normalKeyboardSpeed;
+				this.gameObject.transform.parent.gameObject.GetComponent<SpotlightControl>().speed = normalControllerSpeed;
+			}
+
+
+		}
+
+		if (itemtoRemoveTag == "BadItem") {
+			Debug.Log("Bad Item Removed!");
+			this.gameObject.transform.parent.gameObject.GetComponent<KeyboardControl>().speed = slowSpeed;
+			this.gameObject.transform.parent.gameObject.GetComponent<SpotlightControl>().speed = slowSpeed;
+
+			//accounts for picking up multiple items in a row
+			numItemsWaiting++;
+			yield return new WaitForSeconds(5.0f);
+			numItemsWaiting--;
+
+			if(numItemsWaiting == 0) {
+				this.gameObject.transform.parent.gameObject.GetComponent<KeyboardControl>().speed = normalKeyboardSpeed;
+				this.gameObject.transform.parent.gameObject.GetComponent<SpotlightControl>().speed = normalControllerSpeed;
+			}
+
+
+		}
 	}
 }
