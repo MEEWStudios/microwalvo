@@ -16,12 +16,12 @@ public class detection : MonoBehaviour {
 
 	private float normalControllerSpeed, normalKeyboardSpeed;
 	private int numItemsWaiting = 0;
-
+	private int spawnRepel;
 
 	void Start() {
 		control = this.transform.parent.GetComponent<SpotlightControl>();
 		scoreManager = managersObject.GetComponent<ScoreManager>();
-
+		spawnRepel = managersObject.GetComponent<GameManager>().spawnRepel;
  
 	}
 
@@ -86,24 +86,10 @@ public class detection : MonoBehaviour {
 		}
 	}
 
-	bool CheckSpawnPosition(Vector3 position, Vector3 size) {
-		Vector3 spotlightPosition = this.transform.position;
-		Vector3 spotlightSize = this.GetComponent<MeshCollider>().bounds.size;
-
-		return !(Mathf.Abs(spotlightPosition.x - position.x) * 2 < (spotlightSize.x + size.x)) ||
-		 !(Mathf.Abs(spotlightPosition.z - spotlightPosition.z) * 2 < (spotlightSize.z + size.z));
-	}
-
 	IEnumerator MoveRonaldo(float delay, GameObject ronaldo) {
 		yield return new WaitForSeconds(delay);
 		GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
-		Vector3 position = ronaldo.transform.position;
-		// The current plane we have is 10 x 10 x 10
-		//do {
-		position.x = Random.Range(position.x - 15, position.x + 15);
-		position.z = Random.Range(position.z - 15, position.z + 15);
-		//} while (CheckSpawnPosition(position, ronaldo.GetComponent<MeshCollider>().bounds.size));
-		ronaldo.transform.position = position;
+		ronaldo.transform.position = GameManager.GetRandomPointOnMap(ronaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel));
 		Debug.Log("Ronaldo has moved!");
 
 		// Add points to the corresponding spotlight's score
@@ -115,11 +101,7 @@ public class detection : MonoBehaviour {
 	IEnumerator MoveFakeRonaldo(float delay, GameObject fakeRonaldo) {
 		yield return new WaitForSeconds(delay);
 		GameObject effect = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
-		Vector3 position = fakeRonaldo.transform.position;
-		// The current plane we have is 10 x 10 x 10
-		position.x = Random.Range(position.x - 15, position.x + 15);
-		position.z = Random.Range(position.z - 15, position.z + 15);
-		fakeRonaldo.transform.position = position;
+		fakeRonaldo.transform.position = GameManager.GetRandomPointOnMap(fakeRonaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel)); ;
 		Debug.Log("Fake Ronaldo has moved!");
 
 		// Subtract points from corresponding spotlight

@@ -34,7 +34,6 @@ public class ScoreManager : MonoBehaviour {
 			scores[player] = 0;
 		}
 
-		Debug.Log("P" + (((int) player) + 1));
 		GameObject text = scoresObject.transform.Find("P" + (((int) player) + 1)).Find("Score").gameObject;
 		text.GetComponent<Text>().text = scores[player].ToString();
 	}
