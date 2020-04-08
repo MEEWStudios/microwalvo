@@ -56,11 +56,15 @@ public class GameManager : MonoBehaviour {
 		Transform map = GameObject.Find("Map").transform;
 
 		for (int i = 0; i < playerCount; i++) {
+			// Add player's spotlight
 			int x = i % 2 == 1 ? -20 : 20;
 			int z = i / 2 == 0 ? 0 : -30;
 			GameObject newSpotlight = Instantiate(sourceSpotlight, new Vector3(x, 0 , z), Quaternion.identity, map) as GameObject;
+			// Add SpotlightControl
 			SpotlightControl control = newSpotlight.AddComponent<SpotlightControl>();
+			// Add Player specifier
 			control.player = (Player) i;
+			// Tell the detection script about the controller
 			newSpotlight.transform.Find("SpotlightCollider").GetComponent<detection>().control = control;
 
 			// Add keyboard control
@@ -72,8 +76,13 @@ public class GameManager : MonoBehaviour {
 			// Add the spotlight to the texture draw script
 			draw.spotlights.Add(newSpotlight.transform.Find("SpotlightCollider").gameObject);
 
+			// Spawn player's Ronaldo
 			GameObject ronaldo = Instantiate(sourceRonaldo, new Vector3(Random.Range(-80, 80), sourceRonaldo.transform.position.y, Random.Range(-80, 80)), Quaternion.identity, map) as GameObject;
+			// Add NPCController
 			ronaldo.AddComponent<NPCController>();
+			// Enable the Nav Mesh Agent
+			ronaldo.GetComponent<NavMeshAgent>().enabled = true;
+			// Add Player specifier
 			NPCTraits traits = ronaldo.AddComponent<NPCTraits>();
 			traits.player = (Player) i;
 		}
