@@ -100,6 +100,8 @@ public class GameManager : MonoBehaviour {
 			ronaldo.AddComponent<NPCController>();
 			// Enable the Nav Mesh Agent
 			ronaldo.GetComponent<NavMeshAgent>().enabled = true;
+			// Enable the Animator
+			ronaldo.GetComponent<Animator>().enabled = true;
 			// Tag as a Ronaldo
 			ronaldo.tag = "Real Ronaldo";
 			// Add Player specifier
@@ -116,6 +118,8 @@ public class GameManager : MonoBehaviour {
 			npc.AddComponent<NPCController>();
 			// Enable the Nav Mesh Agent
 			npc.GetComponent<NavMeshAgent>().enabled = true;
+			// Enable the Animator
+			npc.GetComponent<Animator>().enabled = true;
 		}
 
 		// Spawn look alikes
@@ -126,6 +130,8 @@ public class GameManager : MonoBehaviour {
 			npc.AddComponent<NPCController>();
 			// Enable the Nav Mesh Agent
 			npc.GetComponent<NavMeshAgent>().enabled = true;
+			// Enable the Animator
+			npc.GetComponent<Animator>().enabled = true;
 			// Tag as a look alike
 			npc.tag = "Fake Ronaldo";
 		}
