@@ -2636,6 +2636,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1446081015}
     m_Modifications:
+    - target: {fileID: -6057140222963153312, guid: d1e2df6288300e248bd00adef90aa53f,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 1cf687580c6984640a827a032df4e00a, type: 2}
     - target: {fileID: -4216859302048453862, guid: d1e2df6288300e248bd00adef90aa53f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4412,6 +4417,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1446081015}
     m_Modifications:
+    - target: {fileID: -6057140222963153312, guid: d1e2df6288300e248bd00adef90aa53f,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 1cf687580c6984640a827a032df4e00a, type: 2}
     - target: {fileID: -4216859302048453862, guid: d1e2df6288300e248bd00adef90aa53f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14859,8 +14869,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 280c2802bda2d314b801001fedc494bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 1491203931}
-  agent: {fileID: 0}
 --- !u!195 &1457058054
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -18620,6 +18628,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1446081015}
     m_Modifications:
+    - target: {fileID: -6057140222963153312, guid: d1e2df6288300e248bd00adef90aa53f,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 1cf687580c6984640a827a032df4e00a, type: 2}
     - target: {fileID: -4216859302048453862, guid: d1e2df6288300e248bd00adef90aa53f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -19645,21 +19658,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c132b1920997a8040a809b29a1d4300f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 120
-  running: 0
-  timeCounter: 0
-  timerText: {fileID: 1999139077}
-  p1Score: {fileID: 944421078}
-  p2Score: {fileID: 471454185}
-  p3Score: {fileID: 506149031}
-  p4Score: {fileID: 1606368215}
-  winnerText: {fileID: 1170358458}
-  startScreenText: {fileID: 1188978343}
-  p1Num: 0
-  p2Num: 0
-  p3Num: 0
-  p4Num: 0
-  startScreen: {fileID: 0}
 --- !u!114 &1999139077
 MonoBehaviour:
   m_ObjectHideFlags: 0
