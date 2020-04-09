@@ -7,9 +7,10 @@ public class SpotlightControl : PlayerControl {
 		Horizontal, Vertical
 	}
 
+	public static readonly float DEFAULT_SPEED = 0.45f;
 	// Joystick needs to be at least this far away from the center to activate [0, 1]
 	public float joystickActivationDistance = 0.05f;
-	public float speed = 1;
+	public float speed = DEFAULT_SPEED;
 	public Player player;
 
 	// Start is called before the first frame update
