@@ -10,7 +10,7 @@ public class detection : MonoBehaviour {
 	public GameObject pickup;
 	Dictionary<GameObject, Coroutine> coroutines = new Dictionary<GameObject, Coroutine>();
 	IEnumerator coroutine;
-	
+
 	public SpotlightControl control;
 	private ScoreManager scoreManager;
 
@@ -25,7 +25,7 @@ public class detection : MonoBehaviour {
 		control = this.transform.parent.GetComponent<SpotlightControl>();
 		scoreManager = managersObject.GetComponent<ScoreManager>();
 		spawnRepel = managersObject.GetComponent<GameManager>().spawnRepel;
- 
+
 	}
 
 	// Update is called once per frame
@@ -186,34 +186,18 @@ public class detection : MonoBehaviour {
 
 	//Good item: set faster speed, Bad Item: set slower speed
 	IEnumerator modifySpotlightSpeed(string itemtoRemoveTag) {
-		int slowSpeed = 3;
-		int fastSpeed = 150;
-		normalKeyboardSpeed = 50;
-		normalControllerSpeed = 1;
+		float fastMultiplier = 2;
+		float slowMultiplier = 0.5f;
+		GameObject spotlight = this.gameObject.transform.parent.gameObject;
+		spotlight.TryGetComponent<KeyboardControl>(out KeyboardControl keyboardControl);
+		SpotlightControl spotlightControl = spotlight.GetComponent<SpotlightControl>();
 
 		if (itemtoRemoveTag == "GoodItem") {
 			Debug.Log("Good Item Removed!");
-
-			this.gameObject.transform.parent.gameObject.GetComponent<KeyboardControl>().speed = fastSpeed;
-			this.gameObject.transform.parent.gameObject.GetComponent<SpotlightControl>().speed = fastSpeed;
-
-			//accounts for picking up multiple items in a row
-			numItemsWaiting++; 
-			yield return new WaitForSeconds(5.0f);
-			numItemsWaiting--;
-
-			if(numItemsWaiting == 0) {
-				this.gameObject.transform.parent.gameObject.GetComponent<KeyboardControl>().speed = normalKeyboardSpeed;
-				this.gameObject.transform.parent.gameObject.GetComponent<SpotlightControl>().speed = normalControllerSpeed;
+			if (keyboardControl != null) {
+				keyboardControl.speed = KeyboardControl.DEFAULT_SPEED * fastMultiplier;
 			}
-
-
-		}
-
-		if (itemtoRemoveTag == "BadItem") {
-			Debug.Log("Bad Item Removed!");
-			this.gameObject.transform.parent.gameObject.GetComponent<KeyboardControl>().speed = slowSpeed;
-			this.gameObject.transform.parent.gameObject.GetComponent<SpotlightControl>().speed = slowSpeed;
+			spotlightControl.speed = SpotlightControl.DEFAULT_SPEED * fastMultiplier;
 
 			//accounts for picking up multiple items in a row
 			numItemsWaiting++;
@@ -221,8 +205,32 @@ public class detection : MonoBehaviour {
 			numItemsWaiting--;
 
 			if(numItemsWaiting == 0) {
-				this.gameObject.transform.parent.gameObject.GetComponent<KeyboardControl>().speed = normalKeyboardSpeed;
-				this.gameObject.transform.parent.gameObject.GetComponent<SpotlightControl>().speed = normalControllerSpeed;
+				if (keyboardControl != null) {
+					keyboardControl.speed = KeyboardControl.DEFAULT_SPEED;
+				}
+				spotlightControl.speed = SpotlightControl.DEFAULT_SPEED;
+			}
+
+
+		}
+
+		if (itemtoRemoveTag == "BadItem") {
+			Debug.Log("Bad Item Removed!");
+			if (keyboardControl != null) {
+				keyboardControl.speed = KeyboardControl.DEFAULT_SPEED * slowMultiplier;
+			}
+			spotlightControl.speed = SpotlightControl.DEFAULT_SPEED * slowMultiplier;
+
+			//accounts for picking up multiple items in a row
+			numItemsWaiting++;
+			yield return new WaitForSeconds(5.0f);
+			numItemsWaiting--;
+
+			if(numItemsWaiting == 0) {
+				if (keyboardControl != null) {
+					keyboardControl.speed = KeyboardControl.DEFAULT_SPEED;
+				}
+				spotlightControl.speed = SpotlightControl.DEFAULT_SPEED;
 			}
 
 

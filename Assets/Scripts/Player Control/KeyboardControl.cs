@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class KeyboardControl : MonoBehaviour {
 
-	public float speed;
+	public static readonly float DEFAULT_SPEED = 12;
+	public float speed = DEFAULT_SPEED;
 
 	// Start is called before the first frame update
 	void Start() {

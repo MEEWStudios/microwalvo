@@ -4,42 +4,82 @@ using UnityEngine.AI;
 
 public class NPCController : MonoBehaviour {
 
-	public float wanderRadius = 60; // Wander Radius
-	public float minWanderTime = 3;
-	public float maxWanderTime = 8;
+	public float wanderRadius = 30; // Wander Radius
+	public float minIdleTime = 0;
+	public float maxIdleTime = 8;
+	public bool debug = false;
 
-	private float wanderTimer;
 	private Transform target;
 	private NavMeshAgent agent;
-	private float timer;
+	private Animator animator;
+	private float idleTime;
+	private float timer = 0;
+	private bool hasReachedDestination = false;
 
 	// Use this for initialization
 	void OnEnable() {
 		agent = GetComponent<NavMeshAgent>();
-		timer = wanderTimer;
+		animator = GetComponent<Animator>();
 	}
 
 	// Update is called once per frame
 	void Update() {
-		timer += Time.deltaTime;
+		if (debug) {
+			Debug.Log(agent.velocity.sqrMagnitude);
+		}
 
-		if (timer >= wanderTimer) {
-			Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
-			agent.SetDestination(newPos);
-			timer = 0;
-			wanderTimer = Random.Range(minWanderTime, maxWanderTime);
+		// Set animation state
+		if (agent.velocity.sqrMagnitude < 0.5f) {
+			animator.SetInteger("moveState", 0);
+			animator.speed = 1;
+		} else {
+			animator.SetInteger("moveState", 1);
+			animator.speed = Mathf.Max(0.5f, agent.velocity.sqrMagnitude / 27);
+		}
+
+		// Check if stuck
+		if (!hasReachedDestination) {
+			// If stuck for more than 2 seconds, change destination
+			if (timer > 2) {
+				timer = 0;
+				// Set new destination
+				agent.SetDestination(RandomNavSphere(transform.position, wanderRadius));
+			}
+			if (agent.velocity.sqrMagnitude < 1) {
+				timer += Time.deltaTime;
+			}
+		}
+
+
+		// https://answers.unity.com/questions/324589/how-can-i-tell-when-a-navmesh-has-reached-its-dest.html
+		// Check if the destination has been reached
+		if (!hasReachedDestination && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance) {
+			if (!agent.hasPath || agent.velocity.sqrMagnitude < 0f) {
+				hasReachedDestination = true;
+				idleTime = Random.Range(minIdleTime, maxIdleTime);
+				timer = Time.deltaTime;
+			}
+		}
+
+		if (hasReachedDestination) {
+			timer += Time.deltaTime;
+
+			if (timer >= idleTime) {
+				hasReachedDestination = false;
+				timer = 0;
+				// Set new destination
+				agent.SetDestination(RandomNavSphere(transform.position, wanderRadius));
+			}
 		}
 	}
 
-	public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask) {
-		Vector3 randDirection = Random.insideUnitSphere * dist;
+	public static Vector3 RandomNavSphere(Vector3 origin, float dist) {
+		Vector3 randomPoint;
+		NavMeshHit hit;
+		do {
+			randomPoint = (Random.insideUnitSphere * dist) + origin;
+		} while (!NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas));
 
-		randDirection += origin;
-
-		NavMeshHit navHit;
-
-		NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
-
-		return navHit.position;
+		return hit.position;
 	}
 }

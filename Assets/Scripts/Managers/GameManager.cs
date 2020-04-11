@@ -69,7 +69,8 @@ public class GameManager : MonoBehaviour {
 		GameObject sourceSpotlight = prefabSource.transform.Find("Spotlight").gameObject;
 		GameObject sourceRonaldo = characterSource.Find("Ronaldo").gameObject;
 		Transform map = GameObject.Find("Map").transform;
-		Transform characters = map.transform.Find("Characters");
+		GameObject npcs = new GameObject("NPCs");
+		npcs.transform.parent = map;
 
 		for (int i = 0; i < playerCount; i++) {
 			// Add player's spotlight
@@ -88,18 +89,13 @@ public class GameManager : MonoBehaviour {
 			// Add keyboard control
 			if (i == 0) {
 				KeyboardControl keyControl = newSpotlight.AddComponent<KeyboardControl>();
-				keyControl.speed = 50;
 			}
 
 			// Add the spotlight to the texture draw script
 			draw.spotlights.Add(newSpotlight.transform.Find("SpotlightCollider").gameObject);
 
 			// Spawn player's Ronaldo
-			GameObject ronaldo = Instantiate(sourceRonaldo, GetRandomPointOnMap(sourceRonaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel)), Quaternion.identity, characters) as GameObject;
-			// Add NPCController
-			ronaldo.AddComponent<NPCController>();
-			// Enable the Nav Mesh Agent
-			ronaldo.GetComponent<NavMeshAgent>().enabled = true;
+			GameObject ronaldo = SpawnNPC(sourceRonaldo, GetRandomPointOnMap(sourceRonaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel)), Quaternion.identity, npcs.transform);
 			// Tag as a Ronaldo
 			ronaldo.tag = "Real Ronaldo";
 			// Add Player specifier
@@ -111,21 +107,13 @@ public class GameManager : MonoBehaviour {
 		// Spawn people
 		for (int i = 0; i < personCount; i++) {
 			// Spawn person
-			GameObject npc = Instantiate(sourcePerson, GetRandomPointOnMap(sourcePerson.transform.position.y), Quaternion.identity, characters) as GameObject;
-			// Add NPCController
-			npc.AddComponent<NPCController>();
-			// Enable the Nav Mesh Agent
-			npc.GetComponent<NavMeshAgent>().enabled = true;
+			GameObject npc = SpawnNPC(sourcePerson, GetRandomPointOnMap(sourcePerson.transform.position.y), Quaternion.identity, npcs.transform);
 		}
 
 		// Spawn look alikes
 		for (int i = 0; i < fakeRonaldoCount; i++) {
 			// Spawn look alike
-			GameObject npc = Instantiate(sourceLookAlike, GetRandomPointOnMap(sourceLookAlike.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel)), Quaternion.identity, characters) as GameObject;
-			// Add NPCController
-			npc.AddComponent<NPCController>();
-			// Enable the Nav Mesh Agent
-			npc.GetComponent<NavMeshAgent>().enabled = true;
+			GameObject npc = SpawnNPC(sourceLookAlike, GetRandomPointOnMap(sourceLookAlike.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel)), Quaternion.identity, npcs.transform);
 			// Tag as a look alike
 			npc.tag = "Fake Ronaldo";
 		}
@@ -147,6 +135,18 @@ public class GameManager : MonoBehaviour {
 		int seconds = Mathf.CeilToInt(timestamp) - 1;
 
 		return minutes + ":" + (seconds < 10 ? "0" + seconds : "" + seconds);
+	}
+
+	GameObject SpawnNPC(GameObject original, Vector3 position, Quaternion rotation, Transform parent) {
+		GameObject npc = Instantiate(original, position, rotation, parent) as GameObject;
+		// Add NPCController
+		npc.AddComponent<NPCController>();
+		// Enable the Nav Mesh Agent
+		npc.GetComponent<NavMeshAgent>().enabled = true;
+		// Enable the Animator
+		npc.GetComponent<Animator>().enabled = true;
+
+		return npc;
 	}
 
 	public static Vector3 GetRandomPointOnMap(float yPosition) {

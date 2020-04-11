@@ -7,9 +7,10 @@ public class SpotlightControl : PlayerControl {
 		Horizontal, Vertical
 	}
 
+	public static readonly float DEFAULT_SPEED = 12;
 	// Joystick needs to be at least this far away from the center to activate [0, 1]
 	public float joystickActivationDistance = 0.05f;
-	public float speed = 1;
+	public float speed = DEFAULT_SPEED;
 	public Player player;
 
 	// Start is called before the first frame update
@@ -29,8 +30,8 @@ public class SpotlightControl : PlayerControl {
 		}
 
 		Vector3 newPosition = this.transform.position;
-		newPosition.x += xAxis * speed;
-		newPosition.z += yAxis * speed;
+		newPosition.x += xAxis * speed * Time.deltaTime;
+		newPosition.z += yAxis * speed * Time.deltaTime;
 		this.transform.position = newPosition;
 	}
 }
