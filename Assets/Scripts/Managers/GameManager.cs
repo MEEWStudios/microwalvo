@@ -22,10 +22,18 @@ public class GameManager : MonoBehaviour {
 	private float currentRoundTime = 0;
 	private ScoreManager scoreManager;
 	private static List<GameObject> spotlightColliders = new List<GameObject>();
+	private Transform map;
+	private Transform players;
+	private Transform npcs;
 
 	// Awake is called when the script instance is being loaded
 	void Awake() {
 		scoreManager = this.GetComponent<ScoreManager>();
+		map = GameObject.Find("Map").transform;
+		players = new GameObject("Players").transform;
+		players.parent = map;
+		npcs = new GameObject("NPCs").transform;
+		npcs.parent = map;
 	}
 
 	// Use this for initialization
@@ -68,15 +76,15 @@ public class GameManager : MonoBehaviour {
 		GameObject sourceLookAlike = characterSource.Find("Fake Ronaldo").gameObject;
 		GameObject sourceSpotlight = prefabSource.transform.Find("Spotlight").gameObject;
 		GameObject sourceRonaldo = characterSource.Find("Ronaldo").gameObject;
-		Transform map = GameObject.Find("Map").transform;
-		GameObject npcs = new GameObject("NPCs");
-		npcs.transform.parent = map;
 
 		for (int i = 0; i < playerCount; i++) {
+			// Create player object
+			Transform player = new GameObject("Player" + i).transform;
+			player.parent = players;
 			// Add player's spotlight
 			int x = i % 2 == 1 ? -20 : 20;
 			int z = i / 2 == 0 ? 0 : -30;
-			GameObject newSpotlight = Instantiate(sourceSpotlight, new Vector3(x, 0, z), Quaternion.identity, map) as GameObject;
+			GameObject newSpotlight = Instantiate(sourceSpotlight, new Vector3(x, 0, z), Quaternion.identity, player) as GameObject;
 			// Add SpotlightControl
 			SpotlightControl control = newSpotlight.AddComponent<SpotlightControl>();
 			// Add Player specifier
@@ -95,7 +103,7 @@ public class GameManager : MonoBehaviour {
 			draw.spotlights.Add(newSpotlight.transform.Find("SpotlightCollider").gameObject);
 
 			// Spawn player's Ronaldo
-			GameObject ronaldo = SpawnNPC(sourceRonaldo, GetRandomPointOnMap(sourceRonaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel)), Quaternion.identity, npcs.transform);
+			GameObject ronaldo = SpawnNPC(sourceRonaldo, GetRandomPointOnMap(sourceRonaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel)), Quaternion.identity, player);
 			// Tag as a Ronaldo
 			ronaldo.tag = "Real Ronaldo";
 			// Add Player specifier
@@ -107,7 +115,7 @@ public class GameManager : MonoBehaviour {
 		// Spawn people
 		for (int i = 0; i < personCount; i++) {
 			// Spawn person
-			GameObject npc = SpawnNPC(sourcePerson, GetRandomPointOnMap(sourcePerson.transform.position.y), Quaternion.identity, npcs.transform);
+			GameObject npc = SpawnNPC(sourcePerson, GetRandomPointOnMap(sourcePerson.transform.position.y), Quaternion.identity, npcs);
 			// Set skin color
 			npc.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().material.color = SkinColor.GetRandom();
 		}
@@ -115,7 +123,7 @@ public class GameManager : MonoBehaviour {
 		// Spawn look alikes
 		for (int i = 0; i < fakeRonaldoCount; i++) {
 			// Spawn look alike
-			GameObject npc = SpawnNPC(sourceLookAlike, GetRandomPointOnMap(sourceLookAlike.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel)), Quaternion.identity, npcs.transform);
+			GameObject npc = SpawnNPC(sourceLookAlike, GetRandomPointOnMap(sourceLookAlike.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel)), Quaternion.identity, npcs);
 			// Tag as a look alike
 			npc.tag = "Fake Ronaldo";
 		}
@@ -126,8 +134,22 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void EndRound() {
-		scoreManager.DisplayResults();
+		// Disable player controls
 		ControlManager.UnregisterControls(typeof(SpotlightControl));
+
+		// Stop all NPCs
+		foreach (Transform child in npcs) {
+			StopNPC(child.gameObject);
+		}
+		foreach (Transform player in players) {
+			foreach (Transform transform in player.transform) {
+				if (transform.tag == "Real Ronaldo") {
+					StopNPC(transform.gameObject);
+				}
+			}
+		}
+
+		scoreManager.DisplayResults();
 	}
 
 	string TimestampToString(float timestamp) {
@@ -149,6 +171,12 @@ public class GameManager : MonoBehaviour {
 		npc.GetComponent<Animator>().enabled = true;
 
 		return npc;
+	}
+
+	void StopNPC(GameObject npc) {
+		npc.GetComponent<NavMeshAgent>().enabled = false;
+		npc.GetComponent<NPCController>().enabled = false;
+		npc.GetComponent<Animator>().SetInteger("moveState", 0);
 	}
 
 	public static Vector3 GetRandomPointOnMap(float yPosition) {
