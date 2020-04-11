@@ -18,6 +18,9 @@ public class detection : MonoBehaviour {
 	private int numItemsWaiting = 0;
 	private int spawnRepel;
 
+	Vector3 normalSpotlightSize = new Vector3(0,0,0);
+	private bool initialzedSpotlightSize = false;
+
 	void Start() {
 		control = this.transform.parent.GetComponent<SpotlightControl>();
 		scoreManager = managersObject.GetComponent<ScoreManager>();
@@ -116,13 +119,72 @@ public class detection : MonoBehaviour {
 
 		string itemToRemoveTag = itemToRemove.tag;
 
+		//StartCoroutine(modifySpotlightSpeed(itemToRemoveTag));
 		StartCoroutine(modifySpotlightSpeed(itemToRemoveTag));
+
 		Destroy(itemToRemove);
 
 		coroutines.Remove(itemToRemove);
 	}
 
+	//Good item: larger spotlight, Bad Item: smaller spotlight
+	IEnumerator modifySpotlightAppearance(string itemtoRemoveTag) {
 
+
+		if (!initialzedSpotlightSize) {
+			normalSpotlightSize.Set(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+			Debug.Log("x: " + transform.localScale.x + ", y: " + transform.localScale.y + ", z: " + transform.localScale.z);
+			initialzedSpotlightSize = true;
+		}
+
+
+		if (itemtoRemoveTag == "GoodItem") {
+			Debug.Log("Good Item Removed!");
+			int scaleChange = 2;
+
+			//Modify Spotlight parent's Y scale, and spotlightcollider's X and Z scales for appearance and collider effect
+			transform.parent.transform.localScale = new Vector3(normalSpotlightSize.x, normalSpotlightSize.y * scaleChange, normalSpotlightSize.z);
+			transform.localScale = new Vector3(normalSpotlightSize.x * scaleChange, normalSpotlightSize.y, normalSpotlightSize.z * scaleChange);
+
+			//accounts for picking up multiple items in a row
+			numItemsWaiting++;
+			yield return new WaitForSeconds(5.0f);
+			numItemsWaiting--;
+
+			//back to normal after 5 seconds
+			if(numItemsWaiting == 0) {
+				transform.parent.transform.localScale = new Vector3(normalSpotlightSize.x, normalSpotlightSize.y / scaleChange, normalSpotlightSize.z);
+				transform.localScale = new Vector3(normalSpotlightSize.x / scaleChange, normalSpotlightSize.y, normalSpotlightSize.z / scaleChange);
+			}
+
+		}
+
+		else if (itemtoRemoveTag == "BadItem") {
+			Debug.Log("Bad Item Removed!");
+			float scaleChange = 4.0f;
+
+			//Modify Spotlight parent's Y scale, and spotlightcollider's X and Z scales for appearance and collider effect
+			transform.parent.transform.localScale = new Vector3(normalSpotlightSize.x, normalSpotlightSize.y / scaleChange, normalSpotlightSize.z);
+			transform.localScale = new Vector3(normalSpotlightSize.x / scaleChange, normalSpotlightSize.y, normalSpotlightSize.z / scaleChange);
+
+			//accounts for picking up multiple items in a row
+			numItemsWaiting++;
+			yield return new WaitForSeconds(5.0f);
+			numItemsWaiting--;
+
+			//back to normal
+			if(numItemsWaiting == 0) {
+				transform.parent.transform.localScale = new Vector3(normalSpotlightSize.x, normalSpotlightSize.y * scaleChange, normalSpotlightSize.z);
+				transform.localScale = new Vector3(normalSpotlightSize.x * scaleChange, normalSpotlightSize.y, normalSpotlightSize.z * scaleChange);
+			}
+
+
+		}
+
+
+	}
+
+	//Good item: set faster speed, Bad Item: set slower speed
 	IEnumerator modifySpotlightSpeed(string itemtoRemoveTag) {
 		int slowSpeed = 3;
 		int fastSpeed = 150;
@@ -131,6 +193,7 @@ public class detection : MonoBehaviour {
 
 		if (itemtoRemoveTag == "GoodItem") {
 			Debug.Log("Good Item Removed!");
+
 			this.gameObject.transform.parent.gameObject.GetComponent<KeyboardControl>().speed = fastSpeed;
 			this.gameObject.transform.parent.gameObject.GetComponent<SpotlightControl>().speed = fastSpeed;
 
