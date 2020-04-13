@@ -18,6 +18,14 @@ public class detection : MonoBehaviour {
 	private int numItemsWaiting = 0;
 	private int spawnRepel;
 
+	public AudioSource pointIncreaseSound;
+	public AudioSource pointDecreaseSound;
+	public AudioSource slowDownSound;
+	public AudioSource slowBackToNormalSound;
+	public AudioSource speedUpSound;
+	public AudioSource fastBackToNormalSound;
+	public AudioSource smokeBombSound;
+
 	Vector3 normalSpotlightSize = new Vector3(0,0,0);
 	private bool initialzedSpotlightSize = false;
 
@@ -25,7 +33,6 @@ public class detection : MonoBehaviour {
 		control = this.transform.parent.GetComponent<SpotlightControl>();
 		scoreManager = managersObject.GetComponent<ScoreManager>();
 		spawnRepel = managersObject.GetComponent<GameManager>().spawnRepel;
-
 	}
 
 	// Update is called once per frame
@@ -93,6 +100,8 @@ public class detection : MonoBehaviour {
 		yield return new WaitForSeconds(delay);
 		GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
 		ronaldo.transform.position = GameManager.GetRandomPointOnMap(ronaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel));
+		smokeBombSound.Play();
+		pointIncreaseSound.Play();
 		Debug.Log("Ronaldo has moved!");
 
 		// Add points to the corresponding spotlight's score
@@ -105,8 +114,9 @@ public class detection : MonoBehaviour {
 		yield return new WaitForSeconds(delay);
 		GameObject effect = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
 		fakeRonaldo.transform.position = GameManager.GetRandomPointOnMap(fakeRonaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel)); ;
+		smokeBombSound.Play();
 		Debug.Log("Fake Ronaldo has moved!");
-
+		pointDecreaseSound.Play();
 		// Subtract points from corresponding spotlight
 		scoreManager.ChangeScoreBy(control.player, -1);
 
@@ -194,10 +204,13 @@ public class detection : MonoBehaviour {
 
 		if (itemtoRemoveTag == "GoodItem") {
 			Debug.Log("Good Item Removed!");
+			speedUpSound.Play();
+
 			if (keyboardControl != null) {
 				keyboardControl.speed = KeyboardControl.DEFAULT_SPEED * fastMultiplier;
 			}
 			spotlightControl.speed = SpotlightControl.DEFAULT_SPEED * fastMultiplier;
+			
 
 			//accounts for picking up multiple items in a row
 			numItemsWaiting++;
@@ -206,6 +219,7 @@ public class detection : MonoBehaviour {
 
 			if(numItemsWaiting == 0) {
 				if (keyboardControl != null) {
+					fastBackToNormalSound.Play();
 					keyboardControl.speed = KeyboardControl.DEFAULT_SPEED;
 				}
 				spotlightControl.speed = SpotlightControl.DEFAULT_SPEED;
@@ -216,6 +230,8 @@ public class detection : MonoBehaviour {
 
 		if (itemtoRemoveTag == "BadItem") {
 			Debug.Log("Bad Item Removed!");
+			slowDownSound.Play();
+
 			if (keyboardControl != null) {
 				keyboardControl.speed = KeyboardControl.DEFAULT_SPEED * slowMultiplier;
 			}
@@ -227,6 +243,7 @@ public class detection : MonoBehaviour {
 			numItemsWaiting--;
 
 			if(numItemsWaiting == 0) {
+				slowBackToNormalSound.Play();
 				if (keyboardControl != null) {
 					keyboardControl.speed = KeyboardControl.DEFAULT_SPEED;
 				}
