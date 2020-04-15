@@ -13,30 +13,30 @@ head: |
 # Team Members
 <img class='profile' src='{{site.baseurl}}/assets/team/mirrenhollison.jpg'>
 ## Mirren Hollison
-Animation/Design 
+Animation/Design\
 Email: mirren@hawaii.edu
 
 <img class='profile' src='{{site.baseurl}}/assets/team/emilypang.jpg'>
 ## Emily Pang
-Programming
+Programming\
 Email: eppang@hawaii.edu
 
 <img class='profile' src='{{site.baseurl}}/assets/team/ethanchow.jpg'>
 ## Ethan Chow
-Programming 
+Programming\
 Email: epchow@hawaii.edu
 
 <img class='profile' src='{{site.baseurl}}/assets/team/willardperalta.jpg'>
 ## Willard Peralta
-Programming  
+Programming\
 Email: willardp@hawaii.edu
 
 <img class='profile' src='{{site.baseurl}}/assets/team/kamrenwakakuwa.jpg'>
 ## Kamren Wakakuwa
-Sound Design
+Sound Design\
 Email: kamrenw@hawaii.edu
 
 <img class='profile' src='{{site.baseurl}}/assets/team/michaelmatrasko.jpg'>
 ## Michael Matrasko
-Sound Design
+Sound Design\
 Email: mm297@hawaii.edu
