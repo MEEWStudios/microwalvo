@@ -10,7 +10,7 @@ head: |
   	}
   </style>
 ---
-# Team Members
+# Team Membersq
 <img class='profile' src='{{site.baseurl}}/assets/team/mirrenhollison.jpg'>
 ## Mirren Hollison
 Animation/Design\
