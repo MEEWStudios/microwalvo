@@ -33,10 +33,10 @@ Email: willardp@hawaii.edu
 
 <img class='profile' src='{{site.baseurl}}/assets/team/kamrenwakakuwa.jpg'>
 ## Kamren Wakakuwa
-Sound Design <br />
+Sound <br />
 Email: kamrenw@hawaii.edu
 
 <img class='profile' src='{{site.baseurl}}/assets/team/michaelmatrasko.jpg'>
 ## Michael Matrasko
-Sound Design <br />
+Sound <br />
 Email: mm297@hawaii.edu
