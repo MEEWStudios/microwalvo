@@ -124,6 +124,8 @@ public class GameManager : MonoBehaviour {
 		for (int i = 0; i < fakeRonaldoCount; i++) {
 			// Spawn look alike
 			GameObject npc = SpawnNPC(sourceLookAlike, GetRandomPointOnMap(sourceLookAlike.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel)), Quaternion.identity, npcs);
+			// Set skin color
+			npc.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().material.color = SkinColor.GetRandom();
 			// Tag as a look alike
 			npc.tag = "Fake Ronaldo";
 		}
