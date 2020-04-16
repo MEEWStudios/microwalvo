@@ -14,15 +14,11 @@ public class detection : MonoBehaviour {
 	public SpotlightControl control;
 	private ScoreManager scoreManager;
 
-	private int numItemsWaiting = 0;
 	private int spawnRepel;
 
 	public AudioSource pointIncreaseSound;
 	public AudioSource pointDecreaseSound;
 	public AudioSource smokeBombSound;
-
-	Vector3 normalSpotlightSize = new Vector3(0, 0, 0);
-	private bool initialzedSpotlightSize = false;
 
 	void Start() {
 		control = this.transform.parent.GetComponent<SpotlightControl>();
