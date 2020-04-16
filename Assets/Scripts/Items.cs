@@ -24,14 +24,14 @@ public class Items : MonoBehaviour {
 			Vector3 position = GameManager.GetRandomPointOnMap(goodItem.transform.position.y);
 			GameObject GoodItem = Instantiate(goodItem, position, Quaternion.identity) as GameObject;
 			GameObject sparkle = Instantiate(animation, position, Quaternion.identity, GoodItem.transform) as GameObject;
-			sparkle.transform.localScale = new Vector3(2, 2, 2);
+			sparkle.transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
 		}
 
 		for (int i = 0; i < badItemCount; i++) {
 			Vector3 position = GameManager.GetRandomPointOnMap(goodItem.transform.position.y);
 			GameObject BadItem = Instantiate(badItem, position, Quaternion.identity) as GameObject;
 			GameObject sparkle = Instantiate(animation, position, Quaternion.identity, BadItem.transform) as GameObject;
-			sparkle.transform.localScale = new Vector3(2, 2, 2);
+			sparkle.transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
 		}
 	}
 }

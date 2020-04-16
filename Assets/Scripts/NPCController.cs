@@ -52,9 +52,9 @@ public class NPCController : MonoBehaviour {
 		if (panicTimer > 0) {
 			panicTimer -= Time.deltaTime;
 			// Increase speed
-			agent.speed = defaultSpeed * 3;
-			agent.acceleration = defaultAcceleration * 3;
-			agent.angularSpeed = defaultAngularSpeed * 3;
+			agent.speed = defaultSpeed * 2.5f;
+			agent.acceleration = defaultAcceleration * 2.5f;
+			agent.angularSpeed = defaultAngularSpeed * 2.5f;
 			// Prevent pausing between destinations
 			idleTime = 0;
 		} else {
@@ -105,7 +105,11 @@ public class NPCController : MonoBehaviour {
 
 		if (gameObject.CompareTag("Player")) {
 			SpotlightControl control = gameObject.transform.parent.GetComponent<SpotlightControl>();
-			panicTimer = panicTime;
+			NPCTraits traits = GetComponent<NPCTraits>();
+
+			if (traits == null || control.player != traits.player) {
+				panicTimer = panicTime;
+			}
 		}
 	}
 

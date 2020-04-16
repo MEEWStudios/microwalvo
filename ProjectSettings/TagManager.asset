@@ -8,6 +8,7 @@ TagManager:
   - Real Ronaldo
   - GoodItem
   - BadItem
+  - Item
   layers:
   - Default
   - TransparentFX

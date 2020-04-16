@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
 	private bool roundInProgress = false;
 	private float currentRoundTime = 0;
 	private ScoreManager scoreManager;
+	private static Dictionary<Player, GameObject> playerMap = new Dictionary<Player, GameObject>();
 	private static List<GameObject> spotlightColliders = new List<GameObject>();
 	private Transform map;
 	private Transform players;
@@ -80,11 +81,13 @@ public class GameManager : MonoBehaviour {
 		for (int i = 0; i < playerCount; i++) {
 			// Create player object
 			Transform player = new GameObject("Player" + i).transform;
+			playerMap.Add((Player) i, player.gameObject);
 			player.parent = players;
 			// Add player's spotlight
 			int x = i % 2 == 1 ? -20 : 20;
 			int z = i / 2 == 0 ? 0 : -30;
 			GameObject newSpotlight = Instantiate(sourceSpotlight, new Vector3(x, 0, z), Quaternion.identity, player) as GameObject;
+			newSpotlight.name = "Spotlight";
 			// Add SpotlightControl
 			SpotlightControl control = newSpotlight.AddComponent<SpotlightControl>();
 			// Add Player specifier
@@ -104,6 +107,7 @@ public class GameManager : MonoBehaviour {
 
 			// Spawn player's Ronaldo
 			GameObject ronaldo = SpawnNPC(sourceRonaldo, GetRandomPointOnMap(sourceRonaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel)), Quaternion.identity, player);
+			ronaldo.name = "Ronaldo";
 			// Tag as a Ronaldo
 			ronaldo.tag = "Real Ronaldo";
 			// Add Player specifier
@@ -213,5 +217,9 @@ public class GameManager : MonoBehaviour {
 		}
 
 		return false;
+	}
+
+	public static GameObject GetPlayerObject(Player player) {
+		return playerMap[player];
 	}
 }
