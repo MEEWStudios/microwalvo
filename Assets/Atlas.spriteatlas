@@ -20,7 +20,19 @@ SpriteAtlas:
       readable: 0
       crunchedCompression: 0
       sRGB: 1
-    platformSettings: []
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 8192
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
     packingSettings:
       serializedVersion: 2
       padding: 4
@@ -30,22 +42,40 @@ SpriteAtlas:
       enableTightPacking: 0
     variantMultiplier: 1
     packables:
-    - {fileID: 2800000, guid: 2c369a726cc90ea4090f89e9fa8751aa, type: 3}
-    - {fileID: 2800000, guid: 173b231baee2c474e8b0403c9184de6d, type: 3}
-    - {fileID: 2800000, guid: ab155db9f395e2341be1825f7761119a, type: 3}
+    - {fileID: 2800000, guid: 0354e690488e31b4eb7a1a8212ef551b, type: 3}
+    - {fileID: 2800000, guid: b0503974c8ac34140a13d8b6804739dc, type: 3}
+    - {fileID: 2800000, guid: d5f9feb728dc02a4189d266d3ff45568, type: 3}
+    - {fileID: 2800000, guid: 4d204ef3a40d20949b9d7a8e71bfeb07, type: 3}
+    - {fileID: 2800000, guid: 2bef71655d529b647b57c12610bfa76d, type: 3}
+    - {fileID: 2800000, guid: 3e5bdf44be310c549803d84a5260e4ba, type: 3}
+    - {fileID: 2800000, guid: b3da4b86ba6772f48bbcf804a5df5f9a, type: 3}
+    - {fileID: 2800000, guid: 59130db62e3c06c468d82025e775ccfd, type: 3}
+    - {fileID: 2800000, guid: ad77a1440452cbf4f834c3ce52ec76af, type: 3}
     - {fileID: 2800000, guid: b2f85f35169c779479bdab8de5e297bd, type: 3}
-    totalSpriteSurfaceArea: 760000
+    totalSpriteSurfaceArea: 13373322
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: 2c369a726cc90ea4090f89e9fa8751aa, type: 3}
+  - {fileID: 21300000, guid: 0354e690488e31b4eb7a1a8212ef551b, type: 3}
+  - {fileID: 21300000, guid: 4d204ef3a40d20949b9d7a8e71bfeb07, type: 3}
+  - {fileID: 21300000, guid: ad77a1440452cbf4f834c3ce52ec76af, type: 3}
+  - {fileID: 21300000, guid: 3e5bdf44be310c549803d84a5260e4ba, type: 3}
+  - {fileID: 21300000, guid: b0503974c8ac34140a13d8b6804739dc, type: 3}
   - {fileID: 21300000, guid: b2f85f35169c779479bdab8de5e297bd, type: 3}
-  - {fileID: 21300000, guid: ab155db9f395e2341be1825f7761119a, type: 3}
-  - {fileID: 21300000, guid: 173b231baee2c474e8b0403c9184de6d, type: 3}
+  - {fileID: 21300000, guid: 2bef71655d529b647b57c12610bfa76d, type: 3}
+  - {fileID: 21300000, guid: b3da4b86ba6772f48bbcf804a5df5f9a, type: 3}
+  - {fileID: 21300000, guid: 59130db62e3c06c468d82025e775ccfd, type: 3}
+  - {fileID: 21300000, guid: d5f9feb728dc02a4189d266d3ff45568, type: 3}
   m_PackedSpriteNamesToIndex:
-  - 1
+  - blueCheckered
+  - purpleCheckered
+  - powerup_slow
+  - powerup_disable
+  - greenCheckered
   - SpotlightOutline
-  - 3
-  - 2
+  - redCheckered
+  - powerup_fast
+  - powerup_magnify
+  - greenStripes
   m_Tag: Atlas
   m_IsVariant: 0
