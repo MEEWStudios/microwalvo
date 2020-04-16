@@ -14,7 +14,6 @@ public class detection : MonoBehaviour {
 	public SpotlightControl control;
 	private ScoreManager scoreManager;
 
-	private float normalControllerSpeed, normalKeyboardSpeed;
 	private int numItemsWaiting = 0;
 	private int spawnRepel;
 
@@ -35,24 +34,18 @@ public class detection : MonoBehaviour {
 		spawnRepel = managersObject.GetComponent<GameManager>().spawnRepel;
 	}
 
-	// Update is called once per frame
-	void Update() {
-
-	}
-
-
 	private void OnTriggerEnter(Collider collider) {
 		GameObject gameObject = collider.gameObject;
 		IEnumerator enumerator = null;
 
 		if (gameObject.tag == "Real Ronaldo" && gameObject.GetComponent<NPCTraits>().player == control.player) {
 			Debug.Log("Ronaldo entered spotlight!");
-			enumerator = MoveRonaldo(1.0f, gameObject);
+			enumerator = MoveRonaldo(2.0f, gameObject);
 		}
 
 		if (gameObject.tag == "Fake Ronaldo") {
 			Debug.Log("Fake Ronaldo entered spotlight!");
-			enumerator = MoveFakeRonaldo(1.0f, gameObject);
+			enumerator = MoveFakeRonaldo(2.0f, gameObject);
 		}
 
 		if (gameObject.tag == "GoodItem") {

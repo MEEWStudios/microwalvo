@@ -138,6 +138,7 @@ public class GameManager : MonoBehaviour {
 	void EndRound() {
 		// Disable player controls
 		ControlManager.UnregisterControls(typeof(SpotlightControl));
+		ControlManager.UnregisterControls(typeof(KeyboardControl));
 
 		// Stop all NPCs
 		foreach (Transform child in npcs) {
