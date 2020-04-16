@@ -6,11 +6,14 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 	[Header("Model Configuration")]
-	public GameObject prefabSource;
+	public Transform prefabSource;
 	[Header("NPCs")]
 	public int fakeRonaldoCount;
 	public int personCount;
 	public int spawnRepel = 10;
+	[Header("Items")]
+	public int itemCount = 10;
+	public GameObject itemAnimation;
 	[Header("Rounds")]
 	public int roundTime = 120;
 	[Header("User Interface")]
@@ -26,6 +29,7 @@ public class GameManager : MonoBehaviour {
 	private Transform map;
 	private Transform players;
 	private Transform npcs;
+	private Transform items;
 
 	// Awake is called when the script instance is being loaded
 	void Awake() {
@@ -35,6 +39,8 @@ public class GameManager : MonoBehaviour {
 		players.parent = map;
 		npcs = new GameObject("NPCs").transform;
 		npcs.parent = map;
+		items = new GameObject("Items").transform;
+		items.parent = map;
 	}
 
 	// Use this for initialization
@@ -72,11 +78,15 @@ public class GameManager : MonoBehaviour {
 
 	void StartRound() {
 		int playerCount = EZGM.EZGamepadCount() == 0 ? 1 : EZGM.EZGamepadCount();
-		Transform characterSource = prefabSource.transform.Find("Characters");
+		Transform characterSource = prefabSource.Find("Characters");
 		GameObject sourcePerson = characterSource.Find("Person").gameObject;
 		GameObject sourceLookAlike = characterSource.Find("Fake Ronaldo").gameObject;
-		GameObject sourceSpotlight = prefabSource.transform.Find("Spotlight").gameObject;
+		GameObject sourceSpotlight = prefabSource.Find("Spotlight").gameObject;
 		GameObject sourceRonaldo = characterSource.Find("Ronaldo").gameObject;
+		Transform itemSource = prefabSource.Find("Items");
+		List<Transform> itemList = new List<Transform>(itemSource.GetComponentsInChildren<Transform>());
+		// Remove parent from list
+		itemList.Remove(itemSource);
 
 		for (int i = 0; i < playerCount; i++) {
 			// Create player object
@@ -132,6 +142,21 @@ public class GameManager : MonoBehaviour {
 			npc.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().material.color = SkinColor.GetRandom();
 			// Tag as a look alike
 			npc.tag = "Fake Ronaldo";
+		}
+
+		// Spawn items
+		for (int i = 0; i < itemCount; i++) {
+			// Pick a random item
+			GameObject source = itemList[Random.Range(0, itemList.Count)].gameObject;
+			// Get a random position
+			Vector3 position = GameManager.GetRandomPointOnMap(source.transform.position.y);
+			// Spawn the item
+			GameObject item = Instantiate(source, position, source.transform.rotation, items) as GameObject;
+			// Spawn the animation effect
+			GameObject sparkle = Instantiate(itemAnimation, position, Quaternion.identity, item.transform) as GameObject;
+			sparkle.transform.localPosition = new Vector3(0, 0.5f, 0.5f);
+			// Set the animation size
+			sparkle.transform.localScale = new Vector3(4, 4, 4);
 		}
 
 		roundInProgress = true;
