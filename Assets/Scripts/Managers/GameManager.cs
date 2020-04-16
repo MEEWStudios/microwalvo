@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviour {
 		Vector3 randomPoint;
 		NavMeshHit hit;
 		do {
-			randomPoint = new Vector3(Random.Range(-119, 119), 0, Random.Range(-53, 53));
+			randomPoint = new Vector3(Random.Range(-119f, 119f), 0, Random.Range(-53f, 53f));
 		} while (!NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas));
 
 		return new Vector3(hit.position.x, yPosition, hit.position.z);
@@ -196,7 +196,7 @@ public class GameManager : MonoBehaviour {
 		Vector3 randomPoint;
 		NavMeshHit hit;
 		do {
-			randomPoint = new Vector3(Random.Range(-119, 119), 0, Random.Range(-53, 53));
+			randomPoint = new Vector3(Random.Range(-119f, 119f), 0, Random.Range(-53f, 53f));
 		} while (CollidesWithSpotlights(randomPoint, size) || !NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas));
 
 		return new Vector3(hit.position.x, yPosition, hit.position.z);
