@@ -6,8 +6,6 @@ TagManager:
   tags:
   - Fake Ronaldo
   - Real Ronaldo
-  - GoodItem
-  - BadItem
   - Item
   layers:
   - Default
