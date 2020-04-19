@@ -132,7 +132,12 @@ public class GameManager : MonoBehaviour {
 			GameObject npc = SpawnNPC(sourcePerson, GetRandomPointOnMap(sourcePerson.transform.position.y), Quaternion.identity, npcs);
 			// Set skin color
 			npc.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().material.color = SkinColor.GetRandom();
+			Color color = ShirtColor.GetRandom();
+			npc.transform.Find("shirt1").Find("pCylinder1").GetComponent<SkinnedMeshRenderer>().materials[0].color = color;
+			npc.transform.Find("shirt1").Find("pCylinder1").GetComponent<SkinnedMeshRenderer>().materials[1].color = color;
+
 		}
+
 
 		// Spawn look alikes
 		for (int i = 0; i < fakeRonaldoCount; i++) {
