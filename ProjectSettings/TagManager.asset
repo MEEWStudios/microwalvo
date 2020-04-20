@@ -7,6 +7,8 @@ TagManager:
   - Fake Ronaldo
   - Real Ronaldo
   - Item
+  - FxTemporaire
+  - Key
   layers:
   - Default
   - TransparentFX

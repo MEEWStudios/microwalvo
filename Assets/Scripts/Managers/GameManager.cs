@@ -252,4 +252,21 @@ public class GameManager : MonoBehaviour {
 	public static GameObject GetPlayerObject(Player player) {
 		return playerMap[player];
 	}
+
+	public IEnumerator spawnKey() {
+		yield return new WaitForSeconds(5.0f);
+
+		GameObject source = GameObject.Find("PlaceholderKey");
+			// Get a random position
+			Vector3 position = GameManager.GetRandomPointOnMap(source.transform.position.y);
+			// Spawn the item
+			GameObject item = Instantiate(source, position, source.transform.rotation, items) as GameObject;
+			// Spawn the animation effect
+			GameObject sparkle = Instantiate(itemAnimation, position, Quaternion.identity, item.transform) as GameObject;
+			sparkle.transform.localPosition = new Vector3(0, 0.5f, 0.5f);
+			// Set the animation size
+			sparkle.transform.localScale = new Vector3(4, 4, 4);
+
+		Debug.Log("Key spawned");
+	}
 }

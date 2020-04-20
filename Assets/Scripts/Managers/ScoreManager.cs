@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ScoreManager : MonoBehaviour {
 	public GameObject scoresObject;
 	public Text winnerText;
+	public bool scoreIsIncrementing = false;
 
 	private Dictionary<Player, int> scores = new Dictionary<Player, int>();
 
@@ -27,15 +28,22 @@ public class ScoreManager : MonoBehaviour {
 		}
 	}
 
-	public void ChangeScoreBy(Player player, int score) {
-		scores[player] += score;
+	public IEnumerator ChangeScoreBy(Player player, int score) {
 
-		if (scores[player] < 0) {
-			scores[player] = 0;
+		scoreIsIncrementing = true;
+
+		while(scoreIsIncrementing) {
+			scores[player] += score;
+			yield return new WaitForSeconds(1.0f);
+
+			if (scores[player] < 0) {
+				scores[player] = 0;
+			}
+
+			GameObject text = scoresObject.transform.Find("P" + (((int) player) + 1)).Find("Score").gameObject;
+			text.GetComponent<Text>().text = scores[player].ToString();
 		}
 
-		GameObject text = scoresObject.transform.Find("P" + (((int) player) + 1)).Find("Score").gameObject;
-		text.GetComponent<Text>().text = scores[player].ToString();
 	}
 
 	public void DisplayResults() {

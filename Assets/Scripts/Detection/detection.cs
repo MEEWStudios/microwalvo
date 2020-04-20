@@ -13,6 +13,7 @@ public class detection : MonoBehaviour {
 
 	public SpotlightControl control;
 	private ScoreManager scoreManager;
+	private GameManager gameManager;
 
 	private int spawnRepel;
 
@@ -23,6 +24,7 @@ public class detection : MonoBehaviour {
 	void Start() {
 		control = this.transform.parent.GetComponent<SpotlightControl>();
 		scoreManager = managersObject.GetComponent<ScoreManager>();
+		gameManager = managersObject.GetComponent<GameManager>();
 		spawnRepel = managersObject.GetComponent<GameManager>().spawnRepel;
 	}
 
@@ -42,6 +44,11 @@ public class detection : MonoBehaviour {
 
 		if (gameObject.CompareTag("Item")) {
 			enumerator = ActivateItem(1f, gameObject);
+		}
+
+		if(gameObject.CompareTag("Key")) {
+			enumerator = ActivateKey(1f, gameObject);
+			Debug.Log("Key in spotlight");
 		}
 
 		if (enumerator != null) {
@@ -67,6 +74,7 @@ public class detection : MonoBehaviour {
 		}
 	}
 
+	//Eventually change to despawn Ronaldo instead
 	IEnumerator MoveRonaldo(float delay, GameObject ronaldo) {
 		yield return new WaitForSeconds(delay);
 		GameObject expl = Instantiate(explosion, ronaldo.transform.position, Quaternion.identity) as GameObject;
@@ -74,10 +82,12 @@ public class detection : MonoBehaviour {
 
 		smokeBombSound.Play();
 		pointIncreaseSound.Play();
-		Debug.Log("Ronaldo has moved!");
+		
+		//Spawn Key
+		StartCoroutine(gameManager.spawnKey());
 
 		// Add points to the corresponding spotlight's score
-		scoreManager.ChangeScoreBy(control.player, 1);
+		StartCoroutine(scoreManager.ChangeScoreBy(control.player, 1)); 
 
 		coroutines.Remove(ronaldo);
 	}
@@ -107,6 +117,21 @@ public class detection : MonoBehaviour {
 		// Activate the item
 		ItemEffect effect = item.GetComponent<ItemEffect>();
 		effect.Activate(GameManager.GetPlayerObject(control.player));
+		// Remove the coroutine
+		coroutines.Remove(item);
+	}
+
+	IEnumerator ActivateKey(float delay, GameObject item) {
+		// Wait
+		yield return new WaitForSeconds(delay);
+		// Hide item
+		item.transform.position = new Vector3(1000, 1000, 1000);
+		// Spawn pickup effect
+		Instantiate(pickup, item.transform.position, Quaternion.identity);
+		// Activate the item
+		//ItemEffect effect = item.GetComponent<ItemEffect>();
+		//effect.Activate(GameManager.GetPlayerObject(control.player));
+		scoreManager.scoreIsIncrementing = false;
 		// Remove the coroutine
 		coroutines.Remove(item);
 	}
