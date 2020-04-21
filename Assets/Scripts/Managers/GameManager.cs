@@ -84,11 +84,7 @@ public class GameManager : MonoBehaviour {
 		GameObject sourceSpotlight = prefabSource.Find("Spotlight").gameObject;
 		GameObject sourceRonaldo = characterSource.Find("Ronaldo").gameObject;
 		Transform shirtSource = prefabSource.Find("Clothing").Find("Shirts");
-		Transform[] shirtList = Extension.GetComponentsInDirectChildren<Transform>(shirtSource);
 		Transform itemSource = prefabSource.Find("Items");
-		List<Transform> itemList = new List<Transform>(itemSource.GetComponentsInChildren<Transform>());
-		// Remove parent from list
-		itemList.Remove(itemSource);
 
 		for (int i = 0; i < playerCount; i++) {
 			// Create player object
@@ -135,7 +131,7 @@ public class GameManager : MonoBehaviour {
 			// Set skin color
 			npc.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().material.color = SkinColor.GetRandom();
 			// Pick a random shirt
-			Transform clothing = (Instantiate(shirtList[Random.Range(0, shirtList.Length)].gameObject, npc.transform) as GameObject).transform;
+			Transform clothing = (Instantiate(shirtSource.GetChild(Random.Range(0, shirtSource.childCount)).gameObject, npc.transform) as GameObject).transform;
 			clothing.transform.localPosition = new Vector3(0, 0, 0);
 			// Add the Wearable script
 			Wearable wearable = clothing.transform.Find("pCylinder1").gameObject.AddComponent<Wearable>();
@@ -163,7 +159,7 @@ public class GameManager : MonoBehaviour {
 		// Spawn items
 		for (int i = 0; i < itemCount; i++) {
 			// Pick a random item
-			GameObject source = itemList[Random.Range(0, itemList.Count)].gameObject;
+			GameObject source = itemSource.GetChild(Random.Range(0, itemSource.childCount)).gameObject;
 			// Spawn it
 			SpawnItem(source);
 		}
