@@ -47,13 +47,11 @@ public class detection : MonoBehaviour {
 		}
 
 		if (gameObject.CompareTag("Item")) {
-			enumerator = ActivateItem(1f, gameObject);
-		}
+			ItemEffect effect = gameObject.GetComponent<ItemEffect>();
 
-		//player can only pickup key when their ronaldo is off
-		if(gameObject.CompareTag("Key") && !playersOwnRonaldo.activeSelf) {
-			enumerator = ActivateKey(1f, gameObject);
-			Debug.Log("Key in spotlight");
+			if (effect.CanActivate(this.transform.parent.transform.parent.gameObject)) {
+				enumerator = ActivateItem(1f, gameObject);
+			}
 		}
 
 		if (enumerator != null) {
@@ -128,22 +126,6 @@ public class detection : MonoBehaviour {
 		// Activate the item
 		ItemEffect effect = item.GetComponent<ItemEffect>();
 		effect.Activate(GameManager.GetPlayerObject(control.player));
-		// Remove the coroutine
-		coroutines.Remove(item);
-	}
-
-	IEnumerator ActivateKey(float delay, GameObject item) {
-		// Wait
-		yield return new WaitForSeconds(delay);
-		// Hide item
-		item.transform.position = new Vector3(1000, 1000, 1000);
-		// Spawn pickup effect
-		Instantiate(pickup, item.transform.position, Quaternion.identity);
-		// Activate the item
-		//ItemEffect effect = item.GetComponent<ItemEffect>();
-		//effect.Activate(GameManager.GetPlayerObject(control.player));
-		scoreManager.scoreIsIncrementing = false;
-		playersOwnRonaldo.SetActive(true);
 		// Remove the coroutine
 		coroutines.Remove(item);
 	}

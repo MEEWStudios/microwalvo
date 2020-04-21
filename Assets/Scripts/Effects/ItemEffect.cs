@@ -26,6 +26,10 @@ public abstract class ItemEffect : MonoBehaviour {
 		StartCoroutine(DoEffect(playerObject));
 	}
 
+	public virtual bool CanActivate(GameObject playerObject) {
+		return true;
+	}
+
 	public virtual IEnumerator DoEffect(GameObject playerObject) {
 		ApplyEffect(playerObject);
 		yield return new WaitForSeconds(EffectDuration);

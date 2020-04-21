@@ -164,15 +164,8 @@ public class GameManager : MonoBehaviour {
 		for (int i = 0; i < itemCount; i++) {
 			// Pick a random item
 			GameObject source = itemList[Random.Range(0, itemList.Count)].gameObject;
-			// Get a random position
-			Vector3 position = GameManager.GetRandomPointOnMap(source.transform.position.y);
-			// Spawn the item
-			GameObject item = Instantiate(source, position, source.transform.rotation, items) as GameObject;
-			// Spawn the animation effect
-			GameObject sparkle = Instantiate(itemAnimation, position, Quaternion.identity, item.transform) as GameObject;
-			sparkle.transform.localPosition = new Vector3(0, 0.5f, 0.5f);
-			// Set the animation size
-			sparkle.transform.localScale = new Vector3(4, 4, 4);
+			// Spawn it
+			SpawnItem(source);
 		}
 
 		roundInProgress = true;
@@ -221,6 +214,22 @@ public class GameManager : MonoBehaviour {
 		return npc;
 	}
 
+	GameObject SpawnItem(GameObject original) {
+		// Get a random position
+		Vector3 position = GameManager.GetRandomPointOnMap(original.transform.position.y);
+		// Spawn the item
+		GameObject item = Instantiate(original, position, original.transform.rotation, items) as GameObject;
+		// Tag as an item
+		item.tag = "Item";
+		// Spawn the animation effect
+		GameObject sparkle = Instantiate(itemAnimation, position, Quaternion.identity, item.transform) as GameObject;
+		sparkle.transform.localPosition = new Vector3(0, 0.5f, 0.5f);
+		// Set the animation size
+		sparkle.transform.localScale = new Vector3(4, 4, 4);
+
+		return item;
+	}
+
 	void StopNPC(GameObject npc) {
 		npc.GetComponent<NavMeshAgent>().enabled = false;
 		npc.GetComponent<NPCController>().enabled = false;
@@ -267,16 +276,7 @@ public class GameManager : MonoBehaviour {
 	public IEnumerator spawnKey(float delay) {
 		yield return new WaitForSeconds(delay);
 
-		GameObject source = GameObject.Find("PlaceholderKey");
-			// Get a random position
-			Vector3 position = GameManager.GetRandomPointOnMap(source.transform.position.y);
-			// Spawn the item
-			GameObject item = Instantiate(source, position, source.transform.rotation, items) as GameObject;
-			// Spawn the animation effect
-			GameObject sparkle = Instantiate(itemAnimation, position, Quaternion.identity, item.transform) as GameObject;
-			sparkle.transform.localPosition = new Vector3(0, 0.5f, 0.5f);
-			// Set the animation size
-			sparkle.transform.localScale = new Vector3(4, 4, 4);
+		SpawnItem(prefabSource.Find("key").gameObject);
 
 		Debug.Log("Key spawned");
 	}
