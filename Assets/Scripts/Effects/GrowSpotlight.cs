@@ -3,7 +3,7 @@
 public class GrowSpotlight : ItemEffect {
 	public override float EffectDuration { get { return 4; } }
 
-	private float scaleChange = 1.25f;
+	private float scaleChange = 1.5f;
 	private GameObject spotlight;
 
 	public override void ApplyEffect(GameObject playerObject) {
