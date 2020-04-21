@@ -6,15 +6,15 @@ public class GrowSpotlight : ItemEffect {
 	private float scaleChange = 1.5f;
 	private GameObject spotlight;
 
-	public override void ApplyEffect(GameObject playerObject) {
-		spotlight = playerObject.transform.Find("Spotlight").gameObject;
+	public override void ApplyEffect(Transform playerGroup) {
+		spotlight = playerGroup.Find("Spotlight").gameObject;
 		Vector3 scale = spotlight.transform.localScale;
 		scale.x *= scaleChange;
 		scale.z *= scaleChange;
 		spotlight.transform.localScale = scale;
 	}
 
-	public override void RemoveEffect(GameObject playerObject) {
+	public override void RemoveEffect(Transform playerGroup) {
 		Vector3 scale = spotlight.transform.localScale;
 		scale.x /= scaleChange;
 		scale.z /= scaleChange;

@@ -22,24 +22,24 @@ public abstract class ItemEffect : MonoBehaviour {
 		this.transform.position = position;
 	}
 
-	public void Activate(GameObject playerObject) {
-		StartCoroutine(DoEffect(playerObject));
+	public void Activate(Transform playerGroup) {
+		StartCoroutine(DoEffect(playerGroup));
 	}
 
-	public virtual bool CanActivate(GameObject playerObject) {
+	public virtual bool CanActivate(Transform playerGroup) {
 		return true;
 	}
 
-	public virtual IEnumerator DoEffect(GameObject playerObject) {
-		ApplyEffect(playerObject);
+	public virtual IEnumerator DoEffect(Transform playerGroup) {
+		ApplyEffect(playerGroup);
 		yield return new WaitForSeconds(EffectDuration);
-		RemoveEffect(playerObject);
+		RemoveEffect(playerGroup);
 		// Hack to perform some final actions before the object is removed
 		yield return new WaitForSeconds(10);
 		Destroy(this.gameObject);
 	}
 
-	public abstract void ApplyEffect(GameObject playerObject);
+	public abstract void ApplyEffect(Transform playerGroup);
 
-	public abstract void RemoveEffect(GameObject playerObject);
+	public abstract void RemoveEffect(Transform playerGroup);
 }

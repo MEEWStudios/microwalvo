@@ -49,7 +49,7 @@ public class detection : MonoBehaviour {
 		if (gameObject.CompareTag("Item")) {
 			ItemEffect effect = gameObject.GetComponent<ItemEffect>();
 
-			if (effect.CanActivate(this.transform.parent.transform.parent.gameObject)) {
+			if (effect.CanActivate(this.transform.parent.transform.parent)) {
 				enumerator = ActivateItem(1f, gameObject);
 			}
 		}
@@ -125,7 +125,7 @@ public class detection : MonoBehaviour {
 		Instantiate(pickup, item.transform.position, Quaternion.identity);
 		// Activate the item
 		ItemEffect effect = item.GetComponent<ItemEffect>();
-		effect.Activate(GameManager.GetPlayerObject(control.player));
+		effect.Activate(GameManager.GetPlayerGroup(control.player));
 		// Remove the coroutine
 		coroutines.Remove(item);
 	}

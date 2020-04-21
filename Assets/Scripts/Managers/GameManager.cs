@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
 	private bool roundInProgress = false;
 	private float currentRoundTime = 0;
 	private ScoreManager scoreManager;
-	private static Dictionary<Player, GameObject> playerMap = new Dictionary<Player, GameObject>();
+	private static Dictionary<Player, Transform> playerMap = new Dictionary<Player, Transform>();
 	private static List<GameObject> spotlightColliders = new List<GameObject>();
 	private Transform map;
 	private Transform players;
@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour {
 		for (int i = 0; i < playerCount; i++) {
 			// Create player object
 			Transform player = new GameObject("Player" + i).transform;
-			playerMap.Add((Player) i, player.gameObject);
+			playerMap.Add((Player) i, player);
 			player.parent = players;
 			// Add player's spotlight
 			int x = i % 2 == 1 ? -20 : 20;
@@ -269,7 +269,7 @@ public class GameManager : MonoBehaviour {
 		return false;
 	}
 
-	public static GameObject GetPlayerObject(Player player) {
+	public static Transform GetPlayerGroup(Player player) {
 		return playerMap[player];
 	}
 
