@@ -83,6 +83,8 @@ public class GameManager : MonoBehaviour {
 		GameObject sourceLookAlike = characterSource.Find("Fake Ronaldo").gameObject;
 		GameObject sourceSpotlight = prefabSource.Find("Spotlight").gameObject;
 		GameObject sourceRonaldo = characterSource.Find("Ronaldo").gameObject;
+		Transform shirtSource = prefabSource.Find("Clothing").Find("Shirts");
+		Transform[] shirtList = Extension.GetComponentsInDirectChildren<Transform>(shirtSource);
 		Transform itemSource = prefabSource.Find("Items");
 		List<Transform> itemList = new List<Transform>(itemSource.GetComponentsInChildren<Transform>());
 		// Remove parent from list
@@ -132,10 +134,19 @@ public class GameManager : MonoBehaviour {
 			GameObject npc = SpawnNPC(sourcePerson, GetRandomPointOnMap(sourcePerson.transform.position.y), Quaternion.identity, npcs);
 			// Set skin color
 			npc.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().material.color = SkinColor.GetRandom();
+			// Pick a random shirt
+			Transform clothing = (Instantiate(shirtList[Random.Range(0, shirtList.Length)].gameObject, npc.transform) as GameObject).transform;
+			clothing.transform.localPosition = new Vector3(0, 0, 0);
+			// Add the Wearable script
+			Wearable wearable = clothing.transform.Find("pCylinder1").gameObject.AddComponent<Wearable>();
+			wearable.target = npc.transform.Find("pCube1").gameObject;
+			// Pick a random shirt color
 			Color color = ShirtColor.GetRandom();
-			npc.transform.Find("shirt1").Find("pCylinder1").GetComponent<SkinnedMeshRenderer>().materials[0].color = color;
-			npc.transform.Find("shirt1").Find("pCylinder1").GetComponent<SkinnedMeshRenderer>().materials[1].color = color;
-
+			Material[] materials = clothing.Find("pCylinder1").GetComponent<SkinnedMeshRenderer>().materials;
+			for (int j = 0; j < materials.Length; j++) {
+				// Apply color
+				materials[j].color = color;
+			}
 		}
 
 
