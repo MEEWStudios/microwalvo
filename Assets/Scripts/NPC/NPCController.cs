@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class NPCController : MonoBehaviour {
 
-	public float wanderRadius = 30; // Wander Radius
+	public float wanderRadius = 100; // Wander Radius
 	public float minIdleTime = 0;
 	public float maxIdleTime = 8;
 	public float panicTime = 5;
