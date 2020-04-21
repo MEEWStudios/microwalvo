@@ -6,9 +6,11 @@ using UnityEngine.UI;
 public class detection : MonoBehaviour {
 	public GameObject managersObject;
 	public GameObject ronaldo;
+	public GameObject playersOwnRonaldo;
 	public GameObject explosion;
 	public GameObject pickup;
 	Dictionary<GameObject, Coroutine> coroutines = new Dictionary<GameObject, Coroutine>();
+	Dictionary<Player, Player> captureTracker = new Dictionary<Player, Player>();
 	IEnumerator coroutine;
 
 	public SpotlightControl control;
@@ -26,13 +28,15 @@ public class detection : MonoBehaviour {
 		scoreManager = managersObject.GetComponent<ScoreManager>();
 		gameManager = managersObject.GetComponent<GameManager>();
 		spawnRepel = managersObject.GetComponent<GameManager>().spawnRepel;
+		playersOwnRonaldo = this.transform.parent.transform.parent.GetChild(1).gameObject;
 	}
 
 	private void OnTriggerEnter(Collider collider) {
 		GameObject gameObject = collider.gameObject;
 		IEnumerator enumerator = null;
 
-		if (gameObject.tag == "Real Ronaldo" && gameObject.GetComponent<NPCTraits>().player == control.player) {
+		//Second conditional changed to != check if the Ronaldo found is not their own 
+		if (gameObject.tag == "Real Ronaldo" && gameObject.GetComponent<NPCTraits>().player != control.player) {
 			Debug.Log("Ronaldo entered spotlight!");
 			enumerator = MoveRonaldo(2.0f, gameObject);
 		}
@@ -46,7 +50,8 @@ public class detection : MonoBehaviour {
 			enumerator = ActivateItem(1f, gameObject);
 		}
 
-		if(gameObject.CompareTag("Key")) {
+		//player can only pickup key when their ronaldo is off
+		if(gameObject.CompareTag("Key") && !playersOwnRonaldo.activeSelf) {
 			enumerator = ActivateKey(1f, gameObject);
 			Debug.Log("Key in spotlight");
 		}
@@ -65,7 +70,7 @@ public class detection : MonoBehaviour {
 			coroutines.Remove(gameObject);
 		}
 
-		if (gameObject.tag == "Real Ronaldo" && gameObject.GetComponent<NPCTraits>().player == control.player) {
+		if (gameObject.tag == "Real Ronaldo" && gameObject.GetComponent<NPCTraits>().player != control.player) {
 			Debug.Log("Ronaldo exited spotlight!");
 		}
 
@@ -74,20 +79,26 @@ public class detection : MonoBehaviour {
 		}
 	}
 
-	//Eventually change to despawn Ronaldo instead
+	
 	IEnumerator MoveRonaldo(float delay, GameObject ronaldo) {
 		yield return new WaitForSeconds(delay);
 		GameObject expl = Instantiate(explosion, ronaldo.transform.position, Quaternion.identity) as GameObject;
-		ronaldo.transform.position = GameManager.GetRandomPointOnMap(ronaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel));
 
+		//Capturer : Captured
+		captureTracker.Add(control.player, gameObject.GetComponent<NPCTraits>().player);
+
+		//Turn off Ronaldo when found
+		ronaldo.SetActive(false);
+		ronaldo.transform.position = GameManager.GetRandomPointOnMap(ronaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel));
 		smokeBombSound.Play();
 		pointIncreaseSound.Play();
+		// Add points to the corresponding spotlight's score over time
+		StartCoroutine(scoreManager.StartIncreasingScoreBy(control.player, 1)); 
 		
-		//Spawn Key
-		StartCoroutine(gameManager.spawnKey());
+		//Spawn Key after a delay
+		StartCoroutine(gameManager.spawnKey(5.0f));
 
-		// Add points to the corresponding spotlight's score
-		StartCoroutine(scoreManager.ChangeScoreBy(control.player, 1)); 
+
 
 		coroutines.Remove(ronaldo);
 	}
@@ -132,6 +143,7 @@ public class detection : MonoBehaviour {
 		//ItemEffect effect = item.GetComponent<ItemEffect>();
 		//effect.Activate(GameManager.GetPlayerObject(control.player));
 		scoreManager.scoreIsIncrementing = false;
+		playersOwnRonaldo.SetActive(true);
 		// Remove the coroutine
 		coroutines.Remove(item);
 	}

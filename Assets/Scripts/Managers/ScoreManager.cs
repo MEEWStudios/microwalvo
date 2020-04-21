@@ -28,7 +28,21 @@ public class ScoreManager : MonoBehaviour {
 		}
 	}
 
-	public IEnumerator ChangeScoreBy(Player player, int score) {
+	public void ChangeScoreBy(Player player, int score) {
+
+		scores[player] += score;
+	
+
+		if (scores[player] < 0) {
+			scores[player] = 0;
+		}
+
+		GameObject text = scoresObject.transform.Find("P" + (((int) player) + 1)).Find("Score").gameObject;
+		text.GetComponent<Text>().text = scores[player].ToString();
+		
+	}
+
+	public IEnumerator StartIncreasingScoreBy(Player player, int score) {
 
 		scoreIsIncrementing = true;
 

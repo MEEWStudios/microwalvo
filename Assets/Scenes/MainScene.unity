@@ -12455,7 +12455,7 @@ Transform:
   m_GameObject: {fileID: 980098677}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1026.59, y: 4.92, z: 999.5}
-  m_LocalScale: {x: 1.67, y: 3.7, z: 1.55}
+  m_LocalScale: {x: 1.67, y: 3, z: 1.55}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 11
@@ -19855,6 +19855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   managersObject: {fileID: 475965069}
   ronaldo: {fileID: 2138886379}
+  playersOwnRonaldo: {fileID: 0}
   explosion: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56, type: 3}
   pickup: {fileID: 100006, guid: 8fc06027b01064e4f885fd8dd2929310, type: 3}
   control: {fileID: 0}

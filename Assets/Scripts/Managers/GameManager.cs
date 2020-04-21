@@ -253,8 +253,8 @@ public class GameManager : MonoBehaviour {
 		return playerMap[player];
 	}
 
-	public IEnumerator spawnKey() {
-		yield return new WaitForSeconds(5.0f);
+	public IEnumerator spawnKey(float delay) {
+		yield return new WaitForSeconds(delay);
 
 		GameObject source = GameObject.Find("PlaceholderKey");
 			// Get a random position
