@@ -85,7 +85,7 @@ public class detection : MonoBehaviour {
 		GameObject expl = Instantiate(explosion, ronaldo.transform.position, Quaternion.identity) as GameObject;
 
 		//Capturer : Captured
-		captureTracker.Add(control.player, gameObject.GetComponent<NPCTraits>().player);
+		captureTracker.Add(control.player, ronaldo.GetComponent<NPCTraits>().player);
 
 		//Turn off Ronaldo when found
 		ronaldo.SetActive(false);
