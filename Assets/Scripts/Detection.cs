@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class detection : MonoBehaviour {
+public class Detection : MonoBehaviour {
 	public GameObject managersObject;
 	public GameObject ronaldo;
 	public GameObject playersOwnRonaldo;
