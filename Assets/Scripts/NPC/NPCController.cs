@@ -113,6 +113,13 @@ public class NPCController : MonoBehaviour {
 		}
 	}
 
+	// Reset values before the ronaldo is disabled
+	public void OnDisable() {
+		agent.speed = defaultSpeed;
+		agent.acceleration = defaultAcceleration;
+		agent.angularSpeed = defaultAngularSpeed;
+	}
+
 	public static Vector3 RandomNavSphere(Vector3 origin, float dist) {
 		Vector3 randomPoint;
 		NavMeshHit hit;
