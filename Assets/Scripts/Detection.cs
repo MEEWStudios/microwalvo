@@ -10,24 +10,18 @@ public class Detection : MonoBehaviour {
 	public GameObject explosion;
 	public GameObject pickup;
 	Dictionary<GameObject, Coroutine> coroutines = new Dictionary<GameObject, Coroutine>();
-	Dictionary<Player, Player> captureTracker = new Dictionary<Player, Player>();
-	IEnumerator coroutine;
 
 	public SpotlightControl control;
-	private ScoreManager scoreManager;
-	private GameManager gameManager;
 
 	private int spawnRepel;
 
-	public AudioSource pointIncreaseSound;
-	public AudioSource pointDecreaseSound;
-	public AudioSource smokeBombSound;
+	public AudioSource audioSource;
+	public AudioClip smokeBomb;
+	public float smokeBombVolume;
 
 	void Start() {
 		control = this.transform.parent.GetComponent<SpotlightControl>();
-		scoreManager = managersObject.GetComponent<ScoreManager>();
-		gameManager = managersObject.GetComponent<GameManager>();
-		spawnRepel = managersObject.GetComponent<GameManager>().spawnRepel;
+		spawnRepel = managersObject.GetComponent<GameManager>().spawnDistanceFromSpotlight;
 		playersOwnRonaldo = this.transform.parent.transform.parent.GetChild(1).gameObject;
 	}
 
@@ -82,21 +76,8 @@ public class Detection : MonoBehaviour {
 		yield return new WaitForSeconds(delay);
 		GameObject expl = Instantiate(explosion, ronaldo.transform.position, Quaternion.identity) as GameObject;
 
-		//Capturer : Captured
-		captureTracker.Add(control.player, ronaldo.GetComponent<NPCTraits>().player);
-
-		//Turn off Ronaldo when found
-		ronaldo.SetActive(false);
-		ronaldo.transform.position = GameManager.GetRandomPointOnMap(ronaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel));
-		smokeBombSound.Play();
-		pointIncreaseSound.Play();
-		// Add points to the corresponding spotlight's score over time
-		StartCoroutine(scoreManager.StartIncreasingScoreBy(control.player, 1)); 
-		
-		//Spawn Key after a delay
-		StartCoroutine(gameManager.spawnKey(5.0f));
-
-
+		audioSource.PlayOneShot(smokeBomb, smokeBombVolume);
+		GameManager.CaptureRonaldo(ronaldo, control.player);
 
 		coroutines.Remove(ronaldo);
 	}
@@ -106,12 +87,11 @@ public class Detection : MonoBehaviour {
 		GameObject effect = Instantiate(explosion, fakeRonaldo.transform.position, Quaternion.identity) as GameObject;
 		fakeRonaldo.transform.position = GameManager.GetRandomPointOnMap(fakeRonaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel));
 
-		smokeBombSound.Play();
-		pointDecreaseSound.Play();
+		audioSource.PlayOneShot(smokeBomb, smokeBombVolume);
 		Debug.Log("Fake Ronaldo has moved!");
 
 		// Subtract points from corresponding spotlight
-		scoreManager.ChangeScoreBy(control.player, -1);
+		ScoreManager.ChangeScoreBy(control.player, -1);
 
 		coroutines.Remove(fakeRonaldo);
 	}

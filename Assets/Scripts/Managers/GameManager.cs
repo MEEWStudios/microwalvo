@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour {
 	[Header("NPCs")]
 	public int fakeRonaldoCount;
 	public int personCount;
-	public int spawnRepel = 10;
+	public int spawnDistanceFromSpotlight = 10;
 	[Header("Items")]
 	public int itemCount = 10;
 	public GameObject itemAnimation;
@@ -21,11 +21,13 @@ public class GameManager : MonoBehaviour {
 	[Header("Camera Blur Pane")]
 	public DrawOnTexture draw;
 
+	public static GameManager manager;
 	private bool roundInProgress = false;
 	private float currentRoundTime = 0;
-	private ScoreManager scoreManager;
 	private static Dictionary<Player, Transform> playerMap = new Dictionary<Player, Transform>();
 	private static List<GameObject> spotlightColliders = new List<GameObject>();
+	// Dictionary<Player captive, Player captor>
+	private static Dictionary<Player, Player> captures = new Dictionary<Player, Player>();
 	private Transform map;
 	private Transform players;
 	private Transform npcs;
@@ -33,7 +35,7 @@ public class GameManager : MonoBehaviour {
 
 	// Awake is called when the script instance is being loaded
 	void Awake() {
-		scoreManager = this.GetComponent<ScoreManager>();
+		manager = this;
 		map = GameObject.Find("Map").transform;
 		players = new GameObject("Players").transform;
 		players.parent = map;
@@ -86,11 +88,19 @@ public class GameManager : MonoBehaviour {
 		Transform shirtSource = prefabSource.Find("Clothing").Find("Shirts");
 		Transform itemSource = prefabSource.Find("Items");
 
+		playerMap.Clear();
+		spotlightColliders.Clear();
+		captures.Clear();
+
 		for (int i = 0; i < playerCount; i++) {
 			// Create player object
 			Transform player = new GameObject("Player" + i).transform;
-			playerMap.Add((Player) i, player);
 			player.parent = players;
+			// Attach player data
+			PlayerData data = player.gameObject.AddComponent<PlayerData>();
+			data.player = (Player) i;
+			// Save a reference to the player object
+			playerMap.Add((Player) i, player);
 			// Add player's spotlight
 			int x = i % 2 == 1 ? -20 : 20;
 			int z = i / 2 == 0 ? 0 : -30;
@@ -114,7 +124,7 @@ public class GameManager : MonoBehaviour {
 			draw.spotlights.Add(newSpotlight.transform.Find("SpotlightCollider").gameObject);
 
 			// Spawn player's Ronaldo
-			GameObject ronaldo = SpawnNPC(sourceRonaldo, GetRandomPointOnMap(sourceRonaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel)), Quaternion.identity, player);
+			GameObject ronaldo = SpawnNPC(sourceRonaldo, GetRandomPointOnMap(sourceRonaldo.transform.position.y, new Vector3(spawnDistanceFromSpotlight, 10, spawnDistanceFromSpotlight)), Quaternion.identity, player);
 			ronaldo.name = "Ronaldo";
 			// Tag as a Ronaldo
 			ronaldo.tag = "Real Ronaldo";
@@ -148,7 +158,7 @@ public class GameManager : MonoBehaviour {
 		// Spawn look alikes
 		for (int i = 0; i < fakeRonaldoCount; i++) {
 			// Spawn look alike
-			GameObject npc = SpawnNPC(sourceLookAlike, GetRandomPointOnMap(sourceLookAlike.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel)), Quaternion.identity, npcs);
+			GameObject npc = SpawnNPC(sourceLookAlike, GetRandomPointOnMap(sourceLookAlike.transform.position.y, new Vector3(spawnDistanceFromSpotlight, 10, spawnDistanceFromSpotlight)), Quaternion.identity, npcs);
 			// Set skin color
 			npc.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().material.color = SkinColor.GetRandom();
 			// Tag as a look alike
@@ -165,7 +175,7 @@ public class GameManager : MonoBehaviour {
 
 		roundInProgress = true;
 		//scoreManager.ResetScores(EZGM.EZGamepadCount());
-		scoreManager.ResetScores(4);
+		ScoreManager.ResetScores(4);
 	}
 
 	void EndRound() {
@@ -185,7 +195,33 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 
-		scoreManager.DisplayResults();
+		ScoreManager.DisplayResults();
+	}
+
+	public static void CaptureRonaldo(GameObject ronaldo, Player captor) {
+		Player captive = ronaldo.GetComponent<NPCTraits>().player;
+
+		// Keep track of which player captured which player's ronaldo
+		captures.Add(captive, captor);
+
+		// Turn off Ronaldo when found
+		ronaldo.SetActive(false);
+		ronaldo.transform.position = GetRandomPointOnMap(ronaldo.transform.position.y, new Vector3(manager.spawnDistanceFromSpotlight, 10, manager.spawnDistanceFromSpotlight));
+		// Add points to the corresponding spotlight's score over time
+		ScoreManager.StartIncreasingScoreBy(captor, 1);
+
+		// Spawn Key after a delay
+		manager.StartCoroutine(spawnKey(5.0f));
+	}
+
+	public static void ReleaseRonaldo(Player player) {
+		Transform playerGroup = GetPlayerGroup(player);
+
+		// Stop increasing the captor's score
+		ScoreManager.StopIncreasingScoreBy(captures[player], 1);
+		captures.Remove(player);
+		// Enable the released ronaldo
+		playerGroup.Find("Ronaldo").gameObject.SetActive(true);
 	}
 
 	string TimestampToString(float timestamp) {
@@ -268,10 +304,10 @@ public class GameManager : MonoBehaviour {
 		return playerMap[player];
 	}
 
-	public IEnumerator spawnKey(float delay) {
+	public static IEnumerator spawnKey(float delay) {
 		yield return new WaitForSeconds(delay);
 
-		SpawnItem(prefabSource.Find("key").gameObject);
+		manager.SpawnItem(manager.prefabSource.Find("key").gameObject);
 
 		Debug.Log("Key spawned");
 	}

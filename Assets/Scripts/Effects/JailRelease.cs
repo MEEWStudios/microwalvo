@@ -8,8 +8,7 @@ public class JailRelease : ItemEffect {
 	}
 
 	public override void ApplyEffect(Transform playerGroup) {
-		GameObject.Find("Managers").GetComponent<ScoreManager>().scoreIsIncrementing = false;
-		playerGroup.transform.Find("Ronaldo").gameObject.SetActive(true);
+		GameManager.ReleaseRonaldo(playerGroup.GetComponent<PlayerData>().player);
 	}
 
 	public override void RemoveEffect(Transform playerGroup) {
