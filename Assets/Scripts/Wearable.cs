@@ -2,11 +2,9 @@
 using UnityEngine;
 
 public class Wearable : MonoBehaviour {
-	public GameObject target;
-
-
 	// Use this for initialization
 	void Start() {
+		Transform target = this.transform.parent.parent.Find("pCube1");
 		SkinnedMeshRenderer targetRenderer = target.GetComponent<SkinnedMeshRenderer>();
 		Dictionary<string, Transform> boneMap = new Dictionary<string, Transform>();
 

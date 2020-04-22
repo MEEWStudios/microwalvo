@@ -134,8 +134,7 @@ public class GameManager : MonoBehaviour {
 			Transform clothing = (Instantiate(shirtSource.GetChild(Random.Range(0, shirtSource.childCount)).gameObject, npc.transform) as GameObject).transform;
 			clothing.transform.localPosition = new Vector3(0, 0, 0);
 			// Add the Wearable script
-			Wearable wearable = clothing.transform.Find("pCylinder1").gameObject.AddComponent<Wearable>();
-			wearable.target = npc.transform.Find("pCube1").gameObject;
+			clothing.transform.Find("pCylinder1").gameObject.AddComponent<Wearable>();
 			// Pick a random shirt color
 			Color color = ShirtColor.GetRandom();
 			Material[] materials = clothing.Find("pCylinder1").GetComponent<SkinnedMeshRenderer>().materials;
