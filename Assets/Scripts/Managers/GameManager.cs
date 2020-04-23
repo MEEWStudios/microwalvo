@@ -154,15 +154,16 @@ public class GameManager : MonoBehaviour {
 				materials[j].color = color;
 			}
 			// Choose random accessories
-			foreach (Transform child in accessoriesSource) {
-				int selection = Random.Range(-1, child.childCount);
+			foreach (Transform accessoryType in accessoriesSource) {
+				int selection = Random.Range(-1, accessoryType.childCount);
 
 				if (selection == -1) {
 					continue;
 				}
 
-				Transform accessoryBody = child.GetChild(selection);
-				Transform accessorySource = accessoryBody.GetComponent<AccessoryLocation>().accessory;
+				Transform accessoryBody = accessoryType.GetChild(selection);
+				Transform[] accessoryList = accessoryBody.GetComponent<AccessoryLocation>().accessories;
+				Transform accessorySource = accessoryList[Random.Range(0, accessoryList.Length)];
 				Transform temporary = accessorySource.parent;
 				Stack<string> path = new Stack<string>();
 
@@ -182,6 +183,7 @@ public class GameManager : MonoBehaviour {
 					temporary = temporary.Find(path.Pop());
 				}
 
+				// Spawn the accessory and set it's position, rotation, and scale
 				GameObject accessory = Instantiate(accessorySource.gameObject, temporary) as GameObject;
 				accessory.transform.localPosition = accessorySource.localPosition;
 				accessory.transform.rotation = accessorySource.rotation;
