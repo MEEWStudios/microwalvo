@@ -2,7 +2,7 @@
 using System.Collections;
 
 public static class PantColor {
-	public static readonly int[,] COLORS = new int[,] { { 20, 20, 34 }, { 255, 255, 255 }, { 138, 138, 138 }, { 171, 107, 17 } };
+	public static readonly int[,] COLORS = new int[,] { { 20, 20, 34 }, { 255, 255, 255 }, { 138, 138, 138 }, { 161, 112, 16 }, { 42, 65, 128 }, { 128, 42, 42 } };
 
 	public static Color GetRandom() {
 		int color = Random.Range(0, COLORS.GetLength(0));
