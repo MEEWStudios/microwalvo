@@ -7,7 +7,7 @@ public class NPCController : MonoBehaviour {
 
 	public float wanderRadius = 100; // Wander Radius
 	public float minIdleTime = 0;
-	public float maxIdleTime = 8;
+	public float maxIdleTime = 15;
 	public float panicTime = 5;
 	public bool debug = false;
 
@@ -28,6 +28,9 @@ public class NPCController : MonoBehaviour {
 		defaultSpeed = agent.speed;
 		defaultAcceleration = agent.acceleration;
 		defaultAngularSpeed = agent.angularSpeed;
+
+		hasReachedDestination = true;
+		idleTime = Random.Range(minIdleTime, 1);
 	}
 
 	// Update is called once per frame

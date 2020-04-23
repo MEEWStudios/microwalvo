@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour {
 		GameObject sourceSpotlight = prefabSource.Find("Spotlight").gameObject;
 		GameObject sourceRonaldo = characterSource.Find("Ronaldo").gameObject;
 		Transform shirtSource = prefabSource.Find("Clothing").Find("Shirts");
+		Transform accessoriesSource = prefabSource.Find("Accessories");
 		Transform itemSource = prefabSource.Find("Items");
 
 		playerMap.Clear();
@@ -151,6 +152,40 @@ public class GameManager : MonoBehaviour {
 			for (int j = 0; j < materials.Length; j++) {
 				// Apply color
 				materials[j].color = color;
+			}
+			// Choose random accessories
+			foreach (Transform child in accessoriesSource) {
+				int selection = Random.Range(-1, child.childCount);
+
+				if (selection == -1) {
+					continue;
+				}
+
+				Transform accessoryBody = child.GetChild(selection);
+				Transform accessorySource = accessoryBody.GetComponent<AccessoryLocation>().accessory;
+				Transform temporary = accessorySource.parent;
+				Stack<string> path = new Stack<string>();
+
+				// Find the path that must be traversed to place the accessory on the right bone
+				while (temporary != accessoryBody) {
+					if (temporary.parent == null) {
+						return;
+					}
+
+					path.Push(temporary.name);
+					temporary = temporary.parent;
+				}
+
+				// Traverse through the body to get the correct bone
+				temporary = npc.transform;
+				while (path.Count > 0) {
+					temporary = temporary.Find(path.Pop());
+				}
+
+				GameObject accessory = Instantiate(accessorySource.gameObject, temporary) as GameObject;
+				accessory.transform.localPosition = accessorySource.localPosition;
+				accessory.transform.rotation = accessorySource.rotation;
+				accessory.transform.localScale = accessorySource.localScale;
 			}
 		}
 
