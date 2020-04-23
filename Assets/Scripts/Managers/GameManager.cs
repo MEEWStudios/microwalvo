@@ -107,6 +107,8 @@ public class GameManager : MonoBehaviour {
 			int z = i / 2 == 0 ? 0 : -30;
 			GameObject newSpotlight = Instantiate(sourceSpotlight, new Vector3(x, 0, z), Quaternion.identity, player) as GameObject;
 			newSpotlight.name = "Spotlight";
+			// Color spotlight ring
+			newSpotlight.transform.Find("SpotlightCollider").Find("Canvas").Find("Image").gameObject.GetComponent<Image>().color = PlayerColor.Get(i);
 			// Add SpotlightControl
 			SpotlightControl control = newSpotlight.AddComponent<SpotlightControl>();
 			// Add Player specifier
@@ -129,6 +131,10 @@ public class GameManager : MonoBehaviour {
 			ronaldo.name = "Ronaldo";
 			// Tag as a Ronaldo
 			ronaldo.tag = "Real Ronaldo";
+			// Set color
+			ronaldo.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().materials[0].color = PlayerColor.Get(i);
+			ronaldo.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().materials[1].color = PlayerColor.Get(i) * new Color(0.5f, 0.5f, 0.5f);
+			ronaldo.transform.Find("sweater2").Find("pCylinder1").GetComponent<SkinnedMeshRenderer>().material.color = PlayerColor.Get(i);
 			// Add Player specifier
 			NPCTraits traits = ronaldo.AddComponent<NPCTraits>();
 			traits.player = (Player) i;
@@ -140,7 +146,8 @@ public class GameManager : MonoBehaviour {
 			// Spawn person
 			GameObject npc = SpawnNPC(sourcePerson, GetRandomPointOnMap(sourcePerson.transform.position.y), Quaternion.identity, npcs);
 			// Set skin color
-			npc.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().material.color = SkinColor.GetRandom();
+			npc.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().materials[0].color = SkinColor.GetRandom();
+			npc.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().materials[1].color = PantColor.GetRandom();
 			// Pick a random shirt
 			Transform clothing = (Instantiate(shirtSource.GetChild(Random.Range(0, shirtSource.childCount)).gameObject, npc.transform) as GameObject).transform;
 			clothing.transform.localPosition = new Vector3(0, 0, 0);
@@ -191,15 +198,15 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 
-
 		// Spawn look alikes
 		for (int i = 0; i < fakeRonaldoCount; i++) {
 			// Spawn look alike
 			GameObject npc = SpawnNPC(sourceLookAlike, GetRandomPointOnMap(sourceLookAlike.transform.position.y, new Vector3(spawnDistanceFromSpotlight, 10, spawnDistanceFromSpotlight)), Quaternion.identity, npcs);
-			// Set skin color
-			npc.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().material.color = SkinColor.GetRandom();
 			// Tag as a look alike
 			npc.tag = "Fake Ronaldo";
+			// Set skin color
+			npc.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().materials[0].color = SkinColor.GetRandom();
+			npc.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().materials[1].color = PantColor.GetRandom();
 		}
 
 		// Spawn items
