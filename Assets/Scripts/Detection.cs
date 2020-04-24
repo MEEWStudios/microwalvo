@@ -91,7 +91,7 @@ public class Detection : MonoBehaviour {
 		Debug.Log("Fake Ronaldo has moved!");
 
 		// Subtract points from corresponding spotlight
-		ScoreManager.ChangeScoreBy(control.player, -1);
+		ScoreManager.ChangeScoreBy(control.player, -20);
 
 		coroutines.Remove(fakeRonaldo);
 	}
