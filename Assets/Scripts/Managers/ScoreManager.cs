@@ -14,13 +14,17 @@ public class ScoreManager : MonoBehaviour {
 		}
 	}
 
+	[Header("UI Configuration")]
+	public Transform prefabSource;
+	public Transform roundPanel;
+	public Text winnerText;
+	public int padding = 25;
+	[Header("Sound Configuration")]
 	public AudioSource audioSource;
 	public AudioClip pointIncreaseSound;
 	public float pointIncreaseVolume;
 	public AudioClip pointDecreaseSound;
 	public float pointDecreaseVolume;
-	public GameObject scoresObject;
-	public Text winnerText;
 
 	private static ScoreManager manager;
 	private static Dictionary<Player, int> scores = new Dictionary<Player, int>();
@@ -43,9 +47,34 @@ public class ScoreManager : MonoBehaviour {
 	}
 
 	public static void SetupScores(int playerCount) {
+		GameObject scoreSource = manager.prefabSource.Find("PlayerScore").gameObject;
+		Transform timer = manager.roundPanel.Find("Timer");
+		float timerWidth = timer.GetComponent<RectTransform>().sizeDelta.x;
+
 		for (int i = 0; i < playerCount; i++) {
+			int side = Mathf.FloorToInt((float) i / playerCount + 0.5f) == 0 ? -1 : 1;
+			int offset = Mathf.FloorToInt(Mathf.Abs(playerCount / 2f - i) - (side == -1 ? 0.5f : 0));
 			scores.Add((Player) i, 0);
 			incrementingScores.Add((Player) i, new List<ScoreIncrementingCoroutine>());
+
+			// Add the score UI
+			Transform playerContainer = (Instantiate(scoreSource, manager.roundPanel) as GameObject).transform;
+			playerContainer.name = "Player" + i;
+			playerContainer.transform.SetParent(manager.roundPanel, false);
+			RectTransform rect = playerContainer.GetComponent<RectTransform>();
+			// Set the position
+			Vector2 position = rect.anchoredPosition;
+			position.x = (timerWidth / 2 + (manager.padding * (1 + offset)) + (rect.sizeDelta.x * offset)) * side;
+			rect.anchoredPosition = position;
+			// Set the pivot point
+			Vector2 pivot = rect.pivot;
+			pivot.x = side == -1 ? 1 : 0;
+			rect.pivot = pivot;
+			// Color ronaldo
+			Transform ronaldoUI = rect.Find("Ronaldo");
+			ronaldoUI.Find("Body").gameObject.GetComponent<Image>().color = PlayerColor.Get(i);
+			ronaldoUI.Find("Arms Free").gameObject.GetComponent<Image>().color = PlayerColor.Get(i);
+			ronaldoUI.Find("Arms Jailed").gameObject.GetComponent<Image>().color = PlayerColor.Get(i);
 		}
 	}
 
@@ -62,12 +91,27 @@ public class ScoreManager : MonoBehaviour {
 			manager.audioSource.PlayOneShot(manager.pointDecreaseSound, manager.pointDecreaseVolume);
 		}
 
-		GameObject text = manager.scoresObject.transform.Find("P" + (((int) player) + 1)).Find("Score").gameObject;
+		Transform text = manager.roundPanel.Find("Player" + (int) player).Find("Panel").Find("Score");
 		text.GetComponent<Text>().text = scores[player].ToString();
 	}
 
 	public static void StartIncreasingScoreBy(Player player, int score) {
 		incrementingScores[player].Add(new ScoreIncrementingCoroutine(manager.StartCoroutine(IncrementScoreBy(player, score)), score));
+	}
+
+	public static void Jail(Player captive, Player captor) {
+		Transform ronaldoUI = manager.roundPanel.Find("Player" + (int) captive).Find("Ronaldo");
+		ronaldoUI.Find("Arms Free").gameObject.SetActive(false);
+		ronaldoUI.Find("Bars").gameObject.SetActive(true);
+		ronaldoUI.Find("Bars").GetComponent<Image>().color = PlayerColor.Get((int) captor);
+		ronaldoUI.Find("Arms Jailed").gameObject.SetActive(true);
+	}
+
+	public static void Release(Player player) {
+		Transform ronaldoUI = manager.roundPanel.Find("Player" + (int) player).Find("Ronaldo");
+		ronaldoUI.Find("Arms Free").gameObject.SetActive(true);
+		ronaldoUI.Find("Bars").gameObject.SetActive(false);
+		ronaldoUI.Find("Arms Jailed").gameObject.SetActive(false);
 	}
 
 	public static void StopIncreasingScoreBy(Player player, int score) {

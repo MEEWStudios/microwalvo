@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		roundInProgress = true;
-		ScoreManager.SetupScores(4);
+		ScoreManager.SetupScores(playerCount);
 	}
 
 	void EndRound() {
@@ -271,6 +271,7 @@ public class GameManager : MonoBehaviour {
 		ronaldo.transform.position = GetRandomPointOnMap(ronaldo.transform.position.y, new Vector3(manager.spawnDistanceFromSpotlight, 10, manager.spawnDistanceFromSpotlight));
 		// Add points to the corresponding spotlight's score over time
 		ScoreManager.StartIncreasingScoreBy(captor, 1);
+		ScoreManager.Jail(captive, captor);
 
 		// Spawn Key after a delay
 		manager.StartCoroutine(spawnKey(5.0f));
@@ -281,6 +282,7 @@ public class GameManager : MonoBehaviour {
 
 		// Stop increasing the captor's score
 		ScoreManager.StopIncreasingScoreBy(captures[player], 1);
+		ScoreManager.Release(player);
 		captures.Remove(player);
 		// Enable the released ronaldo
 		playerGroup.Find("Ronaldo").gameObject.SetActive(true);
