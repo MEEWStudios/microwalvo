@@ -1,4 +1,6 @@
-﻿Shader "Custom/DualColorMask" {
+﻿// https://forum.unity.com/threads/customize-multiple-colors-on-material.376779/#post-2443974
+
+Shader "Custom/DualColorMask" {
     Properties {
         //_Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
