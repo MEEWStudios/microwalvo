@@ -36,10 +36,13 @@ public class ScoreManager : MonoBehaviour {
 
 	}
 
-	public static void ResetScores(int playerCount) {
+	public static void ResetScores() {
 		scores.Clear();
 		incrementingScores.Clear();
+		manager.winnerText.text = "";
+	}
 
+	public static void SetupScores(int playerCount) {
 		for (int i = 0; i < playerCount; i++) {
 			scores.Add((Player) i, 0);
 			incrementingScores.Add((Player) i, new List<ScoreIncrementingCoroutine>());

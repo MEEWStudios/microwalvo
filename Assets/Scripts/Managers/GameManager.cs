@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager manager;
 	private bool roundInProgress = false;
-	private float currentRoundTime = 0;
+	private float currentRoundTime;
 	private static Dictionary<Player, Transform> playerMap = new Dictionary<Player, Transform>();
 	private static List<GameObject> spotlightColliders = new List<GameObject>();
 	// Dictionary<Player captive, Player captor>
@@ -57,9 +57,13 @@ public class GameManager : MonoBehaviour {
 			// Press Space (Keyboard), A (Xbox), or X (PS) to start the game
 			if (EZGM.EZGamepadCount() > 0) {
 				if (EZGM.GetEZGamepad((Player) 0).buttonSouth.justPressed) {
+					ResetRound();
+					ScoreManager.ResetScores();
 					StartRound();
 				}
 			} else if (Input.GetKeyDown(KeyCode.Space)) {
+				ResetRound();
+				ScoreManager.ResetScores();
 				StartRound();
 			}
 		} else {
@@ -89,9 +93,7 @@ public class GameManager : MonoBehaviour {
 		Transform accessoriesSource = prefabSource.Find("Accessories");
 		Transform itemSource = prefabSource.Find("Items");
 
-		playerMap.Clear();
-		spotlightColliders.Clear();
-		captures.Clear();
+		currentRoundTime = 0;
 
 		for (int i = 0; i < playerCount; i++) {
 			// Create player object
@@ -218,8 +220,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		roundInProgress = true;
-		//scoreManager.ResetScores(EZGM.EZGamepadCount());
-		ScoreManager.ResetScores(4);
+		ScoreManager.SetupScores(4);
 	}
 
 	void EndRound() {
@@ -240,6 +241,22 @@ public class GameManager : MonoBehaviour {
 		}
 
 		ScoreManager.DisplayResults();
+	}
+
+	void ResetRound() {
+		playerMap.Clear();
+		spotlightColliders.Clear();
+		captures.Clear();
+
+		foreach (Transform child in players) {
+			Destroy(child.gameObject);
+		}
+		foreach (Transform child in npcs) {
+			Destroy(child.gameObject);
+		}
+		foreach (Transform child in items) {
+			Destroy(child.gameObject);
+		}
 	}
 
 	public static void CaptureRonaldo(GameObject ronaldo, Player captor) {
