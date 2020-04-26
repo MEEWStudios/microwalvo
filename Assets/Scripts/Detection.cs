@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using XInputDotNetPure; // Required in C#
 using UnityEngine.UI;
 
 public class Detection : MonoBehaviour {
@@ -20,29 +19,13 @@ public class Detection : MonoBehaviour {
 	public AudioClip smokeBomb;
 	public float smokeBombVolume;
 
-	//XInput variable
-	PlayerIndex playerIndex;
-
 	//Vibration variables
-	private bool vibrationStart = false;
 	private float vibrationTimer = 0.5f;
 
 	void Start() {
 		control = this.transform.parent.GetComponent<SpotlightControl>();
 		spawnRepel = managersObject.GetComponent<GameManager>().spawnDistanceFromSpotlight;
 		playersOwnRonaldo = this.transform.parent.transform.parent.GetChild(1).gameObject;
-	}
-
-	//Tracks how long to vibrate the controller
-	private void Update() {
-		if (vibrationStart == true) {
-			vibrationTimer -= Time.deltaTime;
-		}
-		if (vibrationTimer <= 0f) {
-			GamePad.SetVibration(playerIndex, 0, 0);
-			vibrationStart = false;
-			vibrationTimer = 0.5f;
-		}
 	}
 
 	private void OnTriggerEnter(Collider collider) {
@@ -107,8 +90,7 @@ public class Detection : MonoBehaviour {
 		fakeRonaldo.transform.position = GameManager.GetRandomPointOnMap(fakeRonaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel));
 
 		audioSource.PlayOneShot(smokeBomb, smokeBombVolume);
-		vibrationStart = true;
-		GamePad.SetVibration(playerIndex, 1.0f, 0);
+		EZGM.GetEZGamepad(control.player).HapticsOverTime(vibrationTimer, 1, 0);
 		Debug.Log("Fake Ronaldo has moved!");
 
 		// Subtract points from corresponding spotlight
