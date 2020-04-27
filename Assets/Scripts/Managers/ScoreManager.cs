@@ -25,6 +25,10 @@ public class ScoreManager : MonoBehaviour {
 	public float pointIncreaseVolume;
 	public AudioClip pointDecreaseSound;
 	public float pointDecreaseVolume;
+	public AudioClip jailCloseSound;
+	public float jailCloseVolume;
+	public AudioClip jailOpenSound;
+	public float jailOpenVolume;
 
 	private static ScoreManager manager;
 	private static Dictionary<Player, int> scores = new Dictionary<Player, int>();
@@ -86,7 +90,7 @@ public class ScoreManager : MonoBehaviour {
 		}
 
 		if (score > 0) {
-			manager.audioSource.PlayOneShot(manager.pointIncreaseSound, manager.pointIncreaseVolume);
+			
 		} else if (score < 0) {
 			manager.audioSource.PlayOneShot(manager.pointDecreaseSound, manager.pointDecreaseVolume);
 		}
@@ -105,6 +109,8 @@ public class ScoreManager : MonoBehaviour {
 		ronaldoUI.Find("Bars").gameObject.SetActive(true);
 		ronaldoUI.Find("Bars").GetComponent<Image>().color = PlayerColor.Get((int) captor);
 		ronaldoUI.Find("Arms Jailed").gameObject.SetActive(true);
+		manager.audioSource.PlayOneShot(manager.jailCloseSound, manager.jailCloseVolume);
+		manager.audioSource.PlayOneShot(manager.pointIncreaseSound, manager.pointIncreaseVolume);
 	}
 
 	public static void Release(Player player) {
@@ -112,6 +118,7 @@ public class ScoreManager : MonoBehaviour {
 		ronaldoUI.Find("Arms Free").gameObject.SetActive(true);
 		ronaldoUI.Find("Bars").gameObject.SetActive(false);
 		ronaldoUI.Find("Arms Jailed").gameObject.SetActive(false);
+		manager.audioSource.PlayOneShot(manager.jailOpenSound, manager.jailOpenVolume);
 	}
 
 	public static void StopIncreasingScoreBy(Player player, int score) {
