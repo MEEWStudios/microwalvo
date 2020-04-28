@@ -29,6 +29,9 @@ public class ScoreManager : MonoBehaviour {
 	public float jailCloseVolume;
 	public AudioClip jailOpenSound;
 	public float jailOpenVolume;
+	public AudioClip roundFinishSound;
+	public float roundFinishVolume;
+
 
 	private static ScoreManager manager;
 	private static Dictionary<Player, int> scores = new Dictionary<Player, int>();
@@ -145,6 +148,8 @@ public class ScoreManager : MonoBehaviour {
 	public static void DisplayResults() {
 		int maxScore = 0;
 		List<Player> players = new List<Player>();
+
+		manager.audioSource.PlayOneShot(manager.roundFinishSound, manager.roundFinishVolume);
 
 		foreach (KeyValuePair<Player, int> pair in scores) {
 			if (pair.Value > maxScore) {

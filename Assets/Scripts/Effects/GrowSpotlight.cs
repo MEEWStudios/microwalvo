@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 
 public class GrowSpotlight : ItemEffect {
-	public override float EffectDuration { get { return 4; } }
+	public override float EffectDuration { get { return 8; } }
 
 	private float scaleChange = 1.5f;
 	private float areaLightPositionChange = 1.5f;
 	private GameObject spotlight;
 	private GameObject areaLight;
+	public AudioSource spotlightChangeSound;
 
 	public override void ApplyEffect(Transform playerGroup) {
 		spotlight = playerGroup.Find("Spotlight").gameObject;
@@ -20,6 +21,8 @@ public class GrowSpotlight : ItemEffect {
 		areaLightPosition.y *= areaLightPositionChange;
 		areaLight.transform.position = areaLightPosition;
 		areaLight.GetComponent<Light>().intensity *= 2;
+
+		spotlightChangeSound.Play();
 	}
 
 	public override void RemoveEffect(Transform playerGroup) {
@@ -32,5 +35,7 @@ public class GrowSpotlight : ItemEffect {
 		areaLightPosition.y /= areaLightPositionChange;
 		areaLight.transform.position = areaLightPosition;
 		areaLight.GetComponent<Light>().intensity /= 2;
+
+		spotlightChangeSound.Play();
 	}
 }

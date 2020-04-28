@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class SpeedBoost : ItemEffect {
-	public override float EffectDuration { get { return 4; } }
+	public override float EffectDuration { get { return 8; } }
 	public AudioSource speedUp;
 	public AudioSource slowDown;
 
