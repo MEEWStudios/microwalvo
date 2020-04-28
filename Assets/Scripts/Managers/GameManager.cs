@@ -83,8 +83,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void StartRound() {
-		int playerCount = 4;
-		//int playerCount = EZGM.EZGamepadCount() == 0 ? 1 : EZGM.EZGamepadCount();
+		int playerCount = EZGM.EZGamepadCount() == 0 ? 1 : EZGM.EZGamepadCount();
 		Transform characterSource = prefabSource.Find("Characters");
 		GameObject sourcePerson = characterSource.Find("Person").gameObject;
 		GameObject sourceLookAlike = characterSource.Find("Fake Ronaldo").gameObject;
@@ -244,10 +243,11 @@ public class GameManager : MonoBehaviour {
 
 		ScoreManager.DisplayResults();
 
-		//disable detection scripts
+		//disable all spotlight mesh colliders
 		foreach (Transform player in players) {
 			player.Find("Spotlight").transform.Find("SpotlightCollider").GetComponent<MeshCollider>().enabled = false;
 		}
+
 	}
 
 	void ResetRound() {
