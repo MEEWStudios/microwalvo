@@ -246,7 +246,7 @@ public class GameManager : MonoBehaviour {
 
 		//disable detection scripts
 		foreach (Transform player in players) {
-			player.Find("Spotlight").transform.Find("SpotlightCollider").GetComponent<Detection>().enabled = false;
+			player.Find("Spotlight").transform.Find("SpotlightCollider").GetComponent<MeshCollider>().enabled = false;
 		}
 	}
 
