@@ -35,7 +35,6 @@ public class MainMenu : PlayerControl {
 			panel.SetActive(false);
 		}
 		if (gamepad.buttonEast.justPressed && imageComponent.sprite == tutorial) {
-			Debug.Log("button pressed!");
 			panel.SetActive(true);
 			backText.SetActive(false);
 			imageComponent.sprite = title;
