@@ -22,16 +22,16 @@ public class GameManager : MonoBehaviour {
 	public DrawOnTexture draw;
 
 	public static GameManager manager;
-	private bool roundInProgress = false;
-	private float currentRoundTime;
+	private static bool roundInProgress = false;
+	private static float currentRoundTime;
 	private static Dictionary<Player, Transform> playerMap = new Dictionary<Player, Transform>();
 	private static List<GameObject> spotlightColliders = new List<GameObject>();
 	// Dictionary<Player captive, Player captor>
 	private static Dictionary<Player, Player> captures = new Dictionary<Player, Player>();
-	private Transform map;
-	private Transform players;
-	private Transform npcs;
-	private Transform items;
+	private static Transform map;
+	private static Transform players;
+	private static Transform npcs;
+	private static Transform items;
 
 	// Awake is called when the script instance is being loaded
 	void Awake() {
@@ -54,18 +54,18 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
 		if (!roundInProgress) {
-			// Press Space (Keyboard), A (Xbox), or X (PS) to start the game
-			if (EZGM.EZGamepadCount() > 0) {
-				if (EZGM.GetEZGamepad((Player) 0).buttonSouth.justPressed) {
-					ResetRound();
-					ScoreManager.ResetScores();
-					StartRound();
-				}
-			} else if (Input.GetKeyDown(KeyCode.Space)) {
-				ResetRound();
-				ScoreManager.ResetScores();
-				StartRound();
-			}
+			//// Press Space (Keyboard), A (Xbox), or X (PS) to start the game
+			//if (EZGM.EZGamepadCount() > 0) {
+			//	if (EZGM.GetEZGamepad((Player) 0).buttonSouth.justPressed) {
+			//		ResetRound();
+			//		ScoreManager.ResetScores();
+			//		StartRound();
+			//	}
+			//} else if (Input.GetKeyDown(KeyCode.Space)) {
+			//	ResetRound();
+			//	ScoreManager.ResetScores();
+			//	StartRound();
+			//}
 		} else {
 			currentRoundTime += Time.deltaTime;
 			if ((roundTime - currentRoundTime) > 0) {
@@ -82,16 +82,16 @@ public class GameManager : MonoBehaviour {
 		ControlManager.RegisterGlobalControl(new MainMenu());
 	}
 
-	void StartRound() {
+	public static void StartRound() {
 		int playerCount = EZGM.EZGamepadCount() == 0 ? 1 : EZGM.EZGamepadCount();
-		Transform characterSource = prefabSource.Find("Characters");
+		Transform characterSource = manager.prefabSource.Find("Characters");
 		GameObject sourcePerson = characterSource.Find("Person").gameObject;
 		GameObject sourceLookAlike = characterSource.Find("Fake Ronaldo").gameObject;
-		GameObject sourceSpotlight = prefabSource.Find("Spotlight").gameObject;
+		GameObject sourceSpotlight = manager.prefabSource.Find("Spotlight").gameObject;
 		GameObject sourceRonaldo = characterSource.Find("Ronaldo").gameObject;
-		Transform shirtSource = prefabSource.Find("Clothing").Find("Shirts");
-		Transform accessoriesSource = prefabSource.Find("Accessories");
-		Transform itemSource = prefabSource.Find("Items");
+		Transform shirtSource = manager.prefabSource.Find("Clothing").Find("Shirts");
+		Transform accessoriesSource = manager.prefabSource.Find("Accessories");
+		Transform itemSource = manager.prefabSource.Find("Items");
 
 		currentRoundTime = 0;
 
@@ -126,10 +126,10 @@ public class GameManager : MonoBehaviour {
 			}
 
 			// Add the spotlight to the texture draw script
-			draw.spotlights.Add(newSpotlight.transform.Find("SpotlightCollider").gameObject);
+			manager.draw.spotlights.Add(newSpotlight.transform.Find("SpotlightCollider").gameObject);
 
 			// Spawn player's Ronaldo
-			GameObject ronaldo = SpawnNPC(sourceRonaldo, GetRandomPointOnMap(sourceRonaldo.transform.position.y, new Vector3(spawnDistanceFromSpotlight, 10, spawnDistanceFromSpotlight)), Quaternion.identity, player);
+			GameObject ronaldo = SpawnNPC(sourceRonaldo, GetRandomPointOnMap(sourceRonaldo.transform.position.y, new Vector3(manager.spawnDistanceFromSpotlight, 10, manager.spawnDistanceFromSpotlight)), Quaternion.identity, player);
 			ronaldo.name = "Ronaldo";
 			// Tag as a Ronaldo
 			ronaldo.tag = "Real Ronaldo";
@@ -142,9 +142,9 @@ public class GameManager : MonoBehaviour {
 			traits.player = (Player) i;
 
 			// Spawn look alikes
-			for (int j = 0; j < fakeRonaldoCount; j++) {
+			for (int j = 0; j < manager.fakeRonaldoCount; j++) {
 				// Spawn look alike
-				GameObject npc = SpawnNPC(sourceLookAlike, GetRandomPointOnMap(sourceLookAlike.transform.position.y, new Vector3(spawnDistanceFromSpotlight, 10, spawnDistanceFromSpotlight)), Quaternion.identity, npcs);
+				GameObject npc = SpawnNPC(sourceLookAlike, GetRandomPointOnMap(sourceLookAlike.transform.position.y, new Vector3(manager.spawnDistanceFromSpotlight, 10, manager.spawnDistanceFromSpotlight)), Quaternion.identity, npcs);
 				// Tag as a look alike
 				npc.tag = "Fake Ronaldo";
 				// Set skin color
@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour {
 
 		// Spawn NPCs
 		// Spawn people
-		for (int i = 0; i < personCount; i++) {
+		for (int i = 0; i < manager.personCount; i++) {
 			// Spawn person
 			GameObject npc = SpawnNPC(sourcePerson, GetRandomPointOnMap(sourcePerson.transform.position.y), Quaternion.identity, npcs);
 			// Set skin color
@@ -213,7 +213,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		// Spawn items
-		for (int i = 0; i < itemCount; i++) {
+		for (int i = 0; i < manager.itemCount; i++) {
 			// Pick a random item
 			GameObject source = itemSource.GetChild(Random.Range(0, itemSource.childCount)).gameObject;
 			// Spawn it
@@ -224,7 +224,7 @@ public class GameManager : MonoBehaviour {
 		ScoreManager.SetupScores(playerCount);
 	}
 
-	void EndRound() {
+	public static void EndRound() {
 		// Disable player controls
 		ControlManager.UnregisterControls(typeof(SpotlightControl));
 		ControlManager.UnregisterControls(typeof(KeyboardControl));
@@ -250,7 +250,7 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	void ResetRound() {
+	public static void ResetRound() {
 		playerMap.Clear();
 		spotlightColliders.Clear();
 		captures.Clear();
@@ -303,7 +303,7 @@ public class GameManager : MonoBehaviour {
 		return minutes + ":" + (seconds < 10 ? "0" + seconds : "" + seconds);
 	}
 
-	GameObject SpawnNPC(GameObject original, Vector3 position, Quaternion rotation, Transform parent) {
+	public static GameObject SpawnNPC(GameObject original, Vector3 position, Quaternion rotation, Transform parent) {
 		GameObject npc = Instantiate(original, position, rotation, parent) as GameObject;
 		// Add NPCController
 		npc.AddComponent<NPCController>();
@@ -315,7 +315,7 @@ public class GameManager : MonoBehaviour {
 		return npc;
 	}
 
-	GameObject SpawnItem(GameObject original) {
+	public static GameObject SpawnItem(GameObject original) {
 		// Get a random position
 		Vector3 position = GameManager.GetRandomPointOnMap(original.transform.position.y);
 		// Spawn the item
@@ -323,7 +323,7 @@ public class GameManager : MonoBehaviour {
 		// Tag as an item
 		item.tag = "Item";
 		// Spawn the animation effect
-		GameObject sparkle = Instantiate(itemAnimation, position, Quaternion.identity, item.transform) as GameObject;
+		GameObject sparkle = Instantiate(manager.itemAnimation, position, Quaternion.identity, item.transform) as GameObject;
 		sparkle.transform.localPosition = new Vector3(0, 0.5f, 0.5f);
 		// Set the animation size
 		sparkle.transform.localScale = new Vector3(4, 4, 4);
@@ -331,7 +331,7 @@ public class GameManager : MonoBehaviour {
 		return item;
 	}
 
-	void StopNPC(GameObject npc) {
+	public static void StopNPC(GameObject npc) {
 		npc.GetComponent<NavMeshAgent>().enabled = false;
 		npc.GetComponent<NPCController>().enabled = false;
 		npc.GetComponent<Animator>().SetInteger("moveState", 0);
@@ -377,7 +377,7 @@ public class GameManager : MonoBehaviour {
 	public static IEnumerator spawnKey(float delay) {
 		yield return new WaitForSeconds(delay);
 
-		manager.SpawnItem(manager.prefabSource.Find("key").gameObject);
+		SpawnItem(manager.prefabSource.Find("key").gameObject);
 
 		Debug.Log("Key spawned");
 	}
