@@ -3,20 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpotlightControl : PlayerControl {
-	public enum Axis {
-		Horizontal, Vertical
-	}
-
 	public static readonly float DEFAULT_SPEED = 12;
 	// Joystick needs to be at least this far away from the center to activate [0, 1]
 	public float joystickActivationDistance = 0.05f;
 	public float speed = DEFAULT_SPEED;
 	public Player player;
-
-	// Start is called before the first frame update
-	void Start() {
-		ControlManager.RegisterControl(this, player);
-	}
 
 	public override void ProcessGamepadInput(EZGamepad gamepad) {
 		float xAxis = gamepad.rightJoystick.xAxis;

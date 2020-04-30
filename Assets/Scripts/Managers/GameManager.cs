@@ -117,6 +117,8 @@ public class GameManager : MonoBehaviour {
 			SpotlightControl control = newSpotlight.AddComponent<SpotlightControl>();
 			// Add Player specifier
 			control.player = (Player) i;
+			// Register the control
+			ControlManager.RegisterControl(control, (Player) i);
 			// Tell the detection script about the controller
 			newSpotlight.transform.Find("SpotlightCollider").GetComponent<Detection>().control = control;
 			// Add this spotlight to the list of colliders to avoid spawning Ronaldo or his look alikes under it
