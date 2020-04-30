@@ -3843,8 +3843,10 @@ MonoBehaviour:
   jailCloseVolume: 0.7
   jailOpenSound: {fileID: 8300000, guid: 372c020794683439fb5d87a4a1d4f006, type: 3}
   jailOpenVolume: 0.3
-  roundFinishSound: {fileID: 8300000, guid: 9a9d14f5c9c7149ef821c0756ee0ba7f, type: 3}
-  roundFinishVolume: 0.6
+  roundFinishSound: {fileID: 8300000, guid: b813f3cfc1918ec40abf11aa1a94de48, type: 3}
+  roundFinishVolume: 0.2
+  allTieSound: {fileID: 8300000, guid: 33afd9f2749caa749b5f407161069cbb, type: 3}
+  allTieVolume: 0.2
 --- !u!114 &475965076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12874,7 +12876,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 459.11902, y: -358.64032}
+  m_AnchoredPosition: {x: 459.1172, y: -358.64062}
   m_SizeDelta: {x: -840.23804, y: 40}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &975751550

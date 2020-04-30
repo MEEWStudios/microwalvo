@@ -55,17 +55,19 @@ public class GameManager : MonoBehaviour {
 	void Update() {
 		if (!roundInProgress) {
 			//// Press Space (Keyboard), A (Xbox), or X (PS) to start the game
-			//if (EZGM.EZGamepadCount() > 0) {
-			//	if (EZGM.GetEZGamepad((Player) 0).buttonSouth.justPressed) {
-			//		ResetRound();
-			//		ScoreManager.ResetScores();
-			//		StartRound();
-			//	}
-			//} else if (Input.GetKeyDown(KeyCode.Space)) {
-			//	ResetRound();
-			//	ScoreManager.ResetScores();
-			//	StartRound();
-			//}
+			/*
+			if (EZGM.EZGamepadCount() > 0) {
+				if (EZGM.GetEZGamepad((Player) 0).buttonSouth.justPressed) {
+					ResetRound();
+					ScoreManager.ResetScores();
+					StartRound();
+				}
+			} else if (Input.GetKeyDown(KeyCode.Space)) {
+				ResetRound();
+				ScoreManager.ResetScores();
+				StartRound();
+			}
+			*/
 		} else {
 			currentRoundTime += Time.deltaTime;
 			if ((roundTime - currentRoundTime) > 0) {
@@ -243,10 +245,18 @@ public class GameManager : MonoBehaviour {
 
 		ScoreManager.DisplayResults();
 
-		//disable all spotlight mesh colliders
+		//Stop all player behaviors at end
 		foreach (Transform player in players) {
+			//disable all spotlight mesh colliders
 			player.Find("Spotlight").transform.Find("SpotlightCollider").GetComponent<MeshCollider>().enabled = false;
+			//Stop increasing all scores that were increasing
+			Player currentPlayer = player.GetComponent<PlayerData>().player;
+			ScoreManager.StopIncreasingScoreBy(currentPlayer, 1);
 		}
+
+
+
+
 
 	}
 

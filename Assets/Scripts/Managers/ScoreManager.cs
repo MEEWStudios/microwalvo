@@ -31,6 +31,8 @@ public class ScoreManager : MonoBehaviour {
 	public float jailOpenVolume;
 	public AudioClip roundFinishSound;
 	public float roundFinishVolume;
+	public AudioClip allTieSound;
+	public float allTieVolume;
 
 
 	private static ScoreManager manager;
@@ -113,7 +115,7 @@ public class ScoreManager : MonoBehaviour {
 		ronaldoUI.Find("Bars").GetComponent<Image>().color = PlayerColor.Get((int) captor);
 		ronaldoUI.Find("Arms Jailed").gameObject.SetActive(true);
 		manager.audioSource.PlayOneShot(manager.jailCloseSound, manager.jailCloseVolume);
-		manager.audioSource.PlayOneShot(manager.pointIncreaseSound, manager.pointIncreaseVolume);
+		//manager.audioSource.PlayOneShot(manager.pointIncreaseSound, manager.pointIncreaseVolume);
 	}
 
 	public static void Release(Player player) {
@@ -137,6 +139,7 @@ public class ScoreManager : MonoBehaviour {
 		}
 	}
 
+
 	private static IEnumerator IncrementScoreBy(Player player, int score) {
 		while (true) {
 			ChangeScoreBy(player, score);
@@ -148,8 +151,6 @@ public class ScoreManager : MonoBehaviour {
 	public static void DisplayResults() {
 		int maxScore = 0;
 		List<Player> players = new List<Player>();
-
-		manager.audioSource.PlayOneShot(manager.roundFinishSound, manager.roundFinishVolume);
 
 		foreach (KeyValuePair<Player, int> pair in scores) {
 			if (pair.Value > maxScore) {
@@ -173,8 +174,11 @@ public class ScoreManager : MonoBehaviour {
 			}
 			text += " have tied!";
 			manager.winnerText.text = text;
+			manager.audioSource.PlayOneShot(manager.allTieSound, manager.allTieVolume);
 		} else {
 			manager.winnerText.text = "Player " + (((int) players[0]) + 1) + " wins!";
+
+			manager.audioSource.PlayOneShot(manager.roundFinishSound, manager.roundFinishVolume);
 		}
 	}
 }
