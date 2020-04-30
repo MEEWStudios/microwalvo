@@ -50,6 +50,10 @@ public class ScoreManager : MonoBehaviour {
 	}
 
 	public static void ResetScores() {
+		for (int i = 0; i < scores.Count; i++) {
+			Destroy(manager.roundPanel.Find("Player" + i));
+		}
+
 		scores.Clear();
 		incrementingScores.Clear();
 		manager.winnerText.text = "";
