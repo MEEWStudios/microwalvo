@@ -14,12 +14,14 @@ public class KeyboardControl : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		float x = Input.GetAxis("Horizontal");
-		float z = Input.GetAxis("Vertical");
+		if (!GameManager.IsRoundPaused()) {
+			float x = Input.GetAxis("Horizontal");
+			float z = Input.GetAxis("Vertical");
 
-		x *= speed * Time.deltaTime;
-		z *= speed * Time.deltaTime;
+			x *= speed * Time.deltaTime;
+			z *= speed * Time.deltaTime;
 
-		transform.Translate(x, 0, z);
+			transform.Translate(x, 0, z);
+		}
 	}
 }

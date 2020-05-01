@@ -4,23 +4,27 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class EscMenu : MonoBehaviour {
-	// Start is called before the first frame update
-	void Start() {
-
-	}
+	public bool escKeyWasDown = false;
 
 	// Update is called once per frame
 	void Update() {
-		//if (Keyboard.current.escapeKey.isPressed) {
-		//	this.gameObject.SetActive(!this.gameObject.activeSelf);
-		//}
-		if (Input.GetKey(KeyCode.Escape)) {
-			//this.gameObject.SetActive(this.gameObject.activeSelf);
+		if (Input.GetKey(KeyCode.Escape) && !escKeyWasDown) {
+			escKeyWasDown = true;
+			if (GameManager.IsRoundInProgress()) {
+				if (GameManager.IsRoundPaused()) {
+					GameManager.ResumeRound();
+				} else {
+					GameManager.PauseRound();
+				}
+			} else {
 #if UNITY_EDITOR
-			UnityEditor.EditorApplication.isPlaying = false;
+				UnityEditor.EditorApplication.isPlaying = false;
 #else
-			Application.Quit();
+				Application.Quit();
 #endif
+			}
+		} else if (!Input.GetKey(KeyCode.Escape)) {
+			escKeyWasDown = false;
 		}
 	}
 }

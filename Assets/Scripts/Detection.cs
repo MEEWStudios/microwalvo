@@ -32,7 +32,7 @@ public class Detection : MonoBehaviour {
 		GameObject gameObject = collider.gameObject;
 		IEnumerator enumerator = null;
 
-		//Second conditional changed to != check if the Ronaldo found is not their own 
+		// Check if the Ronaldo found is not their own 
 		if (gameObject.tag == "Real Ronaldo" && gameObject.GetComponent<NPCTraits>().player != control.player) {
 			Debug.Log("Ronaldo entered spotlight!");
 			enumerator = MoveRonaldo(2.0f, gameObject);

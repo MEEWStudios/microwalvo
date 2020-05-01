@@ -7,11 +7,6 @@ public class ControlManager : MonoBehaviour {
 	private static Dictionary<PlayerControl, List<EZGamepad>> controlMapping = new Dictionary<PlayerControl, List<EZGamepad>>();
 	private static List<PlayerControl> globalControls = new List<PlayerControl>();
 
-	// Awake is called when the script instance is being loaded
-	void Awake() {
-
-	}
-
 	// Update is called once per frame
 	void Update() {
 		if (controlMapping.Count != EZGM.EZGamepadCount()) {
@@ -21,17 +16,13 @@ public class ControlManager : MonoBehaviour {
 					EZGamepad gamepad = map.Value[i];
 
 					if (gamepad == null) {
-						//Debug.Log("ITS NULL");
 						continue;
 					}
 
 					if (!gamepad.isConnected) {
-						//Debug.Log(EZGM.EZGamepadCount());
-						//Debug.Log(gamepad);
 						EZGamepad newGamepad = EZGM.GetEZGamepad((Player) gamepad.GetGamepadIndex());
 
 						if (newGamepad != null) {
-							//newControlMapping[map.Key] = gamepad;
 							controlMapping[map.Key][i] = newGamepad;
 						}
 					}

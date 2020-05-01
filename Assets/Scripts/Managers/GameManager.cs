@@ -5,8 +5,11 @@ using UnityEngine.AI;
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
-	[Header("Model Configuration")]
+	[Header("Prefabs")]
 	public Transform prefabSource;
+	[Header("User Interface")]
+	public Transform overlay;
+	public Text timerText;
 	[Header("NPCs")]
 	public int fakeRonaldoCount;
 	public int personCount;
@@ -16,13 +19,12 @@ public class GameManager : MonoBehaviour {
 	public GameObject itemAnimation;
 	[Header("Rounds")]
 	public int roundTime = 120;
-	[Header("User Interface")]
-	public Text timerText;
 	[Header("Camera Blur Pane")]
 	public DrawOnTexture draw;
 
 	public static GameManager manager;
 	private static bool roundInProgress = false;
+	private static bool roundIsPaused = false;
 	private static float currentRoundTime;
 	private static Dictionary<Player, Transform> playerMap = new Dictionary<Player, Transform>();
 	private static List<GameObject> spotlightColliders = new List<GameObject>();
@@ -47,28 +49,13 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-		//MainMenu();
-		//StartRound();
+		ControlManager.RegisterGlobalControl(MenuController.instance);
+		MenuController.SetTopLevelMenu(overlay.Find("MainMenu").Find("Panel"));
 	}
 
 	// Update is called once per frame
 	void Update() {
-		if (!roundInProgress) {
-			//// Press Space (Keyboard), A (Xbox), or X (PS) to start the game
-			/*
-			if (EZGM.EZGamepadCount() > 0) {
-				if (EZGM.GetEZGamepad((Player) 0).buttonSouth.justPressed) {
-					ResetRound();
-					ScoreManager.ResetScores();
-					StartRound();
-				}
-			} else if (Input.GetKeyDown(KeyCode.Space)) {
-				ResetRound();
-				ScoreManager.ResetScores();
-				StartRound();
-			}
-			*/
-		} else {
+		if (roundInProgress && !roundIsPaused) {
 			currentRoundTime += Time.deltaTime;
 			if ((roundTime - currentRoundTime) > 0) {
 				timerText.text = TimestampToString(roundTime - currentRoundTime);
@@ -78,10 +65,6 @@ public class GameManager : MonoBehaviour {
 				EndRound();
 			}
 		}
-	}
-
-	void MainMenu() {
-		ControlManager.RegisterGlobalControl(new MainMenu());
 	}
 
 	public static void StartRound() {
@@ -125,7 +108,7 @@ public class GameManager : MonoBehaviour {
 			spotlightColliders.Add(newSpotlight.transform.Find("SpotlightCollider").gameObject);
 
 			// Add keyboard control
-			if (i == 0) {
+			if (i == 0 && EZGM.EZGamepadCount() == 0) {
 				KeyboardControl keyControl = newSpotlight.AddComponent<KeyboardControl>();
 			}
 
@@ -226,23 +209,57 @@ public class GameManager : MonoBehaviour {
 
 		roundInProgress = true;
 		ScoreManager.SetupScores(playerCount);
+		manager.overlay.Find("RoundPanel").gameObject.SetActive(true);
+	}
+
+	public static void PauseRound() {
+		roundIsPaused = true;
+
+		foreach (Transform child in npcs) {
+			// Pause NPCs
+			child.GetComponent<NPCController>().Pause();
+		}
+		foreach (KeyValuePair<Player, Transform> pair in playerMap) {
+			// Pause ronaldos
+			pair.Value.Find("Ronaldo").GetComponent<NPCController>().Pause();
+			// Disable spotlights
+			pair.Value.Find("Spotlight").Find("SpotlightCollider").GetComponent<MeshCollider>().enabled = false;
+		}
+
+		Transform pauseMenu = manager.overlay.Find("PauseMenu");
+		pauseMenu.gameObject.SetActive(true);
+		MenuController.SetTopLevelMenu(pauseMenu);
+	}
+
+	public static void ResumeRound() {
+		roundIsPaused = false;
+
+		foreach (Transform child in npcs) {
+			// Pause NPCs
+			child.GetComponent<NPCController>().Resume();
+		}
+		foreach (KeyValuePair<Player, Transform> pair in playerMap) {
+			// Pause ronaldos
+			pair.Value.Find("Ronaldo").GetComponent<NPCController>().Resume();
+			// Disable spotlights
+			pair.Value.Find("Spotlight").Find("SpotlightCollider").GetComponent<MeshCollider>().enabled = true;
+		}
+
+		Transform pauseMenu = manager.overlay.Find("PauseMenu");
+		manager.overlay.Find("PauseMenu").gameObject.SetActive(false);
+		MenuController.Clear();
 	}
 
 	public static void EndRound() {
 		// Disable player controls
 		ControlManager.UnregisterControls(typeof(SpotlightControl));
-		ControlManager.UnregisterControls(typeof(KeyboardControl));
 
 		// Stop all NPCs
 		foreach (Transform child in npcs) {
 			StopNPC(child.gameObject);
 		}
-		foreach (Transform player in players) {
-			foreach (Transform transform in player.transform) {
-				if (transform.tag == "Real Ronaldo") {
-					StopNPC(transform.gameObject);
-				}
-			}
+		foreach (KeyValuePair<Player, Transform> pair in playerMap) {
+			StopNPC(pair.Value.Find("Ronaldo").gameObject);
 		}
 
 		ScoreManager.DisplayResults();
@@ -255,11 +272,6 @@ public class GameManager : MonoBehaviour {
 			Player currentPlayer = player.GetComponent<PlayerData>().player;
 			ScoreManager.StopIncreasingScoreBy(currentPlayer, 1);
 		}
-
-
-
-
-
 	}
 
 	public static void ResetRound() {
@@ -276,6 +288,8 @@ public class GameManager : MonoBehaviour {
 		foreach (Transform child in items) {
 			Destroy(child.gameObject);
 		}
+
+		manager.overlay.Find("RoundPanel").gameObject.SetActive(false);
 	}
 
 	public static void CaptureRonaldo(GameObject ronaldo, Player captor) {
@@ -304,6 +318,14 @@ public class GameManager : MonoBehaviour {
 		captures.Remove(player);
 		// Enable the released ronaldo
 		playerGroup.Find("Ronaldo").gameObject.SetActive(true);
+	}
+
+	public static bool IsRoundInProgress() {
+		return roundInProgress;
+	}
+
+	public static bool IsRoundPaused() {
+		return roundIsPaused;
 	}
 
 	string TimestampToString(float timestamp) {
@@ -390,7 +412,5 @@ public class GameManager : MonoBehaviour {
 		yield return new WaitForSeconds(delay);
 
 		SpawnItem(manager.prefabSource.Find("key").gameObject);
-
-		Debug.Log("Key spawned");
 	}
 }

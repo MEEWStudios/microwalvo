@@ -12,13 +12,17 @@ public class SpeedBoost : ItemEffect {
 		gamepadControl = playerGroup.Find("Spotlight").GetComponent<SpotlightControl>();
 		keyboardControl = playerGroup.Find("Spotlight").GetComponent<KeyboardControl>();
 		gamepadControl.speed *= 2;
-		keyboardControl.speed *= 2;
+		if (keyboardControl != null) {
+			keyboardControl.speed *= 2;
+		}
 		speedUp.Play();
 	}
 
 	public override void RemoveEffect(Transform playerGroup) {
 		gamepadControl.speed /= 2;
-		keyboardControl.speed /= 2;
+		if (keyboardControl != null) {
+			keyboardControl.speed /= 2;
+		}
 		slowDown.Play();
 	}
 }
