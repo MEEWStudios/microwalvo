@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour {
 	[Header("User Interface")]
 	public Transform overlay;
 	public Text timerText;
+	[Header("Audio")]
+	public AudioSource menuSource;
+	public AudioSource[] ambientSources;
 	[Header("NPCs")]
 	public int fakeRonaldoCount;
 	public int personCount;
@@ -51,6 +54,8 @@ public class GameManager : MonoBehaviour {
 	void Start() {
 		ControlManager.RegisterGlobalControl(MenuController.instance);
 		MenuController.SetTopLevelMenu(overlay.Find("MainMenu").Find("Panel"));
+		// Play menu music
+		menuSource.Play();
 	}
 
 	// Update is called once per frame
@@ -207,6 +212,13 @@ public class GameManager : MonoBehaviour {
 			SpawnItem(source);
 		}
 
+		// Play menu music
+		manager.menuSource.Stop();
+		// Play ambient sounds
+		foreach (AudioSource source in manager.ambientSources) {
+			source.Play();
+		}
+
 		roundInProgress = true;
 		ScoreManager.SetupScores(playerCount);
 		manager.overlay.Find("RoundPanel").gameObject.SetActive(true);
@@ -288,6 +300,13 @@ public class GameManager : MonoBehaviour {
 		foreach (Transform child in items) {
 			Destroy(child.gameObject);
 		}
+
+		// Stop ambient sounds
+		foreach (AudioSource source in manager.ambientSources) {
+			source.Stop();
+		}
+		// Play menu music
+		manager.menuSource.Play();
 
 		manager.overlay.Find("RoundPanel").gameObject.SetActive(false);
 	}
