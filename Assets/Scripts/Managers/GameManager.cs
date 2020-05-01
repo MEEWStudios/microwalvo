@@ -220,6 +220,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		roundInProgress = true;
+		roundIsPaused = false;
 		ScoreManager.SetupScores(playerCount);
 		manager.overlay.Find("RoundPanel").gameObject.SetActive(true);
 	}
@@ -287,6 +288,9 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public static void ResetRound() {
+		// Disable player controls
+		ControlManager.UnregisterControls(typeof(SpotlightControl));
+
 		playerMap.Clear();
 		spotlightColliders.Clear();
 		captures.Clear();
@@ -300,6 +304,9 @@ public class GameManager : MonoBehaviour {
 		foreach (Transform child in items) {
 			Destroy(child.gameObject);
 		}
+
+		roundInProgress = false;
+		roundIsPaused = false;
 
 		// Stop ambient sounds
 		foreach (AudioSource source in manager.ambientSources) {
