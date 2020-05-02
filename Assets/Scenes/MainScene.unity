@@ -3927,8 +3927,8 @@ MonoBehaviour:
   audioSource: {fileID: 298197939}
   pointIncreaseSound: {fileID: 8300000, guid: c82c45e6e217844d0a5c461b6d85f2ba, type: 3}
   pointIncreaseVolume: 0.1
-  pointDecreaseSound: {fileID: 8300000, guid: 4ce848f4b4c384125acc6149dd161d16, type: 3}
-  pointDecreaseVolume: 0.35
+  pointDecreaseSound: {fileID: 8300000, guid: 46cbb3e35f19447dd859c45d1ff3b8d8, type: 3}
+  pointDecreaseVolume: 0.25
   jailCloseSound: {fileID: 8300000, guid: 8e8e29af1bf2c4be5bc93c1ec587f653, type: 3}
   jailCloseVolume: 0.7
   jailOpenSound: {fileID: 8300000, guid: 372c020794683439fb5d87a4a1d4f006, type: 3}
