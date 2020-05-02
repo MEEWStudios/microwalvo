@@ -62,14 +62,16 @@ head: |
 		<div><a href='mailto:willardp@hawaii.edu'>willardp@hawaii.edu</a></div>
 	</div>
 	<div class='user'>
-		<img class='profile' src='{{site.baseurl}}/assets/team/kamrenwakakuwa.jpg'>
+<!--		<img class='profile' src='{{site.baseurl}}/assets/team/kamrenwakakuwa.jpg'>-->
+		<img class='profile' src='{{site.baseurl}}/assets/team/missing.svg'>
 		<h2>Kamren Wakakuwa</h2>
 		<div class='role'>Sound Design</div>
 		<p>Created audio assets for the project using FMOD.</p>
 		<div><a href='mailto:kamrenw@hawaii.edu'>kamrenw@hawaii.edu</a></div>
 	</div>
 	<div class='user'>
-		<img class='profile' src='{{site.baseurl}}/assets/team/michaelmatrasko.jpg'>
+<!--		<img class='profile' src='{{site.baseurl}}/assets/team/michaelmatrasko.jpg'>-->
+		<img class='profile' src='{{site.baseurl}}/assets/team/missing.svg'>
 		<h2>Michael Matrasko</h2>
 		<div class='role'>Sound Design</div>
 		<p>Created audio assets for the project using FMOD.</p>
