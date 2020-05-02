@@ -109,7 +109,6 @@ footer {
 	margin-top: 0.75em;
 	padding: var(--page-element-padding) var(--page-margin);
 	background: var(--theme-primary-dark-background);
-	color: var(--theme-primary-dark-color);
 	line-height: var(--footer-line-height);
 	user-select: none;
 }

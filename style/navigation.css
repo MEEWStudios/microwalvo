@@ -81,7 +81,7 @@ header a:active {
 
 header a.active {
 	--navigation-background: var(--theme-primary-dark-background);
-	--navigation-color: var(--theme-primary-dark-color);
+	--navigation-color: var(--theme-primary-color);
 	
 	font-weight: 500;
 }
