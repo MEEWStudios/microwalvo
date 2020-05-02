@@ -36,28 +36,28 @@ head: |
 	<div class='user'>
 		<img class='profile' src='{{site.baseurl}}/assets/team/mirrenhollison.jpg'>
 		<h2>Mirren Hollison</h2>
-		<div class='role'>Animation/Design</div>
+		<div class='role'>Animation, Art, and Design</div>
 		<p>Created models and art assets for the project using Maya.</p>
 		<div><a href='mailto:mirren@hawaii.edu'>mirren@hawaii.edu</a></div>
 	</div>
 	<div class='user'>
 		<img class='profile' src='{{site.baseurl}}/assets/team/emilypang.jpg'>
 		<h2>Emily Pang</h2>
-		<div class='role'>Programming</div>
+		<div class='role'>Programming and Unity</div>
 		<p>Worked on programming for the game using Visual Studio and the Unity game engine, as well as website updates.</p>
 		<div><a href='mailto:eppang@hawaii.edu'>eppang@hawaii.edu</a></div>
 	</div>
 	<div class='user'>
 		<img class='profile' src='{{site.baseurl}}/assets/team/ethanchow.jpg'>
 		<h2>Ethan Chow</h2>
-		<div class='role'>Programming</div>
+		<div class='role'>Programming and Unity</div>
 		<p>Worked on programming for the game using Visual Studio and the Unity game engine, as well as website updates.</p>
 		<div><a href='mailto:epchow@hawaii.edu'>epchow@hawaii.edu</a></div>
 	</div>
 	<div class='user'>
 		<img class='profile' src='{{site.baseurl}}/assets/team/willardperalta.jpg'>
 		<h2>Willard Peralta</h2>
-		<div class='role'>Programming</div>
+		<div class='role'>Programming and Unity</div>
 		<p>Worked on programming for the game using Visual Studio and the Unity game engine, as well as website updates.</p>
 		<div><a href='mailto:willardp@hawaii.edu'>willardp@hawaii.edu</a></div>
 	</div>
