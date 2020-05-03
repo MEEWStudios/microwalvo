@@ -22,8 +22,6 @@ public class GameManager : MonoBehaviour {
 	public GameObject itemAnimation;
 	[Header("Rounds")]
 	public int roundTime = 120;
-	[Header("Camera Blur Pane")]
-	public DrawOnTexture draw;
 
 	public static GameManager manager;
 	private static bool roundInProgress = false;
@@ -116,9 +114,6 @@ public class GameManager : MonoBehaviour {
 			if (i == 0 && EZGM.EZGamepadCount() == 0) {
 				KeyboardControl keyControl = newSpotlight.AddComponent<KeyboardControl>();
 			}
-
-			// Add the spotlight to the texture draw script
-			manager.draw.spotlights.Add(newSpotlight.transform.Find("SpotlightCollider"));
 
 			// Spawn player's Ronaldo
 			GameObject ronaldo = SpawnNPC(sourceRonaldo, GetRandomPointOnMap(sourceRonaldo.transform.position.y, new Vector3(manager.spawnDistanceFromSpotlight, 10, manager.spawnDistanceFromSpotlight)), Quaternion.identity, player);
