@@ -44,7 +44,7 @@ head: |
 		<img class='profile' src='{{site.baseurl}}/assets/team/mirrenhollison.jpg'>
 		<h2>Mirren Hollison</h2>
 		<div class='role'>Animation, Art, and Design</div>
-		<p>Created models and art assets for the project using Maya.</p>
+		<p>Created models and art assets for the game using Maya.</p>
 		<div class='links'>
 			<a href='mailto:mirren@hawaii.edu'>mirren@hawaii.edu</a>
 		</div>
@@ -53,7 +53,7 @@ head: |
 		<img class='profile' src='{{site.baseurl}}/assets/team/emilypang.jpg'>
 		<h2>Emily Pang</h2>
 		<div class='role'>Programming and Unity</div>
-		<p>Worked on programming for the game using Visual Studio and the Unity game engine, as well as website updates.</p>
+		<p>Worked on programming for the game using Visual Studio and the Unity game engine, as well as website content updates.</p>
 		<div class='links'>
 			<a href='mailto:eppang@hawaii.edu'>eppang@hawaii.edu</a>
 		</div>
@@ -62,7 +62,7 @@ head: |
 		<img class='profile' src='{{site.baseurl}}/assets/team/ethanchow.jpg'>
 		<h2>Ethan Chow</h2>
 		<div class='role'>Programming and Unity</div>
-		<p>Created consistent branding the website, including a custom Jekyll theme. Worked on programming for the game using Visual Studio and the Unity game engine, as well as website updates.</p>
+		<p>Created consistent branding for the website, including a custom Jekyll theme. Worked on programming for the game using Visual Studio and the Unity game engine, as well as website content updates.</p>
 		<div class='links'>
 			<a href='mailto:epchow@hawaii.edu'>epchow@hawaii.edu</a>
 		</div>
@@ -71,7 +71,7 @@ head: |
 		<img class='profile' src='{{site.baseurl}}/assets/team/willardperalta.jpg'>
 		<h2>Willard Peralta</h2>
 		<div class='role'>Programming and Unity</div>
-		<p>Worked on programming for the game using Visual Studio and the Unity game engine, as well as website updates.</p>
+		<p>Worked on programming for the game using Visual Studio and the Unity game engine, as well as website content updates.</p>
 		<div class='links'>
 			<a href='mailto:willardp@hawaii.edu'>willardp@hawaii.edu</a>
 		</div>
@@ -81,7 +81,7 @@ head: |
 		<img class='profile' src='{{site.baseurl}}/assets/team/missing.svg'>
 		<h2>Kamren Wakakuwa</h2>
 		<div class='role'>Sound Design</div>
-		<p>Created audio assets for the project using FMOD.</p>
+		<p>Created audio assets for the game using FMOD.</p>
 		<div class='links'>
 			<a href='mailto:kamrenw@hawaii.edu'>kamrenw@hawaii.edu</a>
 		</div>
@@ -91,7 +91,7 @@ head: |
 		<img class='profile' src='{{site.baseurl}}/assets/team/missing.svg'>
 		<h2>Michael Matrasko</h2>
 		<div class='role'>Sound Design</div>
-		<p>Created audio assets for the project using FMOD.</p>
+		<p>Created audio assets for the game using FMOD.</p>
 		<div class='links'>
 			<a href='mailto:mm297@hawaii.edu'>mm297@hawaii.edu</a>
 		</div>
