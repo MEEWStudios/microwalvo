@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public abstract class MenuButton : MonoBehaviour {
 	private static Color FOCUS_COLOR = new Color(233 / 255f, 181 / 255f, 36 / 255f);

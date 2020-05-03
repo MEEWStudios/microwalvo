@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Detection : MonoBehaviour {
 	public GameObject managersObject;
 	public GameObject ronaldo;
 	public GameObject explosion;
 	public GameObject pickup;
-	Dictionary<GameObject, Coroutine> coroutines = new Dictionary<GameObject, Coroutine>();
+	readonly Dictionary<GameObject, Coroutine> coroutines = new Dictionary<GameObject, Coroutine>();
 
 	public SpotlightControl control;
 
@@ -19,7 +18,7 @@ public class Detection : MonoBehaviour {
 	public float smokeBombVolume;
 
 	//Vibration variables
-	private float vibrationTimer = 0.5f;
+	private readonly float vibrationTimer = 0.5f;
 
 	void Start() {
 		control = transform.parent.GetComponent<SpotlightControl>();

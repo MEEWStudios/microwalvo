@@ -1,14 +1,12 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class MenuController : PlayerControl {
 	public static MenuController instance;
 	private static readonly float ACTIVATION_DISTANCE = 0.5f;
 	private static readonly float ACTIVATION_DEBOUNCE = 0.25f;
-	private static Stack<Transform> menuStack = new Stack<Transform>();
-	private static List<MenuButton> buttons = new List<MenuButton>();
+	private static readonly Stack<Transform> menuStack = new Stack<Transform>();
+	private static readonly List<MenuButton> buttons = new List<MenuButton>();
 	private static float lastActivation;
 	private static int activeButton;
 

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.AI;
 
 public class NPCController : MonoBehaviour {

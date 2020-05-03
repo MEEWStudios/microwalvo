@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public static class SkinColor {
 	public static readonly int[,] COLORS = new int[,] { { 245, 205, 168 }, { 241, 194, 125 }, { 224, 172, 105 }, { 198, 134, 66 }, { 141, 85, 36 }, { 104, 59, 20 } };

@@ -3,8 +3,8 @@
 public class GrowSpotlight : ItemEffect {
 	public override float EffectDuration { get { return 8; } }
 
-	private float scaleChange = 1.5f;
-	private float areaLightPositionChange = 1.5f;
+	private readonly float scaleChange = 1.5f;
+	private readonly float areaLightPositionChange = 1.5f;
 	private Transform spotlight;
 	private Transform areaLight;
 	public AudioSource spotlightChangeSound;

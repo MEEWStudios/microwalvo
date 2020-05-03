@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 public abstract class ItemEffect : MonoBehaviour {
 	public abstract float EffectDuration { get; }

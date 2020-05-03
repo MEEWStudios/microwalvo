@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Collections;
 using System.Runtime.InteropServices;
+using UnityEngine;
 
 public class SAGEResolutionFix : MonoBehaviour {
 
@@ -12,8 +12,8 @@ public class SAGEResolutionFix : MonoBehaviour {
 	[DllImport("user32.dll")]
 	static extern IntPtr GetForegroundWindow();
 
-	private int cyberResX = 1360 * 5;
-	private int cyberResY = 768 * 3;
+	private readonly int cyberResX = 1360 * 5;
+	private readonly int cyberResY = 768 * 3;
 
 	// Use this for initialization
 	void Awake() {

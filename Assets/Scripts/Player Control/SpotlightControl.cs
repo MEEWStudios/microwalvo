@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SpotlightControl : PlayerControl {
 	public static readonly float DEFAULT_SPEED = 12;

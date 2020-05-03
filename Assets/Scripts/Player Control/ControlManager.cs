@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class ControlManager : MonoBehaviour {
 	private static Dictionary<PlayerControl, List<EZGamepad>> controlMapping = new Dictionary<PlayerControl, List<EZGamepad>>();
-	private static List<PlayerControl> globalControls = new List<PlayerControl>();
+	private static readonly List<PlayerControl> globalControls = new List<PlayerControl>();
 
 	// Update is called once per frame
 	void Update() {

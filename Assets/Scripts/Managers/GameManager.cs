@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
-using UnityEngine.AI;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 	[Header("Prefabs")]
@@ -27,10 +27,10 @@ public class GameManager : MonoBehaviour {
 	private static bool roundInProgress = false;
 	private static bool roundIsPaused = false;
 	private static float currentRoundTime;
-	private static Dictionary<Player, Transform> playerMap = new Dictionary<Player, Transform>();
-	private static List<Transform> spotlightColliders = new List<Transform>();
+	private static readonly Dictionary<Player, Transform> playerMap = new Dictionary<Player, Transform>();
+	private static readonly List<Transform> spotlightColliders = new List<Transform>();
 	// Dictionary<Player captive, Player captor>
-	private static Dictionary<Player, Player> captures = new Dictionary<Player, Player>();
+	private static readonly Dictionary<Player, Player> captures = new Dictionary<Player, Player>();
 	private static Transform map;
 	private static Transform players;
 	private static Transform npcs;

@@ -36,8 +36,8 @@ public class ScoreManager : MonoBehaviour {
 
 
 	private static ScoreManager manager;
-	private static Dictionary<Player, int> scores = new Dictionary<Player, int>();
-	private static Dictionary<Player, List<ScoreIncrementingCoroutine>> incrementingScores = new Dictionary<Player, List<ScoreIncrementingCoroutine>>();
+	private static readonly Dictionary<Player, int> scores = new Dictionary<Player, int>();
+	private static readonly Dictionary<Player, List<ScoreIncrementingCoroutine>> incrementingScores = new Dictionary<Player, List<ScoreIncrementingCoroutine>>();
 
 	// Start is called before the first frame update
 	void Start() {
@@ -99,7 +99,7 @@ public class ScoreManager : MonoBehaviour {
 		}
 
 		if (score > 0) {
-			
+
 		} else if (score < 0) {
 			manager.audioSource.PlayOneShot(manager.pointDecreaseSound, manager.pointDecreaseVolume);
 		}
