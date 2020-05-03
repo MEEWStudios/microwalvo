@@ -85,9 +85,9 @@ public class ScoreManager : MonoBehaviour {
 			rect.pivot = pivot;
 			// Color ronaldo
 			Transform ronaldoUI = rect.Find("Ronaldo");
-			ronaldoUI.Find("Body").gameObject.GetComponent<Image>().color = PlayerColor.Get(i);
-			ronaldoUI.Find("Arms Free").gameObject.GetComponent<Image>().color = PlayerColor.Get(i);
-			ronaldoUI.Find("Arms Jailed").gameObject.GetComponent<Image>().color = PlayerColor.Get(i);
+			ronaldoUI.Find("Body").GetComponent<Image>().color = PlayerColor.Get(i);
+			ronaldoUI.Find("Arms Free").GetComponent<Image>().color = PlayerColor.Get(i);
+			ronaldoUI.Find("Arms Jailed").GetComponent<Image>().color = PlayerColor.Get(i);
 		}
 	}
 

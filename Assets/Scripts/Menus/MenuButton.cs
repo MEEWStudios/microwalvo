@@ -12,8 +12,8 @@ public abstract class MenuButton : MonoBehaviour {
 		image = GetComponent<Image>();
 
 		// Add mouse handling
-		if (gameObject.GetComponent<EventTrigger>() == null) {
-			EventTrigger trigger = this.gameObject.AddComponent<EventTrigger>();
+		if (GetComponent<EventTrigger>() == null) {
+			EventTrigger trigger = gameObject.AddComponent<EventTrigger>();
 
 			EventTrigger.Entry enterEntry = new EventTrigger.Entry();
 			enterEntry.eventID = EventTriggerType.PointerEnter;

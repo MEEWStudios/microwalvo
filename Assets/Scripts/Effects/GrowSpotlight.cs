@@ -5,35 +5,35 @@ public class GrowSpotlight : ItemEffect {
 
 	private float scaleChange = 1.5f;
 	private float areaLightPositionChange = 1.5f;
-	private GameObject spotlight;
-	private GameObject areaLight;
+	private Transform spotlight;
+	private Transform areaLight;
 	public AudioSource spotlightChangeSound;
 
 	public override void ApplyEffect(Transform playerGroup) {
-		spotlight = playerGroup.Find("Spotlight").gameObject;
-		Vector3 scale = spotlight.transform.localScale;
+		spotlight = playerGroup.Find("Spotlight");
+		Vector3 scale = spotlight.localScale;
 		scale.x *= scaleChange;
 		scale.z *= scaleChange;
-		spotlight.transform.localScale = scale;
+		spotlight.localScale = scale;
 
-		areaLight = spotlight.transform.Find("Area Light").gameObject;
-		Vector3 areaLightPosition = areaLight.transform.position;
+		areaLight = spotlight.Find("Area Light");
+		Vector3 areaLightPosition = areaLight.position;
 		areaLightPosition.y *= areaLightPositionChange;
-		areaLight.transform.position = areaLightPosition;
+		areaLight.position = areaLightPosition;
 		areaLight.GetComponent<Light>().intensity *= 2;
 
 		spotlightChangeSound.Play();
 	}
 
 	public override void RemoveEffect(Transform playerGroup) {
-		Vector3 scale = spotlight.transform.localScale;
+		Vector3 scale = spotlight.localScale;
 		scale.x /= scaleChange;
 		scale.z /= scaleChange;
-		spotlight.transform.localScale = scale;
+		spotlight.localScale = scale;
 
-		Vector3 areaLightPosition = areaLight.transform.position;
+		Vector3 areaLightPosition = areaLight.position;
 		areaLightPosition.y /= areaLightPositionChange;
-		areaLight.transform.position = areaLightPosition;
+		areaLight.position = areaLightPosition;
 		areaLight.GetComponent<Light>().intensity /= 2;
 
 		spotlightChangeSound.Play();

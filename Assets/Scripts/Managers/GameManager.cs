@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour {
 	private static bool roundIsPaused = false;
 	private static float currentRoundTime;
 	private static Dictionary<Player, Transform> playerMap = new Dictionary<Player, Transform>();
-	private static List<GameObject> spotlightColliders = new List<GameObject>();
+	private static List<Transform> spotlightColliders = new List<Transform>();
 	// Dictionary<Player captive, Player captor>
 	private static Dictionary<Player, Player> captures = new Dictionary<Player, Player>();
 	private static Transform map;
@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour {
 			GameObject newSpotlight = Instantiate(sourceSpotlight, new Vector3(x, 0, z), Quaternion.identity, player) as GameObject;
 			newSpotlight.name = "Spotlight";
 			// Color spotlight ring
-			newSpotlight.transform.Find("SpotlightCollider").Find("Canvas").Find("Image").gameObject.GetComponent<Image>().color = PlayerColor.Get(i);
+			newSpotlight.transform.Find("SpotlightCollider").Find("Canvas").Find("Image").GetComponent<Image>().color = PlayerColor.Get(i);
 			// Add SpotlightControl
 			SpotlightControl control = newSpotlight.AddComponent<SpotlightControl>();
 			// Add Player specifier
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour {
 			// Tell the detection script about the controller
 			newSpotlight.transform.Find("SpotlightCollider").GetComponent<Detection>().control = control;
 			// Add this spotlight to the list of colliders to avoid spawning Ronaldo or his look alikes under it
-			spotlightColliders.Add(newSpotlight.transform.Find("SpotlightCollider").gameObject);
+			spotlightColliders.Add(newSpotlight.transform.Find("SpotlightCollider"));
 
 			// Add keyboard control
 			if (i == 0 && EZGM.EZGamepadCount() == 0) {
@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour {
 			}
 
 			// Add the spotlight to the texture draw script
-			manager.draw.spotlights.Add(newSpotlight.transform.Find("SpotlightCollider").gameObject);
+			manager.draw.spotlights.Add(newSpotlight.transform.Find("SpotlightCollider"));
 
 			// Spawn player's Ronaldo
 			GameObject ronaldo = SpawnNPC(sourceRonaldo, GetRandomPointOnMap(sourceRonaldo.transform.position.y, new Vector3(manager.spawnDistanceFromSpotlight, 10, manager.spawnDistanceFromSpotlight)), Quaternion.identity, player);
@@ -156,9 +156,9 @@ public class GameManager : MonoBehaviour {
 			npc.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().materials[1].color = PantColor.GetRandom();
 			// Pick a random shirt
 			Transform clothing = (Instantiate(shirtSource.GetChild(Random.Range(0, shirtSource.childCount)).gameObject, npc.transform) as GameObject).transform;
-			clothing.transform.localPosition = new Vector3(0, 0, 0);
+			clothing.localPosition = new Vector3(0, 0, 0);
 			// Add the Wearable script
-			clothing.transform.Find("pCylinder1").gameObject.AddComponent<Wearable>();
+			clothing.Find("pCylinder1").gameObject.AddComponent<Wearable>();
 			// Pick a random shirt color
 			Color color = ShirtColor.GetRandom();
 			Material[] materials = clothing.Find("pCylinder1").GetComponent<SkinnedMeshRenderer>().materials;
@@ -197,10 +197,10 @@ public class GameManager : MonoBehaviour {
 				}
 
 				// Spawn the accessory and set it's position, rotation, and scale
-				GameObject accessory = Instantiate(accessorySource.gameObject, temporary) as GameObject;
-				accessory.transform.localPosition = accessorySource.localPosition;
-				accessory.transform.rotation = accessorySource.rotation;
-				accessory.transform.localScale = accessorySource.localScale;
+				Transform accessory = (Instantiate(accessorySource.gameObject, temporary) as GameObject).transform;
+				accessory.localPosition = accessorySource.localPosition;
+				accessory.rotation = accessorySource.rotation;
+				accessory.localScale = accessorySource.localScale;
 			}
 		}
 
@@ -269,10 +269,10 @@ public class GameManager : MonoBehaviour {
 
 		// Stop all NPCs
 		foreach (Transform child in npcs) {
-			StopNPC(child.gameObject);
+			StopNPC(child);
 		}
 		foreach (KeyValuePair<Player, Transform> pair in playerMap) {
-			StopNPC(pair.Value.Find("Ronaldo").gameObject);
+			StopNPC(pair.Value.Find("Ronaldo"));
 		}
 
 		ScoreManager.DisplayResults();
@@ -280,7 +280,7 @@ public class GameManager : MonoBehaviour {
 		//Stop all player behaviors at end
 		foreach (Transform player in players) {
 			//disable all spotlight mesh colliders
-			player.Find("Spotlight").transform.Find("SpotlightCollider").GetComponent<MeshCollider>().enabled = false;
+			player.Find("Spotlight").Find("SpotlightCollider").GetComponent<MeshCollider>().enabled = false;
 			//Stop increasing all scores that were increasing
 			Player currentPlayer = player.GetComponent<PlayerData>().player;
 			ScoreManager.StopIncreasingScoreBy(currentPlayer, 1);
@@ -383,15 +383,15 @@ public class GameManager : MonoBehaviour {
 		// Tag as an item
 		item.tag = "Item";
 		// Spawn the animation effect
-		GameObject sparkle = Instantiate(manager.itemAnimation, position, Quaternion.identity, item.transform) as GameObject;
-		sparkle.transform.localPosition = new Vector3(0, 0.5f, 0.5f);
+		Transform sparkle = (Instantiate(manager.itemAnimation, position, Quaternion.identity, item.transform) as GameObject).transform;
+		sparkle.localPosition = new Vector3(0, 0.5f, 0.5f);
 		// Set the animation size
-		sparkle.transform.localScale = new Vector3(4, 4, 4);
+		sparkle.localScale = new Vector3(4, 4, 4);
 
 		return item;
 	}
 
-	public static void StopNPC(GameObject npc) {
+	public static void StopNPC(Transform npc) {
 		npc.GetComponent<NavMeshAgent>().enabled = false;
 		npc.GetComponent<NPCController>().enabled = false;
 		npc.GetComponent<Animator>().SetInteger("moveState", 0);
@@ -418,8 +418,8 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public static bool CollidesWithSpotlights(Vector3 position, Vector3 size) {
-		foreach (GameObject spotlight in spotlightColliders) {
-			Vector3 spotlightPosition = spotlight.transform.position;
+		foreach (Transform spotlight in spotlightColliders) {
+			Vector3 spotlightPosition = spotlight.position;
 			Vector3 spotlightSize = spotlight.GetComponent<MeshCollider>().bounds.size;
 
 			if ((Mathf.Abs(spotlightPosition.x - position.x) * 2 < (spotlightSize.x + size.x)) && (Mathf.Abs(spotlightPosition.z - position.z) * 2 < (spotlightSize.z + size.z))) {

@@ -10,16 +10,16 @@ public abstract class ItemEffect : MonoBehaviour {
 	// Use this for initialization
 	void OnEnable() {
 		bobOffset = Random.Range(0f, 1f);
-		initialPosition = this.transform.position;
+		initialPosition = transform.position;
 	}
 
 	// Update is called once per frame
 	void Update() {
-		Vector3 position = this.transform.position;
+		Vector3 position = transform.position;
 
 		// Make the item bob
 		position.y = initialPosition.y + (Mathf.Sin((Time.timeSinceLevelLoad + bobOffset) * 3) * 0.8f);
-		this.transform.position = position;
+		transform.position = position;
 	}
 
 	public void Activate(Transform playerGroup) {

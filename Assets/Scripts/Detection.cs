@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class Detection : MonoBehaviour {
 	public GameObject managersObject;
 	public GameObject ronaldo;
-	public GameObject playersOwnRonaldo;
 	public GameObject explosion;
 	public GameObject pickup;
 	Dictionary<GameObject, Coroutine> coroutines = new Dictionary<GameObject, Coroutine>();
@@ -23,9 +22,8 @@ public class Detection : MonoBehaviour {
 	private float vibrationTimer = 0.5f;
 
 	void Start() {
-		control = this.transform.parent.GetComponent<SpotlightControl>();
+		control = transform.parent.GetComponent<SpotlightControl>();
 		spawnRepel = managersObject.GetComponent<GameManager>().spawnDistanceFromSpotlight;
-		playersOwnRonaldo = this.transform.parent.transform.parent.GetChild(1).gameObject;
 	}
 
 	private void OnTriggerEnter(Collider collider) {
@@ -46,7 +44,7 @@ public class Detection : MonoBehaviour {
 		if (gameObject.CompareTag("Item")) {
 			ItemEffect effect = gameObject.GetComponent<ItemEffect>();
 
-			if (effect.CanActivate(this.transform.parent.transform.parent)) {
+			if (effect.CanActivate(transform.parent.parent)) {
 				enumerator = ActivateItem(1f, gameObject);
 			}
 		}

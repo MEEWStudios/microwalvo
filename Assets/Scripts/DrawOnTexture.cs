@@ -11,7 +11,7 @@ public class DrawOnTexture : MonoBehaviour {
 	public int textureDensity;
 	public int radius;
 	public Color blurColor;
-	public List<GameObject> spotlights = new List<GameObject>();
+	public List<Transform> spotlights = new List<Transform>();
 
 	private int textureWidth;
 	private int textureHeight;
@@ -19,8 +19,8 @@ public class DrawOnTexture : MonoBehaviour {
 	private Color[,] textureCache;
 
 	void Start() {
-		textureWidth = Mathf.FloorToInt(textureDensity * this.transform.localScale.x + 0.5f);
-		textureHeight = Mathf.FloorToInt(textureDensity * this.transform.localScale.z + 0.5f);
+		textureWidth = Mathf.FloorToInt(textureDensity * transform.localScale.x + 0.5f);
+		textureHeight = Mathf.FloorToInt(textureDensity * transform.localScale.z + 0.5f);
 
 		texture = new Texture2D(textureWidth, textureHeight, TextureFormat.RFloat, false, true);
 		textureCache = new Color[textureWidth, textureHeight];
@@ -47,8 +47,8 @@ public class DrawOnTexture : MonoBehaviour {
 		Ray ray;
 		//bool dirty = false;
 
-		foreach (GameObject spotlight in spotlights) {
-			spotlightVector = new Vector3(cam.WorldToScreenPoint(spotlight.transform.position).x, cam.WorldToScreenPoint(spotlight.transform.position).y, 0);
+		foreach (Transform spotlight in spotlights) {
+			spotlightVector = new Vector3(cam.WorldToScreenPoint(spotlight.position).x, cam.WorldToScreenPoint(spotlight.position).y, 0);
 			//the ray for the spotlight
 			ray = cam.ScreenPointToRay(spotlightVector); //Input.mousePosition
 

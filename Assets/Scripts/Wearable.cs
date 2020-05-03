@@ -4,15 +4,15 @@ using UnityEngine;
 public class Wearable : MonoBehaviour {
 	// Use this for initialization
 	void Start() {
-		Transform target = this.transform.parent.parent.Find("pCube1");
+		Transform target = transform.parent.parent.Find("pCube1");
 		SkinnedMeshRenderer targetRenderer = target.GetComponent<SkinnedMeshRenderer>();
 		Dictionary<string, Transform> boneMap = new Dictionary<string, Transform>();
 
 		foreach (Transform bone in targetRenderer.bones) {
-			boneMap[bone.gameObject.name] = bone;
+			boneMap[bone.name] = bone;
 		}
 
-		SkinnedMeshRenderer myRenderer = gameObject.GetComponent<SkinnedMeshRenderer>();
+		SkinnedMeshRenderer myRenderer = GetComponent<SkinnedMeshRenderer>();
 		Transform[] newBones = new Transform[myRenderer.bones.Length];
 
 		for (int i = 0; i < myRenderer.bones.Length; ++i) {
