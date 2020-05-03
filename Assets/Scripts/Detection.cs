@@ -87,7 +87,10 @@ public class Detection : MonoBehaviour {
 		fakeRonaldo.transform.position = GameManager.GetRandomPointOnMap(fakeRonaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel));
 
 		audioSource.PlayOneShot(smokeBomb, smokeBombVolume);
-		EZGM.GetEZGamepad(control.player).HapticsOverTime(vibrationTimer, 1, 0);
+		EZGamepad gamepad = EZGM.GetEZGamepad(control.player);
+		if (gamepad != null) {
+			gamepad.HapticsOverTime(vibrationTimer, 1, 0);
+		}
 		Debug.Log("Fake Ronaldo has moved!");
 
 		// Subtract points from corresponding spotlight
