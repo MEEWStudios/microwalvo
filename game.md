@@ -3,21 +3,19 @@ layout: simple-section
 title: About
 sections:
   Where's Ronaldo?: |
-    Where’s Ronaldo is a competitive four player game in which players control a spotlight with the objective of locating the elusive Ronaldo. Grouped into teams of two, players use unique powerups to gain an edge and slow down the opposing team.
+    Where’s Ronaldo is our video game version of the classic Where's Waldo book with a few twists!
   About: |
-    Where's Ronaldo is a competitive/cooperative two or four player game, where the players are divided into two teams. Players control a spotlight and the objective is to find Ronaldo, who can be found anywhere in a top down view of the level. Any part of the map that is not illuminated by the spotlight is darkened, and Ronaldo will not be viewable unless the spotlight is on him. Ronaldo does not move, and will explode upon being found. Ronaldo wears green stripes and a distinctive monocle, and there will be other lookalikes that will punish the player if they are mistaken for Ronaldo. Players must hover above Ronaldo for a certain amount of time to score a point. Ronaldo re-spawns again in a random location once he is found. The players with the most amount of points within the time limit wins the round and or match. In addition, players can use power-ups that will appear on the map to aid themselves or attack the opposing team.
+    Ronaldo is a competitive two to four player game in which players control a spotlight with the objective of locating the opponent's elusive Ronaldo who can be found anywhere in a top down view of the level. A Ronaldo can be red, purple, blue, or green. Each player is assigned a Ronaldo on the map, if an opposing player finds an opponent's Ronaldo and puts them under the spotlight for a few seconds, their Ronaldo is "captured" and the capturer starts gaining points over time! After a few seconds, a key will spawn on the map, the player who got captured must get the key in order to release their Ronaldo and stop the opponent from receiving points. Be carfeul becasue there are also fake imposter Ronaldos on the map who will decrease your score by a lot if you capture them! The players with the most amount of points within the two-minute time limit wins the round. In addition, players can use power-ups that will appear on the map to modify their spotlight and help them find Ronaldos faster.
   Goals: |
-    * Find (and explode) Ronaldo as fast and as many times as possible
-    * Delay the opposing team in finding Ronaldo by using the provided power-ups on the map
-    * Avoid mistaking Ronaldo for one of his lookalikes
+    * Find opposing Ronaldos and earn as much points as possible within two mintues!
+    * Use the provided power-ups on the map to your advantage!
   Rules: |
-    * In order to earn points, the player must hover over Ronaldo once he is found for 3 seconds
-    * Players cannot simply "camp" an opposing team member by following/overlapping their spotlight everywhere, or both teams will begin to lose points after a certain amount of time
+    * In order to capture Ronaldo and earn points, the player must hover over Ronaldo once he is found for 3 seconds. The player will then gain points over time and the captured Ronaldo will no longer be on the map
+    * To release Ronaldo, the player who got their Ronaldo captured must pickup the key that spawns 5 seconds after their Ronaldo was captured.
   Obstacles: |
-    * The player can only reveal Ronaldo or other power-ups on the map by moving over them with their spotlight
-    * If the player mistakes and explodes a lookalike for Ronaldo, they will lose points
+    * Avoid mistaking Ronaldo for one of his lookalikes!
+    * Release your Ronaldo from jail so the opponent stops gaining points
   Powerups: |
-    * Strengthening your own spotlight to earn you double points whenever you find Ronaldo
-    * Weakening the opposing team's spotlight to decrease the points they earn for finding Ronaldo
-    * Decreasing the opposing team's movement speed
+    * Speedup: Your spotlight moves faster for 8 seconds.
+    * Magnify: Your spotlight increases in size for 8 seconds. 
 ---
