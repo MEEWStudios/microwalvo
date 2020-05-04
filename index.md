@@ -7,7 +7,7 @@ title: Home
 		<img src='{{site.baseurl}}/assets/logo.png' style='display: block; max-width: 25em; width: 100%; margin: 0 auto; pointer-events: none;'>
 		<h1>MEEWStudios</h1>
 		<div class='container' style='padding: calc(var(--page-element-padding) * 2);'>
-			<p>We are a game development team comprised of four students at the University of Hawaiʻi at Mānoa. Three of us are computer science students and one of us is a creative media student. We also have two students from the sound department helping us out with sound.</p>
+			<p>We are a game development team comprised of four students at the University of Hawaiʻi at Mānoa. Three of us are computer science students and one of us is a creative media student. We also have two students from the sound department to help us out with sound.</p>
 		</div>
 	</div>
 </main>
