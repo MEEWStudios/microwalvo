@@ -237,6 +237,9 @@ public class GameManager : MonoBehaviour {
 		Transform pauseMenu = manager.overlay.Find("PauseMenu");
 		pauseMenu.gameObject.SetActive(true);
 		MenuController.SetTopLevelMenu(pauseMenu);
+		//MenuController.AddReturnHandler((menu) => {
+		//	ResumeRound();
+		//});
 	}
 
 	public static void ResumeRound() {

@@ -1,65 +1,121 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuController : PlayerControl {
+	public delegate void OnReturnToParent(Transform parentMenu);
+
+	private class MenuData {
+		public Transform transform;
+		public List<MenuButton> buttons = new List<MenuButton>();
+		public int button = 0;
+		public OnReturnToParent returnHandler = null;
+
+		public MenuData(Transform transform) {
+			this.transform = transform;
+		}
+	}
+
+	public Sprite defaultSprite;
+	public Font defaultFont;
+
 	public static MenuController instance;
 	private static readonly float ACTIVATION_DISTANCE = 0.5f;
 	private static readonly float ACTIVATION_DEBOUNCE = 0.25f;
-	private static readonly Stack<Transform> menuStack = new Stack<Transform>();
-	private static readonly List<MenuButton> buttons = new List<MenuButton>();
+	private static readonly Stack<MenuData> stack = new Stack<MenuData>();
+	private static MenuData activeMenu = null;
 	private static float lastActivation;
-	private static int activeButton;
 
 	// Use this for initialization
 	void Start() {
 		instance = this;
 	}
 
-	public static void SetTopLevelMenu(Transform menu) {
-		menuStack.Clear();
-		menuStack.Push(menu);
-		SetupMenu();
+	override public void Update() {
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			if (activeMenu?.returnHandler != null) {
+				ReturnToParentMenu();
+			}
+		}
 	}
 
-	public static void EnterSubMenu(Transform menu) {
-		menuStack.Push(menu);
-		SetupMenu();
+	public static void SetTopLevelMenu(Transform menuTransform) {
+		stack.Clear();
+		OpenMenu(SetupMenu(menuTransform));
+	}
+
+	public static void AddReturnHandler(OnReturnToParent handler) {
+		activeMenu.returnHandler += handler;
+	}
+
+	public static void EnterSubMenu(Transform menuTransform) {
+		stack.Push(activeMenu);
+		OpenMenu(SetupMenu(menuTransform));
 	}
 
 	public static void ReturnToParentMenu() {
-		menuStack.Pop();
-		SetupMenu();
+		MenuData parent = stack.Count > 0 ? stack.Pop() : null;
+		// Call handlers
+		activeMenu.returnHandler(parent?.transform);
+
+		if (parent == null) {
+			Clear();
+		} else {
+			// Open parent menu
+			OpenMenu(parent);
+		}
 	}
 
-	private static void SetupMenu() {
-		Transform menu = menuStack.Peek();
-		buttons.Clear();
+	public static void Focus(MenuButton button) {
+		activeMenu.buttons[activeMenu.button].Blur();
+		activeMenu.button = activeMenu.buttons.IndexOf(button);
+		button.Focus();
+	}
 
-		foreach (Transform child in menu) {
+	private static MenuData SetupMenu(Transform menuTransform) {
+		MenuData newMenu = new MenuData(menuTransform);
+
+		foreach (Transform child in menuTransform) {
 			MenuButton button = child.GetComponent<MenuButton>();
 
 			if (button != null) {
 				button.Blur();
-				buttons.Add(button);
+				newMenu.buttons.Add(button);
 			}
 		}
 
-		if (buttons.Count == 0) {
-			Debug.LogError("MenuController: No buttons in menu " + menu.name);
-		}
+		return newMenu;
+	}
+
+	private static void OpenMenu(MenuData menu) {
+		activeMenu = menu;
 
 		lastActivation = 0;
-		activeButton = 0;
-		buttons[activeButton].Focus();
+
+		if (activeMenu.buttons.Count > 0) {
+			activeMenu.buttons[activeMenu.button].Focus();
+		}
 	}
 
 	public static void Clear() {
-		menuStack.Clear();
-		buttons.Clear();
+		stack.Clear();
+		activeMenu = null;
 	}
 
 	public override void ProcessGamepadInput(EZGamepad gamepad) {
-		if (buttons.Count == 0) {
+		if (activeMenu == null) {
+			return;
+		}
+
+		if (gamepad.buttonEast.justPressed) {
+			if (activeMenu.returnHandler != null) {
+				ReturnToParentMenu();
+
+				return;
+			}
+		}
+
+		if (activeMenu.buttons.Count == 0) {
 			return;
 		}
 
@@ -70,21 +126,21 @@ public class MenuController : PlayerControl {
 				return;
 			}
 
-			buttons[activeButton].Blur();
+			activeMenu.buttons[activeMenu.button].Blur();
 
 			// Calculate new button
 			int change = -Mathf.RoundToInt(yAxis / Mathf.Abs(yAxis));
-			activeButton += change;
-			if (activeButton < 0) {
-				activeButton = buttons.Count - 1;
-			} else if (activeButton >= buttons.Count) {
-				activeButton = 0;
+			activeMenu.button += change;
+			if (activeMenu.button < 0) {
+				activeMenu.button = activeMenu.buttons.Count - 1;
+			} else if (activeMenu.button >= activeMenu.buttons.Count) {
+				activeMenu.button = 0;
 			}
 
-			buttons[activeButton].Focus();
+			activeMenu.buttons[activeMenu.button].Focus();
 			lastActivation = Time.timeSinceLevelLoad;
 		} else if (gamepad.buttonSouth.justPressed) {
-			buttons[activeButton].Trigger();
+			activeMenu.buttons[activeMenu.button].Trigger();
 		}
 	}
 }

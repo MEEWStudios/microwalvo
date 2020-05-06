@@ -6,5 +6,9 @@ public class Tutorial : MenuButton {
 		Transform howTo = transform.parent.parent.parent.Find("Tutorial");
 		howTo.gameObject.SetActive(true);
 		MenuController.EnterSubMenu(howTo);
+		MenuController.AddReturnHandler((parentMenu) => {
+			howTo.gameObject.SetActive(false);
+			parentMenu.parent.gameObject.SetActive(true);
+		});
 	}
 }

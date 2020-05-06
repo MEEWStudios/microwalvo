@@ -17,7 +17,7 @@ public abstract class MenuButton : MonoBehaviour {
 
 			EventTrigger.Entry enterEntry = new EventTrigger.Entry();
 			enterEntry.eventID = EventTriggerType.PointerEnter;
-			enterEntry.callback.AddListener((data) => { Focus(); });
+			enterEntry.callback.AddListener((data) => { MenuController.Focus(this); });
 			trigger.triggers.Add(enterEntry);
 
 			EventTrigger.Entry exitEntry = new EventTrigger.Entry();
