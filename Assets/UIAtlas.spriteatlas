@@ -43,16 +43,28 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 7cc8092f11bc0fc4cbab83bc8c41e2d2, type: 3}
-    totalSpriteSurfaceArea: 4000000
+    totalSpriteSurfaceArea: 4060000
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 5bf1c2e2b253c434d9865b6a697aa4f1, type: 3}
+  - {fileID: -686770408478947362, guid: 0cece2832db17d24698daa91eb42c09c, type: 3}
+  - {fileID: 3303988218376537383, guid: 0cece2832db17d24698daa91eb42c09c, type: 3}
+  - {fileID: 225358914316224342, guid: 0cece2832db17d24698daa91eb42c09c, type: 3}
+  - {fileID: -7687483754779569326, guid: 0cece2832db17d24698daa91eb42c09c, type: 3}
+  - {fileID: 7366178677551348873, guid: 0cece2832db17d24698daa91eb42c09c, type: 3}
+  - {fileID: 6680207597328628390, guid: 0cece2832db17d24698daa91eb42c09c, type: 3}
   - {fileID: 21300000, guid: 053842a9c1ea5dc498f8cffebbd255fd, type: 3}
   - {fileID: 21300000, guid: 91d673cb474ac11429c586b6ea237908, type: 3}
   - {fileID: 21300000, guid: 80c953af1087fc04c91980492395853a, type: 3}
   m_PackedSpriteNamesToIndex:
   - Body
+  - controls_0
+  - controls_1
+  - controls_2
+  - controls_3
+  - controls_4
+  - controls_5
   - Bars
   - Arms Free
   - Arms Jailed
