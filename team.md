@@ -73,7 +73,7 @@ head: |
 		<img class='profile' src='{{site.baseurl}}/assets/team/willardperalta.jpg'>
 		<h2>Willard Peralta</h2>
 		<div class='role'>Programming and Unity</div>
-		<p>Worked on programming for the game using Visual Studio and the Unity game engine, as well as website content updates. Specific programming tasks for the game included working with various spotlight behaviors as well as programming in the sounds and music.</p>
+		<p>Documented development progress in development blog. Worked on programming for the game using Visual Studio and the Unity game engine. Specific programming tasks for the game included working with various spotlight behaviors as well as programming in the sounds and music.</p>
 		<div class='links'>
 			<a href='mailto:willardp@hawaii.edu'>willardp@hawaii.edu</a>
 			<a href='https://willardperalta.github.io/'>Personal Portfolio</a>
