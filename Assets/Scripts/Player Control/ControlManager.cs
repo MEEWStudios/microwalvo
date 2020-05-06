@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ControlManager : MonoBehaviour {
@@ -31,13 +32,15 @@ public class ControlManager : MonoBehaviour {
 
 		// Update all controls
 		// Call ProcessGamepadInput on all controls
-		foreach (PlayerControl control in globalControls) {
+		// Clone the list to allow modification during enumeration
+		foreach (PlayerControl control in globalControls.ToList()) {
 			control.Update();
 			for (int i = 0; i < EZGM.EZGamepadCount(); i++) {
 				control.ProcessGamepadInput(EZGM.GetEZGamepad((Player) i));
 			}
 		}
-		foreach (KeyValuePair<PlayerControl, List<EZGamepad>> controlMap in controlMapping) {
+		// Clone the dictionary to allow modification during enumeration
+		foreach (KeyValuePair<PlayerControl, List<EZGamepad>> controlMap in new Dictionary<PlayerControl, List<EZGamepad>>(controlMapping)) {
 			controlMap.Key.Update();
 			foreach (EZGamepad gamepad in controlMap.Value) {
 				controlMap.Key.ProcessGamepadInput(gamepad);
