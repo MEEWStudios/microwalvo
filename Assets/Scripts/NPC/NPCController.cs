@@ -31,6 +31,8 @@ public class NPCController : MonoBehaviour {
 		defaultSpeed = agent.speed;
 		defaultAcceleration = agent.acceleration;
 		defaultAngularSpeed = agent.angularSpeed;
+		// Reset panic
+		panicTimer = 0;
 
 		hasReachedDestination = true;
 		idleTimer = Random.Range(minIdleTime, 1);
@@ -62,6 +64,10 @@ public class NPCController : MonoBehaviour {
 	}
 
 	public void Resume() {
+		if (!gameObject.activeSelf) {
+			return;
+		}
+
 		GetComponent<NavMeshAgent>().enabled = true;
 		GetComponent<Animator>().enabled = true;
 
