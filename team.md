@@ -53,9 +53,11 @@ head: |
 		<img class='profile' src='{{site.baseurl}}/assets/team/emilypang.jpg'>
 		<h2>Emily Pang</h2>
 		<div class='role'>Programming and Unity</div>
-		<p>Worked on programming for the game using Visual Studio and the Unity game engine, as well as website content updates.</p>
+		<p>Worked on programming for the game using Visual Studio and the Unity game engine, as well as website content updates. Some specific proogramming tasks included working on spotlight interactions, certain map aesthetics, and NPC behavior.</p>
 		<div class='links'>
 			<a href='mailto:eppang@hawaii.edu'>eppang@hawaii.edu</a>
+            <a href='https://eppang.github.io/'>Personal Portfolio</a>
+            <a href='https://www.linkedin.com/in/emily-pang-45406b16a/'>LinkedIn</a>
 		</div>
 	</div>
 	<div class='user'>
@@ -75,7 +77,7 @@ head: |
 		<div class='links'>
 			<a href='mailto:willardp@hawaii.edu'>willardp@hawaii.edu</a>
 			<a href='https://willardperalta.github.io/'>Personal Portfolio</a>
-			<a href='https://www.linkedin.com/in/willard-peralta-2341b6139/'>Linkedin</a>
+			<a href='https://www.linkedin.com/in/willard-peralta-2341b6139/'>LinkedIn</a>
 		</div>
 	</div>
 	<div class='user'>
