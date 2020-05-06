@@ -61,7 +61,7 @@ public class ScoreManager : MonoBehaviour {
 
 	public static void SetupScores(int playerCount) {
 		GameObject scoreSource = manager.prefabSource.Find("PlayerScore").gameObject;
-		Transform timer = manager.roundPanel.Find("Timer");
+		Transform timer = manager.roundPanel.Find("TimerPanel");
 		float timerWidth = timer.GetComponent<RectTransform>().sizeDelta.x;
 
 		for (int i = 0; i < playerCount; i++) {

@@ -12733,7 +12733,7 @@ GameObject:
   - component: {fileID: 809918740}
   - component: {fileID: 809918739}
   m_Layer: 5
-  m_Name: Timer
+  m_Name: TimerPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12810,7 +12810,7 @@ GameObject:
   - component: {fileID: 820439416}
   - component: {fileID: 820439419}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Tutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14909,7 +14909,7 @@ GameObject:
   - component: {fileID: 1097028764}
   - component: {fileID: 1097028763}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: ExitDesktop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15256,7 +15256,7 @@ GameObject:
   - component: {fileID: 1138499268}
   - component: {fileID: 1138499267}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: ExitMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18024,7 +18024,7 @@ GameObject:
   - component: {fileID: 1570642177}
   - component: {fileID: 1570642180}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18443,7 +18443,7 @@ GameObject:
   - component: {fileID: 1632136350}
   - component: {fileID: 1632136353}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: Exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21896,7 +21896,7 @@ GameObject:
   - component: {fileID: 1990567431}
   - component: {fileID: 1990567430}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Resume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
