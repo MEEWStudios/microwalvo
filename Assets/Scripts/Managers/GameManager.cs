@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
@@ -30,7 +31,7 @@ public class GameManager : MonoBehaviour {
 	private static readonly Dictionary<Player, Transform> playerMap = new Dictionary<Player, Transform>();
 	private static readonly List<Transform> spotlightColliders = new List<Transform>();
 	// Dictionary<Player captive, Player captor>
-	private static readonly Dictionary<Player, Player> captures = new Dictionary<Player, Player>();
+	private static readonly Dictionary<Player, Player> captorOf = new Dictionary<Player, Player>();
 	private static Transform map;
 	private static Transform players;
 	private static Transform npcs;
@@ -60,6 +61,9 @@ public class GameManager : MonoBehaviour {
 	void Update() {
 		if (roundInProgress && !roundIsPaused) {
 			currentRoundTime += Time.deltaTime;
+
+			ScoreManager.UpdateScores();
+
 			if ((roundTime - currentRoundTime) > 0) {
 				timerText.text = TimestampToString(roundTime - currentRoundTime);
 			} else {
@@ -72,6 +76,7 @@ public class GameManager : MonoBehaviour {
 
 	public static void StartRound() {
 		int playerCount = EZGM.EZGamepadCount() == 0 ? 1 : EZGM.EZGamepadCount();
+		playerCount = 4;
 		Transform characterSource = manager.prefabSource.Find("Characters");
 		GameObject sourcePerson = characterSource.Find("Person").gameObject;
 		GameObject sourceLookAlike = characterSource.Find("Fake Ronaldo").gameObject;
@@ -276,12 +281,9 @@ public class GameManager : MonoBehaviour {
 		ScoreManager.DisplayResults();
 
 		//Stop all player behaviors at end
-		foreach (Transform player in players) {
-			//disable all spotlight mesh colliders
-			player.Find("Spotlight").Find("SpotlightCollider").GetComponent<MeshCollider>().enabled = false;
-			//Stop increasing all scores that were increasing
-			Player currentPlayer = player.GetComponent<PlayerData>().player;
-			ScoreManager.StopIncreasingScoreBy(currentPlayer, 1);
+		foreach (Transform playerTransform in players) {
+			// Disable all spotlight mesh colliders
+			playerTransform.Find("Spotlight").Find("SpotlightCollider").GetComponent<MeshCollider>().enabled = false;
 		}
 	}
 
@@ -291,7 +293,7 @@ public class GameManager : MonoBehaviour {
 
 		playerMap.Clear();
 		spotlightColliders.Clear();
-		captures.Clear();
+		captorOf.Clear();
 
 		foreach (Transform child in players) {
 			Destroy(child.gameObject);
@@ -320,13 +322,13 @@ public class GameManager : MonoBehaviour {
 		Player captive = ronaldo.GetComponent<NPCTraits>().player;
 
 		// Keep track of which player captured which player's ronaldo
-		captures.Add(captive, captor);
+		captorOf.Add(captive, captor);
 
 		// Turn off Ronaldo when found
 		ronaldo.SetActive(false);
 		ronaldo.transform.position = GetRandomPointOnMap(ronaldo.transform.position.y, new Vector3(manager.spawnDistanceFromSpotlight, 10, manager.spawnDistanceFromSpotlight));
 		// Add points to the corresponding spotlight's score over time
-		ScoreManager.StartIncreasingScoreBy(captor, 1);
+		ScoreManager.StartIncreasingScoreBy(captor, captive, 1);
 		ScoreManager.Jail(captive, captor);
 
 		// Spawn Key after a delay
@@ -337,9 +339,9 @@ public class GameManager : MonoBehaviour {
 		Transform playerGroup = GetPlayerGroup(player);
 
 		// Stop increasing the captor's score
-		ScoreManager.StopIncreasingScoreBy(captures[player], 1);
+		ScoreManager.StopIncreasingScoreBy(captorOf[player], player);
 		ScoreManager.Release(player);
-		captures.Remove(player);
+		captorOf.Remove(player);
 		// Enable the released ronaldo
 		playerGroup.Find("Ronaldo").gameObject.SetActive(true);
 	}

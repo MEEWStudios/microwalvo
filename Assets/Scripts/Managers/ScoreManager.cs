@@ -4,22 +4,37 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour {
-	private struct ScoreIncrementingCoroutine {
-		public Coroutine coroutine;
-		public int increment;
+	private class ScoreIncrementer {
+		public Player target;
+		public Player source;
+		public int score;
+		public float interval;
+		public float timer;
 
-		public ScoreIncrementingCoroutine(Coroutine coroutine, int increment) {
-			this.coroutine = coroutine;
-			this.increment = increment;
+		public ScoreIncrementer(Player target, Player source, int score, float interval) {
+			this.target = target;
+			this.source = source;
+			this.score = score;
+			this.interval = interval;
+			timer = interval;
+		}
+
+		public void Run(float deltaTime) {
+			timer -= deltaTime;
+
+			if (timer <= 0) {
+				timer = interval;
+				ChangeScoreBy(target, score);
+			}
 		}
 	}
 
-	[Header("UI Configuration")]
+	[Header("UI")]
 	public Transform prefabSource;
 	public Transform roundPanel;
 	public Text winnerText;
 	public int padding = 25;
-	[Header("Sound Configuration")]
+	[Header("Audio")]
 	public AudioSource audioSource;
 	public AudioClip pointIncreaseSound;
 	public float pointIncreaseVolume;
@@ -37,16 +52,22 @@ public class ScoreManager : MonoBehaviour {
 
 	private static ScoreManager manager;
 	private static readonly Dictionary<Player, int> scores = new Dictionary<Player, int>();
-	private static readonly Dictionary<Player, List<ScoreIncrementingCoroutine>> incrementingScores = new Dictionary<Player, List<ScoreIncrementingCoroutine>>();
+	private static readonly Dictionary<Player, List<ScoreIncrementer>> incrementingScores = new Dictionary<Player, List<ScoreIncrementer>>();
 
 	// Start is called before the first frame update
 	void Start() {
 		manager = this;
 	}
 
-	// Update is called once per frame
-	void Update() {
+	// UpdateScores is called once per frame
+	public static void UpdateScores() {
+		float deltaTime = Time.deltaTime;
 
+		foreach (KeyValuePair<Player, List<ScoreIncrementer>> incrementers in incrementingScores) {
+			foreach (ScoreIncrementer incrementer in incrementers.Value) {
+				incrementer.Run(deltaTime);
+			}
+		}
 	}
 
 	public static void ResetScores() {
@@ -68,7 +89,7 @@ public class ScoreManager : MonoBehaviour {
 			int side = Mathf.FloorToInt((float) i / playerCount + 0.5f) == 0 ? -1 : 1;
 			int offset = Mathf.FloorToInt(Mathf.Abs(playerCount / 2f - i) - (side == -1 ? 0.5f : 0));
 			scores.Add((Player) i, 0);
-			incrementingScores.Add((Player) i, new List<ScoreIncrementingCoroutine>());
+			incrementingScores.Add((Player) i, new List<ScoreIncrementer>());
 
 			// Add the score UI
 			Transform playerContainer = (Instantiate(scoreSource, manager.roundPanel) as GameObject).transform;
@@ -108,8 +129,9 @@ public class ScoreManager : MonoBehaviour {
 		text.GetComponent<Text>().text = scores[player].ToString();
 	}
 
-	public static void StartIncreasingScoreBy(Player player, int score) {
-		incrementingScores[player].Add(new ScoreIncrementingCoroutine(manager.StartCoroutine(IncrementScoreBy(player, score)), score));
+	public static void StartIncreasingScoreBy(Player captor, Player captive, int score) {
+		//incrementingScores[player].Add(new ScoreIncrementer(manager.StartCoroutine(IncrementScoreBy(player, score)), score));
+		incrementingScores[captor].Add(new ScoreIncrementer(captor, captive, score, 0.5f));
 	}
 
 	public static void Jail(Player captive, Player captor) {
@@ -130,25 +152,15 @@ public class ScoreManager : MonoBehaviour {
 		manager.audioSource.PlayOneShot(manager.jailOpenSound, manager.jailOpenVolume);
 	}
 
-	public static void StopIncreasingScoreBy(Player player, int score) {
-		List<ScoreIncrementingCoroutine> routines = incrementingScores[player];
+	public static void StopIncreasingScoreBy(Player captor, Player captive) {
+		List<ScoreIncrementer> routines = incrementingScores[captor];
 
-		foreach (ScoreIncrementingCoroutine incrementingCoroutine in routines) {
-			if (incrementingCoroutine.increment == score) {
-				manager.StopCoroutine(incrementingCoroutine.coroutine);
-				routines.Remove(incrementingCoroutine);
+		foreach (ScoreIncrementer incrementer in routines) {
+			if (incrementer.source == captive) {
+				routines.Remove(incrementer);
 
 				return;
 			}
-		}
-	}
-
-
-	private static IEnumerator IncrementScoreBy(Player player, int score) {
-		while (true) {
-			ChangeScoreBy(player, score);
-
-			yield return new WaitForSeconds(0.5f);
 		}
 	}
 
