@@ -35,7 +35,7 @@ public class NPCController : MonoBehaviour {
 		panicTimer = 0;
 
 		hasReachedDestination = true;
-		idleTimer = Random.Range(minIdleTime, 1);
+		idleTimer = Random.Range(minIdleTime, 3);
 	}
 
 	// Reset values before the ronaldo is disabled
@@ -45,8 +45,8 @@ public class NPCController : MonoBehaviour {
 		agent.angularSpeed = defaultAngularSpeed;
 	}
 
-	// Update is called once per frame
-	void Update() {
+	// UpdateAgent is called once per frame while the agent is being updated
+	public void UpdateAgent() {
 		if (agent.enabled) {
 			UpdateNavigation();
 			UpdateAnimationState();
@@ -80,6 +80,18 @@ public class NPCController : MonoBehaviour {
 		agent.velocity = lastVelocity;
 		lastPath = null;
 		lastDestination = Vector3.positiveInfinity;
+	}
+
+	public void Wave() {
+		if (!gameObject.activeSelf) {
+			return;
+		}
+
+		animator.SetInteger("moveState", 4);
+		animator.speed = 3;
+		agent.enabled = true;
+		agent.updatePosition = false;
+		agent.SetDestination(transform.position - new Vector3(0, 0, 5));
 	}
 
 	private void OnTriggerEnter(Collider collider) {
@@ -175,6 +187,8 @@ public class NPCController : MonoBehaviour {
 		NavMeshHit hit;
 		do {
 			randomPoint = (Random.insideUnitSphere * dist) + origin;
+			if (Vector3.Distance(origin, randomPoint) < 1f) {
+			}
 		} while (!NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas));
 
 		return hit.position;

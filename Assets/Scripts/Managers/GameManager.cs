@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour {
 	private static bool roundIsPaused = false;
 	private static float currentRoundTime;
 	private static readonly Dictionary<Player, Transform> playerMap = new Dictionary<Player, Transform>();
+	private static readonly List<NPCController> controllers = new List<NPCController>();
 	private static readonly List<Transform> spotlightColliders = new List<Transform>();
 	// Dictionary<Player captive, Player captor>
 	private static readonly Dictionary<Player, Player> captorOf = new Dictionary<Player, Player>();
@@ -62,8 +63,23 @@ public class GameManager : MonoBehaviour {
 		if (roundInProgress && !roundIsPaused) {
 			currentRoundTime += Time.deltaTime;
 
+			// Update scores
 			ScoreManager.UpdateScores();
+			// Update agents
+			foreach (Transform npc in npcs) {
+				npc.GetComponent<NPCController>().UpdateAgent();
+			}
+			foreach (KeyValuePair<Player, Transform> pair in playerMap) {
+				if (!captorOf.ContainsKey(pair.Key)) {
+					pair.Value.Find("Ronaldo").GetComponent<NPCController>().UpdateAgent();
+				}
+			}
+			// Update colliders
+			foreach (Transform colliderObject in spotlightColliders) {
+				colliderObject.GetComponent<Detection>().UpdateCollisions();
+			}
 
+			// Update round timer
 			if ((roundTime - currentRoundTime) > 0) {
 				timerText.text = TimestampToString(roundTime - currentRoundTime);
 			} else {
@@ -228,15 +244,9 @@ public class GameManager : MonoBehaviour {
 	public static void PauseRound() {
 		roundIsPaused = true;
 
-		foreach (Transform child in npcs) {
+		foreach (NPCController controller in controllers) {
 			// Pause NPCs
-			child.GetComponent<NPCController>().Pause();
-		}
-		foreach (KeyValuePair<Player, Transform> pair in playerMap) {
-			// Pause ronaldos
-			pair.Value.Find("Ronaldo").GetComponent<NPCController>().Pause();
-			// Disable spotlights
-			pair.Value.Find("Spotlight").Find("SpotlightCollider").GetComponent<MeshCollider>().enabled = false;
+			controller.Pause();
 		}
 
 		Transform pauseMenu = manager.overlay.Find("PauseMenu");
@@ -250,13 +260,11 @@ public class GameManager : MonoBehaviour {
 	public static void ResumeRound() {
 		roundIsPaused = false;
 
-		foreach (Transform child in npcs) {
-			// Pause NPCs
-			child.GetComponent<NPCController>().Resume();
+		foreach (NPCController controller in controllers) {
+			// Resume NPCs
+			controller.Resume();
 		}
 		foreach (KeyValuePair<Player, Transform> pair in playerMap) {
-			// Pause ronaldos
-			pair.Value.Find("Ronaldo").GetComponent<NPCController>().Resume();
 			// Disable spotlights
 			pair.Value.Find("Spotlight").Find("SpotlightCollider").GetComponent<MeshCollider>().enabled = true;
 		}
@@ -278,6 +286,16 @@ public class GameManager : MonoBehaviour {
 			StopNPC(pair.Value.Find("Ronaldo"));
 		}
 
+		// Update agents one final time
+		foreach (NPCController controller in controllers) {
+			controller.UpdateAgent();
+		}
+
+
+		foreach (KeyValuePair<Player, Transform> pair in playerMap) {
+			pair.Value.Find("Ronaldo").GetComponent<NPCController>().Wave();
+		}
+
 		ScoreManager.DisplayResults();
 
 		//Stop all player behaviors at end
@@ -292,6 +310,7 @@ public class GameManager : MonoBehaviour {
 		ControlManager.UnregisterControls(typeof(SpotlightControl));
 
 		playerMap.Clear();
+		controllers.Clear();
 		spotlightColliders.Clear();
 		captorOf.Clear();
 
@@ -366,7 +385,7 @@ public class GameManager : MonoBehaviour {
 	public static GameObject SpawnNPC(GameObject original, Vector3 position, Quaternion rotation, Transform parent) {
 		GameObject npc = Instantiate(original, position, rotation, parent) as GameObject;
 		// Add NPCController
-		npc.AddComponent<NPCController>();
+		controllers.Add(npc.AddComponent<NPCController>());
 		// Enable the Nav Mesh Agent
 		npc.GetComponent<NavMeshAgent>().enabled = true;
 		// Enable the Animator
