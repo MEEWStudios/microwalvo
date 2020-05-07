@@ -291,18 +291,12 @@ public class GameManager : MonoBehaviour {
 			controller.UpdateAgent();
 		}
 
-
+		// Make all ronaldos turn and wave
 		foreach (KeyValuePair<Player, Transform> pair in playerMap) {
 			pair.Value.Find("Ronaldo").GetComponent<NPCController>().Wave();
 		}
 
 		ScoreManager.DisplayResults();
-
-		//Stop all player behaviors at end
-		foreach (Transform playerTransform in players) {
-			// Disable all spotlight mesh colliders
-			playerTransform.Find("Spotlight").Find("SpotlightCollider").GetComponent<MeshCollider>().enabled = false;
-		}
 	}
 
 	public static void ResetRound() {
