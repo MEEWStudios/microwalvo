@@ -67,10 +67,10 @@ public class EZGM : MonoBehaviour {
             UpdateEZInput();
         }
 
-        //Press Escape to exit application.
-        if (Input.GetKey(KeyCode.Escape)) {
-            Application.Quit();
-        }
+        ////Press Escape to exit application.
+        //if (Input.GetKey(KeyCode.Escape)) {
+        //    Application.Quit();
+        //}
     }
 
     private void LateUpdate() {
