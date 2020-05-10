@@ -81,8 +81,7 @@ head: |
 		</div>
 	</div>
 	<div class='user'>
-<!--		<img class='profile' src='{{site.baseurl}}/assets/team/kamrenwakakuwa.jpg'>-->
-		<img class='profile' src='{{site.baseurl}}/assets/team/missing.svg'>
+		<img class='profile' src='{{site.baseurl}}/assets/team/kamrenwakakuwa.jpg'>
 		<h2>Kamren Wakakuwa</h2>
 		<div class='role'>Sound Design</div>
 		<p>Created audio assets for the game using FMOD.</p>
