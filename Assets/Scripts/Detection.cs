@@ -25,25 +25,24 @@ public class Detection : MonoBehaviour {
 		}
 	}
 
+	[Header("General")]
 	public GameObject managersObject;
 	public GameObject ronaldo;
 	public GameObject explosion;
 	public GameObject pickup;
-	private readonly Dictionary<GameObject, Collision> collisions = new Dictionary<GameObject, Collision>();
-
-	public SpotlightControl control;
-
-	private int spawnRepel;
-
+	[Header("Audio")]
 	public AudioSource audioSource;
 	public AudioClip smokeBomb;
 	public float smokeBombVolume;
+	[HideInInspector]
+	public Player player;
 
+	private int spawnRepel;
+	private readonly Dictionary<GameObject, Collision> collisions = new Dictionary<GameObject, Collision>();
 	//Vibration variables
 	private readonly float vibrationTimer = 0.5f;
 
 	void Start() {
-		control = transform.parent.GetComponent<SpotlightControl>();
 		spawnRepel = GameManager.manager.spawnDistanceFromSpotlight;
 	}
 
@@ -51,7 +50,7 @@ public class Detection : MonoBehaviour {
 		GameObject gameObject = collider.gameObject;
 
 		// Check if the Ronaldo found is not their own 
-		if (gameObject.CompareTag("Real Ronaldo") && gameObject.GetComponent<NPCTraits>().player != control.player) {
+		if (gameObject.CompareTag("Real Ronaldo") && gameObject.GetComponent<NPCTraits>().player != player) {
 			Debug.Log("Ronaldo entered spotlight!");
 			collisions.Add(gameObject, new Collision(MoveRonaldo, gameObject, 2f));
 		}
@@ -77,7 +76,7 @@ public class Detection : MonoBehaviour {
 			collisions.Remove(gameObject);
 		}
 
-		if (gameObject.CompareTag("Real Ronaldo") && gameObject.GetComponent<NPCTraits>().player != control.player) {
+		if (gameObject.CompareTag("Real Ronaldo") && gameObject.GetComponent<NPCTraits>().player != player) {
 			Debug.Log("Ronaldo exited spotlight!");
 		}
 
@@ -101,7 +100,7 @@ public class Detection : MonoBehaviour {
 		// Play explosion sound effect
 		audioSource.PlayOneShot(smokeBomb, smokeBombVolume);
 		// Capture ronaldo
-		GameManager.CaptureRonaldo(ronaldo, control.player);
+		GameManager.CaptureRonaldo(ronaldo, player);
 
 		// Remove the collision
 		collisions.Remove(ronaldo);
@@ -113,7 +112,7 @@ public class Detection : MonoBehaviour {
 
 		// Play explosion sound effect
 		audioSource.PlayOneShot(smokeBomb, smokeBombVolume);
-		EZGamepad gamepad = EZGM.GetEZGamepad(control.player);
+		EZGamepad gamepad = EZGM.GetEZGamepad(player);
 		if (gamepad != null) {
 			gamepad.HapticsOverTime(vibrationTimer, 1, 0);
 		}
@@ -121,7 +120,7 @@ public class Detection : MonoBehaviour {
 		fakeRonaldo.transform.position = GameManager.GetRandomPointOnMap(fakeRonaldo.transform.position.y, new Vector3(spawnRepel, 10, spawnRepel));
 
 		// Subtract points from corresponding spotlight
-		ScoreManager.ChangeScoreBy(control.player, -20);
+		ScoreManager.ChangeScoreBy(player, -20);
 
 		// Remove the collision
 		collisions.Remove(fakeRonaldo);
@@ -135,7 +134,7 @@ public class Detection : MonoBehaviour {
 		item.transform.position = new Vector3(1000, 1000, 1000);
 		// Activate the item
 		ItemEffect effect = item.GetComponent<ItemEffect>();
-		effect.Activate(GameManager.GetPlayerGroup(control.player));
+		effect.Activate(GameManager.GetPlayerGroup(player));
 
 		// Remove the collision
 		collisions.Remove(item);

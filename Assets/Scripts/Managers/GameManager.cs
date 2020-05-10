@@ -126,14 +126,18 @@ public class GameManager : MonoBehaviour {
 			control.player = (Player) i;
 			// Register the control
 			ControlManager.RegisterControl(control, (Player) i);
-			// Tell the detection script about the controller
-			newSpotlight.transform.Find("SpotlightCollider").GetComponent<Detection>().control = control;
+			// Get Detection script
+			Detection detection = newSpotlight.transform.Find("SpotlightCollider").GetComponent<Detection>();
+			// Enable the detection script
+			detection.enabled = true;
+			// Add Player specifier
+			detection.player = (Player) i;
 			// Add this spotlight to the list of colliders to avoid spawning Ronaldo or his look alikes under it
 			spotlightColliders.Add(newSpotlight.transform.Find("SpotlightCollider"));
 
 			// Add keyboard control
 			if (i == 0 && EZGM.EZGamepadCount() == 0) {
-				KeyboardControl keyControl = newSpotlight.AddComponent<KeyboardControl>();
+				newSpotlight.AddComponent<KeyboardControl>();
 			}
 
 			// Spawn player's Ronaldo
