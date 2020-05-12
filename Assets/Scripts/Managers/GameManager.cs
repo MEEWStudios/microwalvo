@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
@@ -404,6 +403,13 @@ public class GameManager : MonoBehaviour {
 		sparkle.localPosition = new Vector3(0, 0.5f, 0.5f);
 		// Set the animation size
 		sparkle.localScale = new Vector3(4, 4, 4);
+		// Add the progress UI
+		RectTransform canvas = (Instantiate(manager.prefabSource.Find("SpotlightProgress").gameObject, item.transform, false) as GameObject).GetComponent<RectTransform>();
+		canvas.name = "Progress";
+		// Set the UI position
+		canvas.localPosition = new Vector3(0, 0, 0);
+		// Enable the item script
+		item.GetComponent<ItemEffect>().enabled = true;
 
 		return item;
 	}

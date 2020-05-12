@@ -8,19 +8,35 @@ public class Detection : MonoBehaviour {
 	private class Collision {
 		public CollisionAction action;
 		public GameObject target;
+		public ItemEffect effect;
+		public float delay;
 		public float timer;
+		private readonly Detection detection;
 
-		public Collision(CollisionAction action, GameObject target, float delay) {
-			timer = delay;
-			this.target = target;
+		public Collision(CollisionAction action, GameObject target, float delay, Detection detection) {
 			this.action = action;
+			this.target = target;
+			this.delay = delay;
+			timer = delay;
+			effect = target.GetComponent<ItemEffect>();
+			this.detection = detection;
 		}
 
 		public void Run(float deltaTime) {
 			timer -= deltaTime;
 
+			if (effect != null) {
+				effect.SetProgress(detection, 1 - (timer / delay));
+			}
+
 			if (timer <= 0) {
 				action(target);
+			}
+		}
+
+		public void Cancel() {
+			if (effect != null) {
+				effect.CancelProgress(detection);
 			}
 		}
 	}
@@ -52,19 +68,19 @@ public class Detection : MonoBehaviour {
 		// Check if the Ronaldo found is not their own 
 		if (gameObject.CompareTag("Real Ronaldo") && gameObject.GetComponent<NPCTraits>().player != player) {
 			Debug.Log("Ronaldo entered spotlight!");
-			collisions.Add(gameObject, new Collision(MoveRonaldo, gameObject, 2f));
+			collisions.Add(gameObject, new Collision(MoveRonaldo, gameObject, 2f, this));
 		}
 
 		if (gameObject.CompareTag("Fake Ronaldo")) {
 			Debug.Log("Fake Ronaldo entered spotlight!");
-			collisions.Add(gameObject, new Collision(MoveFakeRonaldo, gameObject, 2f));
+			collisions.Add(gameObject, new Collision(MoveFakeRonaldo, gameObject, 2f, this));
 		}
 
 		if (gameObject.CompareTag("Item")) {
 			ItemEffect effect = gameObject.GetComponent<ItemEffect>();
 
 			if (effect.CanActivate(transform.parent.parent)) {
-				collisions.Add(gameObject, new Collision(ActivateItem, gameObject, 1f));
+				collisions.Add(gameObject, new Collision(ActivateItem, gameObject, 2f, this));
 			}
 		}
 	}
@@ -73,6 +89,7 @@ public class Detection : MonoBehaviour {
 		GameObject gameObject = collider.gameObject;
 
 		if (collisions.ContainsKey(gameObject)) {
+			collisions[gameObject].Cancel();
 			collisions.Remove(gameObject);
 		}
 

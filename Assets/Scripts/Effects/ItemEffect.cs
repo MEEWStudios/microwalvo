@@ -1,16 +1,25 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class ItemEffect : MonoBehaviour {
+	public GameObject progressSource;
 	public abstract float EffectDuration { get; }
 
 	private float bobOffset;
 	private Vector3 initialPosition;
+	private RectTransform progressTransform;
+	private GameObject ring;
+	private Image image;
+	private Detection detection = null;
 
 	// Use this for initialization
 	void OnEnable() {
 		bobOffset = Random.Range(0f, 1f);
 		initialPosition = transform.position;
+		progressTransform = transform.Find("Progress").Find("Progress").GetComponent<RectTransform>();
+		ring = transform.Find("Progress").Find("Ring").gameObject;
+		image = transform.Find("Progress").Find("Progress").GetComponent<Image>();
 	}
 
 	// Update is called once per frame
@@ -22,7 +31,30 @@ public abstract class ItemEffect : MonoBehaviour {
 		transform.position = position;
 	}
 
+	public void SetProgress(Detection detection, float progress) {
+		if (this.detection != detection && this.detection != null) {
+			return;
+		}
+
+		this.detection = detection;
+
+		ring.SetActive(true);
+		progressTransform.localScale = new Vector3(progress, progress, progress);
+		image.color = PlayerColor.Get(detection.player) * new Color(1, 1, 1, progress);
+	}
+
+	public void CancelProgress(Detection detection) {
+		if (this.detection != detection) {
+			return;
+		}
+
+		ring.SetActive(false);
+		this.detection = null;
+		progressTransform.localScale = new Vector3(0, 0, 0);
+	}
+
 	public void Activate(Transform playerGroup) {
+		progressTransform.localScale = new Vector3(0, 0, 0);
 		StartCoroutine(DoEffect(playerGroup));
 	}
 
