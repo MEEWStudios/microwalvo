@@ -48,7 +48,10 @@ public class ScoreManager : MonoBehaviour {
 	public float roundFinishVolume;
 	public AudioClip allTieSound;
 	public float allTieVolume;
-
+	public static GameObject overlay;
+	private static GameObject endScreen;
+	private static GameObject tieScreen;
+    
 
 	private static ScoreManager manager;
 	private static readonly Dictionary<Player, int> scores = new Dictionary<Player, int>();
@@ -57,6 +60,9 @@ public class ScoreManager : MonoBehaviour {
 	// Start is called before the first frame update
 	void Start() {
 		manager = this;
+		overlay = GameObject.Find("Overlay");
+		endScreen = overlay.transform.Find("End Game Screen").gameObject;
+		tieScreen = overlay.transform.Find("Tie Screen").gameObject;
 	}
 
 	// UpdateScores is called once per frame
@@ -167,6 +173,10 @@ public class ScoreManager : MonoBehaviour {
 	public static void DisplayResults() {
 		int maxScore = 0;
 		List<Player> players = new List<Player>();
+		Sprite redWinSprite = Resources.Load<Sprite>("end_screens/red_win");
+		Sprite purpleWinSprite = Resources.Load<Sprite>("end_screens/purple_win");
+		Sprite blueWinSprite = Resources.Load<Sprite>("end_screens/blue_win");
+		Sprite greenWinSprite = Resources.Load<Sprite>("end_screens/green_win");
 
 		foreach (KeyValuePair<Player, int> pair in scores) {
 			if (pair.Value > maxScore) {
@@ -191,8 +201,44 @@ public class ScoreManager : MonoBehaviour {
 			text += " have tied!";
 			manager.winnerText.text = text;
 			manager.audioSource.PlayOneShot(manager.allTieSound, manager.allTieVolume);
+
+			//turn off the corresponding sprite if they weren't part of the tie
+			if(!(manager.winnerText.text.Contains("1")) && manager.winnerText.text != "All players have tied!") {
+				tieScreen.transform.Find("Red Separate").gameObject.SetActive(false);
+			}
+			if(!(manager.winnerText.text.Contains("2")) && manager.winnerText.text != "All players have tied!") {
+				tieScreen.transform.Find("Purple Separate").gameObject.SetActive(false);
+			}
+			if(!(manager.winnerText.text.Contains("3")) && manager.winnerText.text != "All players have tied!") {
+				tieScreen.transform.Find("Blue Separate").gameObject.SetActive(false);
+			}
+			if(!(manager.winnerText.text.Contains("4")) && manager.winnerText.text != "All players have tied!") {
+				tieScreen.transform.Find("Green Separate").gameObject.SetActive(false);
+			}
+
+			tieScreen.SetActive(true);
+
+
 		} else {
 			manager.winnerText.text = "Player " + (((int) players[0]) + 1) + " wins!";
+
+			//Individual player win screens
+			if(manager.winnerText.text == "Player 1 wins!") {
+				endScreen.GetComponent<Image>().sprite = redWinSprite;
+				endScreen.SetActive(true);
+			} 
+			else if(manager.winnerText.text == "Player 2 wins!") {
+				endScreen.GetComponent<Image>().sprite = purpleWinSprite;
+				endScreen.SetActive(true);
+			} 
+			else if(manager.winnerText.text == "Player 3 wins!") {
+				endScreen.GetComponent<Image>().sprite = blueWinSprite;
+				endScreen.SetActive(true);
+			} 
+			else if(manager.winnerText.text == "Player 4 wins!") {
+				endScreen.GetComponent<Image>().sprite = greenWinSprite;
+				endScreen.SetActive(true);
+			} 
 
 			manager.audioSource.PlayOneShot(manager.roundFinishSound, manager.roundFinishVolume);
 		}
