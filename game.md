@@ -3,7 +3,7 @@ layout: simple-section
 title: About
 sections:
   Where's Ronaldo?: |
-    Where’s Ronaldo is our video game version of the classic Where's Waldo book with a few twists!
+    Where’s Ronaldo is our video game version of the classic Where's Waldo book with a few twists! Check out our video demo:
     
     [![Watch the video](https://img.youtube.com/vi/j_jjUtrEcGU/hqdefault.jpg)](https://www.youtube.com/watch?v=j_jjUtrEcGU&feature=youtu.be)
   About: |
