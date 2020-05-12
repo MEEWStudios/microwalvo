@@ -91,7 +91,6 @@ public class GameManager : MonoBehaviour {
 
 	public static void StartRound() {
 		int playerCount = EZGM.EZGamepadCount() == 0 ? 1 : EZGM.EZGamepadCount();
-		playerCount = 4;
 		Transform characterSource = manager.prefabSource.Find("Characters");
 		GameObject sourcePerson = characterSource.Find("Person").gameObject;
 		GameObject sourceLookAlike = characterSource.Find("Fake Ronaldo").gameObject;
