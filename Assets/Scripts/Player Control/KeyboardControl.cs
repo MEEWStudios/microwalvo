@@ -13,13 +13,18 @@ public class KeyboardControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
 		if (!GameManager.IsRoundPaused()) {
-			float x = Input.GetAxis("Horizontal");
-			float z = Input.GetAxis("Vertical");
+			float xAxis = Input.GetAxis("Horizontal");
+			float yAxis = Input.GetAxis("Vertical");
 
-			x *= speed * Time.deltaTime;
-			z *= speed * Time.deltaTime;
+			Vector3 newPosition = this.transform.position;
+			newPosition.x += xAxis * speed * Time.deltaTime;
+			newPosition.z += yAxis * speed * Time.deltaTime;
 
-			transform.Translate(x, 0, z);
+			// Clamp values
+			newPosition.x = Mathf.Clamp(newPosition.x, -117, 117);
+			newPosition.z = Mathf.Clamp(newPosition.z, -50, 50);
+
+			this.transform.position = newPosition;
 		}
 	}
 }
