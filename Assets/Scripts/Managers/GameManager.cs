@@ -151,6 +151,8 @@ public class GameManager : MonoBehaviour {
 			// Add Player specifier
 			NPCTraits traits = ronaldo.AddComponent<NPCTraits>();
 			traits.player = (Player) i;
+			// Setup the progress indicator
+			ronaldo.GetComponent<ProgressIndicator>().Initialize(manager.prefabSource.Find("SpotlightProgress").gameObject);
 
 			// Spawn look alikes
 			for (int j = 0; j < manager.fakeRonaldoCount; j++) {
@@ -162,6 +164,8 @@ public class GameManager : MonoBehaviour {
 				npc.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().materials[0].color = SkinColor.GetRandom();
 				npc.transform.Find("pCube1").GetComponent<SkinnedMeshRenderer>().materials[1].color = PlayerColor.Get(i) * new Color(0.5f, 0.5f, 0.5f);
 				npc.transform.Find("sweater2").Find("pCylinder1").GetComponent<SkinnedMeshRenderer>().material.color = PlayerColor.Get(i);
+				// Setup the progress indicator
+				npc.GetComponent<ProgressIndicator>().Initialize(manager.prefabSource.Find("SpotlightProgress").gameObject);
 			}
 		}
 
@@ -300,6 +304,9 @@ public class GameManager : MonoBehaviour {
 		}
 
 		ScoreManager.DisplayResults();
+
+		manager.overlay.Find("RoundEndControls").gameObject.SetActive(true);
+		MenuController.SetTopLevelMenu(manager.overlay.Find("RoundEndControls"));
 	}
 
 	public static void ResetRound() {
@@ -332,6 +339,9 @@ public class GameManager : MonoBehaviour {
 		manager.menuSource.Play();
 
 		manager.overlay.Find("RoundPanel").gameObject.SetActive(false);
+		manager.overlay.Find("RoundEndControls").gameObject.SetActive(false);
+
+		MenuController.Clear();
 	}
 
 	public static void CaptureRonaldo(GameObject ronaldo, Player captor) {
@@ -403,11 +413,8 @@ public class GameManager : MonoBehaviour {
 		sparkle.localPosition = new Vector3(0, 0.5f, 0.5f);
 		// Set the animation size
 		sparkle.localScale = new Vector3(4, 4, 4);
-		// Add the progress UI
-		RectTransform canvas = (Instantiate(manager.prefabSource.Find("SpotlightProgress").gameObject, item.transform, false) as GameObject).GetComponent<RectTransform>();
-		canvas.name = "Progress";
-		// Set the UI position
-		canvas.localPosition = new Vector3(0, 0, 0);
+		// Setup the progress indicator
+		item.GetComponent<ProgressIndicator>().Initialize(manager.prefabSource.Find("SpotlightProgress").gameObject);
 		// Enable the item script
 		item.GetComponent<ItemEffect>().enabled = true;
 

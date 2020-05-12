@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class NPCController : MonoBehaviour {
+public class NPCController : ProgressIndicator {
 	public float wanderRadius = 100;
 	public float minIdleTime = 0;
 	public float maxIdleTime = 15;

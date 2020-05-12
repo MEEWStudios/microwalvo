@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class Detection : MonoBehaviour {
 	private class Collision {
 		public CollisionAction action;
 		public GameObject target;
-		public ItemEffect effect;
+		public ProgressIndicator indicator;
 		public float delay;
 		public float timer;
 		private readonly Detection detection;
@@ -18,25 +19,26 @@ public class Detection : MonoBehaviour {
 			this.target = target;
 			this.delay = delay;
 			timer = delay;
-			effect = target.GetComponent<ItemEffect>();
+			indicator = target.GetComponent<ProgressIndicator>();
 			this.detection = detection;
 		}
 
 		public void Run(float deltaTime) {
 			timer -= deltaTime;
 
-			if (effect != null) {
-				effect.SetProgress(detection, 1 - (timer / delay));
+			if (indicator != null) {
+				indicator.SetProgress(detection, 1 - (timer / delay));
 			}
 
 			if (timer <= 0) {
+				indicator.ClearProgress(detection);
 				action(target);
 			}
 		}
 
 		public void Cancel() {
-			if (effect != null) {
-				effect.CancelProgress(detection);
+			if (indicator != null) {
+				indicator.ClearProgress(detection);
 			}
 		}
 	}

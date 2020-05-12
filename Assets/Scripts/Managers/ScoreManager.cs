@@ -84,6 +84,8 @@ public class ScoreManager : MonoBehaviour {
 		scores.Clear();
 		incrementingScores.Clear();
 		manager.winnerText.text = "";
+		tieScreen.SetActive(false);
+		endScreen.SetActive(false);
 	}
 
 	public static void SetupScores(int playerCount) {
