@@ -67,6 +67,7 @@ head: |
 		<p>Created consistent branding for the website, including a custom Jekyll theme. Worked on programming for the game using Visual Studio and the Unity game engine, as well as website content updates.</p>
 		<div class='links'>
 			<a href='mailto:epchow@hawaii.edu'>epchow@hawaii.edu</a>
+			<a href='https://www.linkedin.com/in/ethan-chow-8b1765157/'>LinkedIn</a>
 		</div>
 	</div>
 	<div class='user'>
