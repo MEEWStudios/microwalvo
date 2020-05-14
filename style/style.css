@@ -111,3 +111,8 @@ footer {
 	line-height: var(--footer-line-height);
 	user-select: none;
 }
+
+.youtube.embed {
+	display: block;
+	margin: 0 auto;
+}
