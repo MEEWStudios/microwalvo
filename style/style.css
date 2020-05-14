@@ -37,8 +37,7 @@ ul > li::before,
 ul > li::after {
 	content: '';
 	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
+	top: 0.4em;
 	pointer-events: none;
 }
 
