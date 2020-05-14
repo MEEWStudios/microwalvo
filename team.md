@@ -56,8 +56,8 @@ head: |
 		<p>Worked on programming for the game using Visual Studio and the Unity game engine, as well as website content updates. Some specific proogramming tasks included working on spotlight interactions, certain map aesthetics, and NPC behavior.</p>
 		<div class='links'>
 			<a href='mailto:eppang@hawaii.edu'>eppang@hawaii.edu</a>
-            <a href='https://eppang.github.io/'>Personal Portfolio</a>
-            <a href='https://www.linkedin.com/in/emily-pang-45406b16a/'>LinkedIn</a>
+			<a href='https://eppang.github.io/'>Personal Portfolio</a>
+			<a href='https://www.linkedin.com/in/emily-pang-45406b16a/'>LinkedIn</a>
 		</div>
 	</div>
 	<div class='user'>
