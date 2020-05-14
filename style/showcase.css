@@ -1,9 +1,23 @@
 .showcase {
 	padding: var(--page-element-padding);
 	padding-bottom: 0.5em;
-	/* Derived from the rgba necessary to go from --theme-primary-background to --theme-primary-light-background using 0.3 alpha */
-	background: rgba(148, 128, 194, 0.3);
+	background: rgba(255, 255, 255, 0.5);
 	text-align: center;
+}
+
+.showcase + .showcase {
+	margin-top: var(--page-element-padding);
+}
+
+.showcase[data-title] {
+	padding-top: calc(var(--page-element-padding) / 2);
+}
+
+.showcase[data-title]::before {
+	content: attr(data-title);
+	display: block;
+	padding-bottom: calc(var(--page-element-padding) / 2);
+	font-size: 1.5em;
 }
 
 .showcase::after {
@@ -14,6 +28,7 @@
 }
 
 .showcase img {
+	display: inline-block;
 	max-width: 18em;
 	max-height: 18em;
 	cursor: pointer;
@@ -26,7 +41,7 @@
 	width: 100%;
 	height: 100%;
 	transition: background var(--theater-transition-duration), backdrop-filter var(--theater-transition-duration);
-    z-index: 1;
+	z-index: 1;
 	user-select: none;
 	overflow-y: hidden;
 }
@@ -37,8 +52,8 @@
 }
 
 .theater .screen {
-    position: relative;
-    height: 85vh;
+	position: relative;
+	height: 85vh;
 }
 
 .theater .screen img {
@@ -58,37 +73,37 @@
 }
 
 .theater .browser {
-    position: absolute;
-    display: flex;
-    align-items: center;
+	position: absolute;
+	display: flex;
+	align-items: center;
 	/* Breaks in Chrome when the container is overflowed */
-/*    justify-content: center;*/
+/*	justify-content: center;*/
 	bottom: -15vh;
-    height: 15vh;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.7);
+	height: 15vh;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.7);
 	opacity: 0;
-    transition: bottom var(--theater-transition-duration), opacity var(--theater-transition-duration);
+	transition: bottom var(--theater-transition-duration), opacity var(--theater-transition-duration);
 	overflow-x: auto;
 }
 
 .theater.open .browser {
-    bottom: 0;
+	bottom: 0;
 	padding: 0 calc(var(--page-element-padding) / 2);
-    opacity: 1;
+	opacity: 1;
 	box-sizing: border-box;
 }
 
 .theater .browser img {
-    max-height: 90%;
-    max-width: 10em;
-    margin: 0 calc(var(--page-element-padding) / 2);
-    cursor: pointer;
+	max-height: 90%;
+	max-width: 10em;
+	margin: 0 calc(var(--page-element-padding) / 2);
+	cursor: pointer;
 }
 
 .theater .browser img.selected {
-    outline: calc(var(--page-element-padding) / 5) solid var(--theme-tertiary-background);
-    outline-offset: calc(var(--page-element-padding) / -5);
+	outline: calc(var(--page-element-padding) / 5) solid var(--theme-tertiary-background);
+	outline-offset: calc(var(--page-element-padding) / -5);
 }
 
 .theater .close {

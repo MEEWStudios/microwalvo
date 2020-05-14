@@ -114,4 +114,107 @@ document.addEventListener('DOMContentLoaded', async () => {
 			});
 		}
 	}
+	
+	let showcases = document.getElementsByClassName('showcase');
+	for (let showcase of showcases) {
+		let images = showcase.getElementsByTagName('img');
+		
+		for (let image of images) {
+			image.addEventListener('click', (event) => {
+				event.preventDefault();
+				
+				let overlay = document.createElement('div');
+				overlay.className = 'theater';
+				let screen = document.createElement('div');
+				screen.className = 'screen';
+				let largeImage = document.createElement('img');
+				largeImage.src = image.src;
+				let browser = document.createElement('div');
+				browser.className = 'browser';
+				screen.appendChild(largeImage);
+				overlay.appendChild(screen);
+				overlay.appendChild(browser);
+				document.body.appendChild(overlay);
+				
+				let selectedThumbnail;
+				
+				// Populate image browser
+				for (let thumbnailSource of images) {
+					let thumbnail = document.createElement('img');
+					thumbnail.src = thumbnailSource.src;
+					if (thumbnailSource === image) {
+						selectedThumbnail = thumbnail;
+						thumbnail.classList.add('selected');
+					}
+					// LEAK
+					thumbnail.addEventListener('click', (event) => {
+						event.preventDefault();
+						
+						selectedThumbnail.classList.remove('selected');
+						selectedThumbnail = thumbnail;
+						thumbnail.classList.add('selected');
+						largeImage.src = thumbnailSource.src;
+					});
+					
+					browser.appendChild(thumbnail);
+				}
+				
+				let close = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+				close.setAttribute('class', 'close');
+				close.setAttribute('viewBox', '0 0 24 24');
+				let path1 = document.createElementNS(close.namespaceURI, 'path');
+				path1.setAttribute('d', 'M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z');
+				path1.setAttribute('fill', 'white');
+				path1.style.stroke = '#000';
+				path1.style.strokeWidth = '0.5px';
+				let path2 = document.createElementNS(close.namespaceURI, 'path');
+				path2.setAttribute('d', 'M0 0h24v24H0z');
+				path2.setAttribute('fill', 'none');
+				close.appendChild(path1);
+				close.appendChild(path2);
+				overlay.appendChild(close);
+				
+				function closeTheater(event) {
+					if (event.target === largeImage || isInHeirarchyOf(event.target, browser)) {
+						return;
+					}
+					
+					overlay.removeEventListener('click', closeTheater);
+					overlay.addEventListener('transitionend', (event) => {
+						// Enable scrollbar
+						document.body.style.overflowY = '';
+						document.body.style.marginRight = '';
+						document.body.removeChild(overlay);
+					}, {once: true});
+					
+					overlay.classList.remove('open');
+				}
+				
+				requestAnimationFrame(() => {
+					requestAnimationFrame(() => {
+						if (window.innerHeight < document.body.clientHeight) {
+							// Disable scrollbar
+							document.body.style.overflowY = 'hidden';
+							document.body.style.marginRight = `${getScrollbarWidth()}px`;
+						}
+						
+						if (overlay.style.backdropFilter === undefined) {
+							// Darken the background if the browser does not support backdrop-filter
+							overlay.style.background = 'rgba(0, 0, 0, 0.7)';
+						}
+						
+						overlay.classList.add('open');
+						overlay.addEventListener('click', closeTheater);
+						
+						requestAnimationFrame(() => {
+							requestAnimationFrame(() => {
+								selectedThumbnail.scrollIntoView();
+								overlay.scrollTop = 0;
+							});
+						});
+					});
+				});
+			});
+		}
+	}
 });
